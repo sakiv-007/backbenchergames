@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Side panel toggle functionality
     const userAvatar = document.querySelector('.user-avatar');
+    const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('main');
     
@@ -10,6 +11,31 @@ document.addEventListener('DOMContentLoaded', function() {
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
+    }
+    
+    // Mobile sidebar toggle functionality
+    if (mobileSidebarToggle) {
+        mobileSidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+        });
+    }
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        // Only do this on mobile screens
+        if (window.innerWidth <= 768) {
+            // If click is outside sidebar and not on the toggle button
+            if (!e.target.closest('#sidebar') && 
+                !e.target.closest('#mobile-sidebar-toggle')) {
+                sidebar.classList.remove('active');
+            }
+        }
+    });
+    
+    // Initialize sidebar state on page load
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove('active');
+        mainContent.style.marginLeft = '0';
     }
     
     // Search functionality with auto-suggestions

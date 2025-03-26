@@ -1039,3 +1039,134 @@ body.dark-mode .modal-content p {
 body.dark-mode .modal-icon {
     color: #5da0f7;
 }
+
+
+
+
+
+
+
+
+/* Add mobile sidebar toggle button */
+.mobile-sidebar-toggle {
+    display: none;
+    font-size: 1.5rem;
+    color: #4a90e2;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+body.dark-mode .mobile-sidebar-toggle {
+    color: #5da0f7;
+}
+
+/* Enhanced responsive styles for header */
+@media (max-width: 768px) {
+    /* Adjust header layout */
+    header .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+    }
+    
+    /* Show mobile sidebar toggle */
+    .mobile-sidebar-toggle {
+        display: block;
+        order: 1;
+    }
+    
+    /* Center the logo */
+    .logo {
+        order: 2;
+        margin: 0;
+        flex: 0;
+        text-align: center;
+    }
+    
+    /* Position theme toggle to the right */
+    .theme-toggle {
+        order: 3;
+        margin-left: 0;
+    }
+    
+    /* Move search below the header elements */
+    .search-container {
+        order: 4;
+        width: 100%;
+        margin: 10px 0 0;
+        max-width: 100%;
+    }
+    
+    /* Hide sidebar by default on mobile */
+    #sidebar {
+        transform: translateX(-100%);
+        width: 250px;
+    }
+    
+    #sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* Adjust main content */
+    main {
+        margin-left: 0;
+    }
+}
+
+
+
+
+
+
+
+/* Enhanced responsive styles for header */
+@media (max-width: 768px) {
+    /* Adjust header layout */
+    header .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+    }
+    
+    /* Show mobile sidebar toggle */
+    .mobile-sidebar-toggle {
+        display: block;
+        order: 1;
+    }
+    
+    /* Center the logo */
+    .logo {
+        order: 2;
+        margin: 0;
+        flex: 0;
+        text-align: center;
+    }
+    
+    /* Position theme toggle to the right */
+    .theme-toggle {
+        order: 3;
+        margin-left: 0;
+    }
+    
+    /* Move search below the header elements and center it */
+    .search-container {
+        order: 4;
+        width: 100%;
+        margin: 15px auto 5px;
+        max-width: 90%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .search-box {
+        max-width: 450px;
+        width: 100%;
+    }
+}

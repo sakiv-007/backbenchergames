@@ -1219,4 +1219,13 @@ body.dark-mode .mobile-sidebar-toggle {
         border-radius: 0 25px 25px 0;
         margin-top: 0;
     }
+
+    /* Make play button full width on mobile */
+    .play-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
 }

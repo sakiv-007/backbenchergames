@@ -855,3 +855,56 @@ body.dark-mode #search-btn:focus {
     background-color: #5da0f7;
     border: 1px solid #ffffff;
 }
+
+/* Search Suggestions Styles */
+.search-box {
+    position: relative;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: none;
+}
+
+.suggestion {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.suggestion:hover {
+    background-color: #f0f4f8;
+}
+
+.game-card.highlighted {
+    box-shadow: 0 0 0 3px #4a90e2, 0 10px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px);
+}
+
+/* Dark mode styles for search suggestions */
+body.dark-mode .search-suggestions {
+    background-color: #16213e;
+    border-color: #333;
+}
+
+body.dark-mode .suggestion {
+    color: #f0f0f0;
+}
+
+body.dark-mode .suggestion:hover {
+    background-color: #0f3460;
+}
+
+body.dark-mode .game-card.highlighted {
+    box-shadow: 0 0 0 3px #5da0f7, 0 10px 20px rgba(0, 0, 0, 0.3);
+}

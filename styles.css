@@ -1054,8 +1054,10 @@ body.dark-mode .modal-icon {
     color: #4a90e2;
     background: none;
     border: none;
-    cursor: pointer;
+    cursor: default; /* Change cursor to default instead of pointer */
     padding: 5px;
+    opacity: 0.5; /* Make it appear disabled */
+    pointer-events: none; /* Disable click events */
 }
 
 body.dark-mode .mobile-sidebar-toggle {
@@ -1102,21 +1104,57 @@ body.dark-mode .mobile-sidebar-toggle {
     }
     
     /* Hide sidebar by default on mobile */
+    /* Responsive adjustments for sidebar */
+@media (max-width: 768px) {
     #sidebar {
+        width: 70px;
         transform: translateX(-100%);
-        width: 250px;
     }
     
     #sidebar.active {
         transform: translateX(0);
+        width: 250px; /* Ensure full width when active */
     }
     
-    /* Adjust main content */
+    /* Hide text only when sidebar is collapsed/not active */
+    #sidebar:not(.active) .user-info,
+    #sidebar:not(.active) .sidebar-nav span,
+    #sidebar:not(.active) .logout-btn span,
+    #sidebar:not(.active) .play-btn span,
+    #sidebar:not(.active) .play-online-section h3 {
+        display: none;
+    }
+    
+    #sidebar .user-avatar img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #sidebar.active .user-avatar img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #sidebar:not(.active) .sidebar-nav i {
+        margin-right: 0;
+    }
+    
+    #sidebar.active .sidebar-nav i {
+        margin-right: 15px;
+    }
+    
+    #sidebar.active .user-info,
+    #sidebar.active .sidebar-nav span,
+    #sidebar.active .logout-btn span,
+    #sidebar.active .play-btn span,
+    #sidebar.active .play-online-section h3 {
+        display: block;
+    }
+    
     main {
         margin-left: 0;
     }
-}
-
+}}
 
 
 
@@ -1165,8 +1203,20 @@ body.dark-mode .mobile-sidebar-toggle {
         justify-content: center;
     }
     
+    /* Keep search box as row layout (not column) */
     .search-box {
         max-width: 450px;
         width: 100%;
+        flex-direction: row;
+    }
+    
+    /* Maintain original border radius */
+    #game-search {
+        border-radius: 25px 0 0 25px;
+    }
+    
+    #search-btn {
+        border-radius: 0 25px 25px 0;
+        margin-top: 0;
     }
 }

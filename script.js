@@ -172,3 +172,65 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Modal functionality
+const modal = document.getElementById('feature-modal');
+const modalTitle = modal.querySelector('h2');
+const modalText = modal.querySelector('p');
+const modalIcon = modal.querySelector('.modal-icon i');
+const closeModal = document.querySelector('.close-modal');
+const modalButton = document.querySelector('.modal-button');
+
+// Get all elements with data-feature attribute
+const featureLinks = document.querySelectorAll('[data-feature]');
+
+// Feature icons mapping
+const featureIcons = {
+    'Play with Friends': 'fa-user-friends',
+    'Play with Random Players': 'fa-random',
+    'Play vs Robot': 'fa-robot',
+    'Messaging': 'fa-envelope',
+    'Friends': 'fa-user-friends',
+    'Match History': 'fa-history',
+    'Tournament Creation': 'fa-trophy',
+    'Tournament Play': 'fa-gamepad',
+    'My Tournaments': 'fa-medal',
+    'Logout': 'fa-sign-out-alt'
+};
+
+// Add click event to all feature links
+featureLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const featureName = this.getAttribute('data-feature');
+        
+        // Set modal content
+        modalTitle.textContent = featureName + ' Coming Soon!';
+        modalText.textContent = `We're working hard to bring you the ${featureName} feature. Stay tuned for updates!`;
+        
+        // Set icon
+        modalIcon.className = '';
+        modalIcon.classList.add('fas');
+        modalIcon.classList.add(featureIcons[featureName] || 'fa-rocket');
+        
+        // Show modal
+        modal.style.display = 'block';
+    });
+});
+
+// Close modal when clicking the close button
+closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Close modal when clicking the button
+modalButton.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Close modal when clicking outside the modal content
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+    }
+});

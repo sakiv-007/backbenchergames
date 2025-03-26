@@ -26,15 +26,15 @@
         <div class="play-online-section">
             <h3>Play Online</h3>
             <div class="play-online-buttons">
-                <a href="#" class="play-btn play-with-friends" title="Start a game with your friends">
+                <a href="javascript:void(0)" class="play-btn play-with-friends" data-feature="Play with Friends" title="Start a game with your friends">
                     <i class="fas fa-user-friends"></i>
                     <span>Play with Friends</span>
                 </a>
-                <a href="#" class="play-btn play-with-randoms" title="Find random players to play with">
+                <a href="javascript:void(0)" class="play-btn play-with-randoms" data-feature="Play with Random Players" title="Find random players to play with">
                     <i class="fas fa-random"></i>
                     <span>Play with Randoms</span>
                 </a>
-                <a href="#" class="play-btn play-vs-robot" title="Play against AI opponent">
+                <a href="javascript:void(0)" class="play-btn play-vs-robot" data-feature="Play vs Robot" title="Play against AI opponent">
                     <i class="fas fa-robot"></i>
                     <span>Play vs Robot</span>
                 </a>
@@ -50,20 +50,20 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" title="View your messages">
+                    <a href="javascript:void(0)" data-feature="Messaging" title="View your messages">
                         <i class="fas fa-envelope"></i>
                         <span>Messaging</span>
                         <span class="badge">3</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" title="Manage your friends">
+                    <a href="javascript:void(0)" data-feature="Friends" title="Manage your friends">
                         <i class="fas fa-user-friends"></i>
                         <span>Friends</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" title="View your game history">
+                    <a href="javascript:void(0)" data-feature="Match History" title="View your game history">
                         <i class="fas fa-history"></i>
                         <span>Match History</span>
                     </a>
@@ -73,19 +73,19 @@
                     <span>Tournaments</span>
                 </li>
                 <li>
-                    <a href="#" title="Create a new tournament">
+                    <a href="javascript:void(0)" data-feature="Tournament Creation" title="Create a new tournament">
                         <i class="fas fa-trophy"></i>
                         <span>Create Tournament</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" title="Join existing tournaments">
+                    <a href="javascript:void(0)" data-feature="Tournament Play" title="Join existing tournaments">
                         <i class="fas fa-gamepad"></i>
                         <span>Play Tournaments</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" title="View your tournaments">
+                    <a href="javascript:void(0)" data-feature="My Tournaments" title="View your tournaments">
                         <i class="fas fa-medal"></i>
                         <span>My Tournaments</span>
                     </a>
@@ -94,7 +94,7 @@
         </nav>
         
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn" title="Sign out of your account">
+            <a href="javascript:void(0)" data-feature="Logout" class="logout-btn" title="Sign out of your account">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>
@@ -257,6 +257,18 @@
         </div>
     </footer>
 
+    <!-- Add this modal HTML at the end of the body but before the script tag -->
+    <div id="feature-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h2>Coming Soon!</h2>
+            <p>We're working hard to bring you this feature. Stay tuned for updates!</p>
+            <button class="modal-button">Got it</button>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

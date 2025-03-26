@@ -28,6 +28,16 @@ ul {
 }
 
 /* Header Styles */
+/* Remove upper margin from menu bar */
+header {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.main-nav {
+    margin-top: 0;
+}
+
 header {
     background-color: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -79,7 +89,7 @@ header .container {
     background-color: #4a90e2;
     color: white;
     text-align: center;
-    padding: 60px 0;
+    padding: 5px 0;
 }
 
 .hero h1 {

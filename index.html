@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BackbencherGames - Play Paper Games Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <!-- <div class="sidebar-header">
+            <button id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div> -->
+        
+        <div class="user-card">
+            <div class="user-avatar">
+                <img src="assets/avatar.png" alt="User Avatar">
+            </div>
+            <div class="user-info">
+                <h3>Vikas</h3>
+                <p>Level 5 Player</p>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active">
+                    <a href="index.html">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messaging</span>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-history"></i>
+                        <span>Match History</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">BackbencherGames</a>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="#" class="active">Games</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="language-selector">
+                <select>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Play Paper Games Online</h1>
+                <p>Classic paper games you can play with friends anywhere, anytime!</p>
+            </div>
+        </section>
+
+        <section class="games">
+            <div class="container">
+                <h2>Our Games</h2>
+                <div class="games-grid">
+                    <!-- Game Cards -->
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Tic+Tac+Toe" alt="Tic Tac Toe">
+                        </div>
+                        <div class="game-info">
+                            <h3>Tic Tac Toe</h3>
+                            <p>Classic game of X's and O's</p>
+                            <a href="#" class="play-button">Play Now</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Hangman" alt="Hangman">
+                        </div>
+                        <div class="game-info">
+                            <h3>Hangman</h3>
+                            <p>Guess the word before it's too late</p>
+                            <a href="#" class="play-button">Play Now</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Dots+and+Boxes" alt="Dots and Boxes">
+                        </div>
+                        <div class="game-info">
+                            <h3>Dots and Boxes</h3>
+                            <p>Connect dots to create boxes</p>
+                            <a href="#" class="play-button">Play Now</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Word+Search" alt="Word Search">
+                        </div>
+                        <div class="game-info">
+                            <h3>Word Search</h3>
+                            <p>Find hidden words in a grid</p>
+                            <a href="#" class="play-button">Play Now</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Battleship" alt="Battleship">
+                        </div>
+                        <div class="game-info">
+                            <h3>Battleship</h3>
+                            <p>Sink your opponent's fleet</p>
+                            <a href="#" class="play-button">Play Now</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://via.placeholder.com/300x200/4a90e2/ffffff?text=Sudoku" alt="Sudoku">
+                        </div>
+                        <div class="game-info">
+                            <h3>Sudoku</h3>
+                            <p>Fill the grid with numbers</p>
+                            <a href="#" class="play-button">Play Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Why Play With Us?</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <i class="fas fa-users"></i>
+                        <h3>Multiplayer</h3>
+                        <p>Play with friends or random opponents</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Friendly</h3>
+                        <p>Play on any device, anywhere</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <h3>No Downloads</h3>
+                        <p>Play directly in your browser</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>BackbencherGames</h3>
+                    <p>© 2025 BackbencherGames. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="#">Games</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

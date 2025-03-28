@@ -4,8 +4,17 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh; /* Use viewport height instead of percentage */
-    max-height: -webkit-fill-available; /* For iOS Safari */
+    /* Use a combination of height properties that work better on mobile */
+    height: 100%;
+    /* Fallback for browsers that don't support the fill-available value */
+    height: -webkit-fill-available;
+    height: fill-available;
+    /* Prevent iOS Safari from dimension miscalculations */
+    max-height: 100%;
+    /* Ensure content is scrollable without affecting viewport */
+    overflow-y: auto;
+    /* Enable smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
     width: 70px;
     background-color: var(--white);
     border-right: 1px solid var(--border-color);

@@ -1,0 +1,180 @@
+/* Responsive styles */
+
+@media (max-width: 1024px) {
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+/* Responsive styles for header */
+@media (max-width: 768px) {
+    /* Adjust header layout */
+    header .container {
+        display: grid;
+        grid-template-areas: 
+            "toggle logo theme"
+            "search search search";
+        grid-template-columns: 1fr auto 1fr;
+        gap: 15px;
+        padding: 10px 15px;
+    }
+    
+    /* Show mobile sidebar toggle */
+    .mobile-sidebar-toggle {
+        display: block;
+        grid-area: toggle;
+        justify-self: start;
+    }
+    
+    /* Center the logo */
+    .logo {
+        grid-area: logo;
+        margin: 0;
+        text-align: center;
+    }
+    
+    /* Position theme toggle to the right */
+    .theme-toggle {
+        grid-area: theme;
+        justify-self: end;
+    }
+    
+    /* Move search below and center it */
+    .search-container {
+        grid-area: search;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* Keep search box as row layout */
+    .search-box {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    /* Maintain original border radius */
+    #game-search {
+        border-radius: 25px 0 0 25px;
+    }
+    
+    #search-btn {
+        border-radius: 0 25px 25px 0;
+        margin-top: 0;
+    }
+
+    /* Make play button full width on mobile */
+    .play-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+    
+    /* Responsive adjustments for sidebar */
+    #sidebar {
+        width: 0;
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+    
+    #sidebar.active {
+        transform: translateX(0);
+        width: 250px; /* Ensure full width when active */
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        z-index: 1500; /* Higher z-index to ensure it appears on top */
+    }
+    
+    /* Hide text only when sidebar is collapsed/not active */
+    #sidebar:not(.active) .user-info,
+    #sidebar:not(.active) .sidebar-nav span,
+    #sidebar:not(.active) .logout-btn span,
+    #sidebar:not(.active) .play-btn span,
+    #sidebar:not(.active) .play-online-section h3 {
+        display: none;
+    }
+    
+    #sidebar .user-avatar img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #sidebar.active .user-avatar img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #sidebar:not(.active) .sidebar-nav i {
+        margin-right: 0;
+    }
+    
+    #sidebar.active .sidebar-nav i {
+        margin-right: 15px;
+    }
+    
+    #sidebar.active .user-info,
+    #sidebar.active .sidebar-nav span,
+    #sidebar.active .logout-btn span,
+    #sidebar.active .play-btn span,
+    #sidebar.active .play-online-section h3 {
+        display: block;
+    }
+    
+    main {
+        margin-left: 0;
+        margin-top: 120px; /* Add top margin to account for fixed header */
+    }
+    
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-links ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    /* Center social icons and heading on mobile */
+    .footer-social {
+        text-align: center;
+    }
+    
+    .footer-social h4:after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* Center social icons on mobile */
+    .footer-social .social-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    section {
+        padding: 40px 0;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.7rem;
+    }
+}

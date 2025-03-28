@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BackbencherGames - Play Paper Games Online</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="assets/fevicon.png" type="image/x-icon">
@@ -70,7 +70,7 @@
                 </li>
                 <!-- Tournament Section -->
                 <li class="nav-section-title">
-                    <span>Tournaments</span>
+                    <span>TOURNAMENTS</span>
                 </li>
                 <li>
                     <a href="javascript:void(0)" data-feature="Tournament Creation" title="Create a new tournament">
@@ -226,10 +226,7 @@
                             <a href="https://custom-tic-tac-toe-game.vercel.app/" class="play-button">Coming soon</a>
                         </div>
                     </div>
-
-
-
-                    
+  
                 </div>
             </div>
         </section>
@@ -260,28 +257,68 @@
 
     <footer>
         <div class="container">
+            <div class="footer-feedback">
+                <h4>Share Your Feedback</h4>
+                <p>We'd love to hear your thoughts on how we can improve your gaming experience!</p>
+                <form class="feedback-form">
+                    <textarea placeholder="Your feedback or suggestions..."></textarea>
+                    <div class="feedback-attachments">
+                        <label for="feedback-file" class="file-upload-label">
+                            <i class="fas fa-paperclip"></i> Attach Files
+                        </label>
+                        <input type="file" id="feedback-file" multiple accept="image/*,video/*" class="file-upload-input">
+                        <div class="attachment-preview"></div>
+                    </div>
+                    <button type="submit">Send Feedback <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+            
+            <div class="footer-newsletter">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for the latest games and features</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address">
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+            
             <div class="footer-content">
                 <div class="footer-logo">
                     <h3>BackbencherGames</h3>
-                    <p>© 2025 BackbencherGames. All rights reserved.</p>
+                    <p>Play classic paper games online with friends anywhere, anytime!</p>
+                    <p class="copyright">© 2025 BackbencherGames. All rights reserved.</p>
                 </div>
                 <div class="footer-links">
-                    <h4>Links</h4>
+                    <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="#">Games</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">All Games</a></li>
+                        <li><a href="#">Popular Games</a></li>
+                        <li><a href="#">Tournaments</a></li>
+                        <li><a href="#">Leaderboards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
                         <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">
-                    <h4>Follow Us</h4>
+                    <h4>Connect With Us</h4>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Made with <i class="fas fa-heart" style="color: #e25555;"></i> by BackbencherGames Team | <a href="#">Sitemap</a></p>
             </div>
         </div>
     </footer>
@@ -298,6 +335,7 @@
             <button class="modal-button">Got it</button>
         </div>
     </div>
-    <script src="script.js"></script>
+    <!-- <script src="script.js" type="module"></script> -->
+    <script src="js/main.js" type="module"></script>
 </body>
 </html>

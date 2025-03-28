@@ -1,0 +1,115 @@
+/* Base styles, variables, and typography */
+
+:root {
+    /* Color variables */
+    --primary-color: #4a90e2;
+    --primary-dark: #3a7bc8;
+    --secondary-color: #f0f4f8;
+    --text-color: #333;
+    --text-light: #666;
+    --text-lighter: #888;
+    --border-color: #e0e0e0;
+    --white: #fff;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-darker: rgba(0, 0, 0, 0.2);
+    
+    /* Dark mode variables */
+    --dark-bg: #0f172a;
+    --dark-secondary-bg: #16213e;
+    --dark-text: #f0f0f0;
+    --dark-text-light: #ccc;
+    --dark-border: #333;
+    --dark-primary: #5da0f7;
+    
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    
+    /* Border radius */
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-lg: 25px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s;
+    --transition-normal: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: var(--white);
+    line-height: 1.6;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color var(--transition-normal);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+ul {
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Dark mode base styles */
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+body.dark-mode a {
+    color: var(--dark-primary);
+}
+
+body.dark-mode a:hover {
+    color: var(--primary-color);
+}

@@ -1,0 +1,84 @@
+/* Dark mode styles */
+
+body.dark-mode {
+    background-color: #0f172a;
+    color: #f0f0f0;
+}
+
+/* Dark mode styles for search */
+body.dark-mode #game-search {
+    background-color: #16213e;
+    color: #f0f0f0;
+    border-color: #333;
+}
+
+body.dark-mode #game-search:focus {
+    border-color: #5da0f7;
+    box-shadow: inset 0 0 0 2px rgba(93, 160, 247, 0.5);
+}
+
+body.dark-mode #search-btn {
+    background-color: #4a90e2;
+    color: white;
+}
+
+body.dark-mode #search-btn:active,
+body.dark-mode #search-btn:focus {
+    box-shadow: 0 0 0 4px rgba(93, 160, 247, 0.8);
+    outline: none;
+    background-color: #5da0f7;
+    border: 1px solid #ffffff;
+}
+
+/* Dark mode styles for search suggestions */
+body.dark-mode .search-suggestions {
+    background-color: #16213e;
+    border-color: #333;
+}
+
+body.dark-mode .suggestion {
+    color: #f0f0f0;
+}
+
+body.dark-mode .suggestion:hover {
+    background-color: #0f3460;
+}
+
+/* Dark mode scrollbar */
+body.dark-mode .sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(93, 160, 247, 0.3);
+}
+
+body.dark-mode .sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(93, 160, 247, 0.5);
+}
+
+/* Dark mode styles for modal */
+body.dark-mode .modal-content {
+    background-color: #16213e;
+}
+
+body.dark-mode .close-modal {
+    color: #ccc;
+}
+
+body.dark-mode .close-modal:hover {
+    color: #fff;
+}
+
+body.dark-mode .modal-content h2 {
+    color: #f0f0f0;
+}
+
+body.dark-mode .modal-content p {
+    color: #ccc;
+}
+
+body.dark-mode .modal-icon {
+    color: #5da0f7;
+}
+
+/* Dark mode styles for sidebar nav section titles */
+body.dark-mode .sidebar-nav li.nav-section-title {
+    color: #aaa;
+}

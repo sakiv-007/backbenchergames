@@ -1,0 +1,67 @@
+/* Features section styles */
+
+.features {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--secondary-color);
+    transition: background-color var(--transition-normal);
+}
+
+body.dark-mode .features {
+    background-color: var(--dark-bg);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+.feature {
+    text-align: center;
+    padding: 30px;
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal), background-color var(--transition-normal);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-darker);
+}
+
+.feature i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-lg);
+    transition: color var(--transition-normal);
+}
+
+.feature h3 {
+    margin-bottom: var(--spacing-md);
+    transition: color var(--transition-normal);
+}
+
+.feature p {
+    color: var(--text-light);
+    transition: color var(--transition-normal);
+}
+
+/* Dark mode styles */
+body.dark-mode .feature {
+    background-color: var(--dark-secondary-bg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .feature:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .feature i {
+    color: var(--dark-primary);
+}
+
+body.dark-mode .feature p {
+    color: var(--dark-text-light);
+}

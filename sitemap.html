@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap - BackbencherGames</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/fevicon.png" type="image/x-icon">
+    <style>
+        .sitemap-container {
+            padding: 40px 0;
+        }
+        .sitemap-section {
+            margin-bottom: 30px;
+        }
+        .sitemap-section h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .sitemap-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .sitemap-item {
+            margin-bottom: 10px;
+        }
+        .sitemap-item a {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+        .sitemap-item a:hover {
+            color: var(--primary-color);
+        }
+        .sitemap-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        body.dark-mode .sitemap-section h2 {
+            color: var(--primary-color-light);
+            border-color: var(--dark-border);
+        }
+        body.dark-mode .sitemap-item a {
+            color: var(--dark-text);
+        }
+        body.dark-mode .sitemap-item a:hover {
+            color: var(--primary-color-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar (same as in index.html) -->
+    <div id="sidebar">
+        <!-- Sidebar content would be here, same as index.html -->
+    </div>
+    
+    <header>
+        <div class="container">
+            <button class="mobile-sidebar-toggle" id="mobile-sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <a href="index.html">BackbencherGames</a>
+            </div>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="game-search" placeholder="Search games...">
+                    <button id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="sitemap-container">
+            <div class="container">
+                <h1>Sitemap</h1>
+                <p>Find everything on BackbencherGames in one place.</p>
+                
+                <div class="sitemap-section">
+                    <h2>Main Pages</h2>
+                    <div class="sitemap-list">
+                        <div class="sitemap-item">
+                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sitemap-section">
+                    <h2>Games</h2>
+                    <div class="sitemap-list">
+                        <div class="sitemap-item">
+                            <a href="https://tic-tac-toe-game-vikas-projects-6fd8bef5.vercel.app/"><i class="fas fa-gamepad"></i> Tic Tac Toe</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="https://snakegame-vikas-projects-6fd8bef5.vercel.app/"><i class="fas fa-gamepad"></i> Snake Game</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="https://custom-tic-tac-toe-game.vercel.app/"><i class="fas fa-gamepad"></i> Custom Tic Tac Toe</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="https://chess-vikas-projects-6fd8bef5.vercel.app/"><i class="fas fa-chess"></i> Chess</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-search"></i> Word Search (Coming Soon)</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-ship"></i> Battleship (Coming Soon)</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-question-circle"></i> Quiz (Coming Soon)</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-cubes"></i> Block Breaker (Coming Soon)</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sitemap-section">
+                    <h2>Play Options</h2>
+                    <div class="sitemap-list">
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-user-friends"></i> Play with Friends</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-random"></i> Play with Random Players</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-robot"></i> Play vs Robot</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sitemap-section">
+                    <h2>Tournaments</h2>
+                    <div class="sitemap-list">
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-trophy"></i> Create Tournament</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-gamepad"></i> Play Tournaments</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-medal"></i> My Tournaments</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sitemap-section">
+                    <h2>User Features</h2>
+                    <div class="sitemap-list">
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-envelope"></i> Messaging</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-user-friends"></i> Friends</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-history"></i> Match History</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sitemap-section">
+                    <h2>Support</h2>
+                    <div class="sitemap-list">
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-question-circle"></i> Help Center</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-envelope"></i> Contact Us</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                        </div>
+                        <div class="sitemap-item">
+                            <a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Footer content would be here, same as index.html -->
+    </footer>
+
+    <script src="js/main.js" type="module"></script>
+</body>
+</html>

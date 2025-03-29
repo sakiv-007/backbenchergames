@@ -13,6 +13,9 @@
     --shadow: rgba(0, 0, 0, 0.1);
     --shadow-darker: rgba(0, 0, 0, 0.2);
     
+    /* Adding light-bg variable that was missing */
+    --light-bg: #ffffff;
+    
     /* Dark mode variables */
     --dark-bg: #0f172a;
     --dark-secondary-bg: #16213e;
@@ -44,12 +47,23 @@
     box-sizing: border-box;
 }
 
+/* Add this to your base.css file */
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: #1a1a2e; /* Direct color instead of variable */
     color: var(--text-color);
-    background-color: var(--white);
     line-height: 1.6;
-    transition: background-color var(--transition-normal), color var(--transition-normal);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+    background-image: url(''); /* Changed file extension */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: soft-light;
+    background-color: rgba(26, 26, 46, 0.4);
 }
 
 a {

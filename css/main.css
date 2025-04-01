@@ -1,34 +1,232 @@
 /* Main CSS file that imports all other CSS files */
 
-/* Base styles */
+/* Import variables and themes */
+@import 'variables.css';
+
+/* Import base styles */
 @import 'base.css';
 
-/* Layout */
+/* Import layout styles */
 @import 'layout.css';
 
-/* Components */
+/* Import component styles */
 @import 'components.css';
 
-/* Header */
-@import 'header.css';
+/* Import section styles */
+@import 'sections.css';
 
-/* Sidebar */
-@import 'sidebar.css';
+/* Import animations */
+@import 'animations.css';
 
-/* Games */
-@import 'games.css';
-
-/* Features */
-@import 'features.css';
-
-/* Modal */
-@import 'modal.css';
-
-/* Footer */
-@import 'footer.css';
-
-/* Dark mode */
-@import 'dark-mode.css';
-
-/* Responsive styles - should be last */
+/* Import responsive styles */
 @import 'responsive.css';
+
+.hero {
+    min-height: 70vh;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 60px 0;
+}
+
+/* Sidebar collapsed state handling */
+body.sidebar-collapsed .play-online-section h3,
+body.sidebar-collapsed .play-online-section .play-online-buttons span {
+    display: flex;
+}
+
+/* Clone the avatar to the body when sidebar is collapsed */
+body.sidebar-collapsed::before {
+    content: "";
+    position: fixed;
+    top: 15px; /* Increased from 15px to 30px to move it lower */
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    background-image: url('../assets/avatar.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    z-index: 1500;
+    cursor: pointer;
+}
+
+body.sidebar-collapsed .user-info {
+    display: flex;
+}
+
+/* Sidebar Scrollbar Styling */
+#sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+#sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+#sidebar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    border: 2px solid transparent;
+}
+
+#sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-hover-color);
+}
+
+/* Sidebar Smooth Scrolling */
+#sidebar {
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* Sidebar Visual Enhancements */
+#sidebar {
+    background: linear-gradient(145deg, rgba(30, 30, 30, 0.95), rgba(20, 20, 20, 0.95));
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+#sidebar ul {
+    padding-right: 8px;
+}
+
+#sidebar .nav-section-title {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9em;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+}
+
+#sidebar li a {
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 4px 8px;
+    padding: 12px 16px;
+}
+
+#sidebar li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(4px);
+}
+
+#sidebar .sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin-top: auto;
+}
+
+#sidebar .logout-btn {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+#sidebar .logout-btn:hover {
+    background: rgba(255, 0, 0, 0.2);
+}
+
+/* Footer Layout Fixes */
+/* .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    width: 100%;
+} */
+
+.footer-logo {
+    
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-links, .footer-social {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-links ul, .footer-social .social-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-social .social-icons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr repeat(3, minmax(150px, 1fr));
+    }
+    
+    .footer-logo {
+        grid-column: auto;
+        text-align: left;
+        margin-bottom: 0;
+    }
+    
+    .footer-links ul, .footer-social .social-icons {
+        align-items: flex-start;
+    }
+    
+    .footer-social .social-icons {
+        justify-content: flex-start;
+    }
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3); /* Darker background for better contrast */
+}
+
+#fruitCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: auto;
+    touch-action: none; /* Better touch handling */
+    cursor: none; /* Hide cursor for better immersion */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)); /* Subtle glow for game elements */
+}
+
+/* Custom cursor for the game area */
+#fruitCanvas::after {
+    content: '';
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+    pointer-events: none; /* Allow clicks to pass through to canvas */
+}
+
+/* Make text elements selectively clickable */
+.hero .container button,
+.hero .container a {
+    pointer-events: auto;
+}

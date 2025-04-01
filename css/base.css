@@ -1,45 +1,4 @@
-/* Base styles, variables, and typography */
-
-:root {
-    /* Color variables */
-    --primary-color: #4a90e2;
-    --primary-dark: #3a7bc8;
-    --secondary-color: #f0f4f8;
-    --text-color: #333;
-    --text-light: #666;
-    --text-lighter: #888;
-    --border-color: #e0e0e0;
-    --white: #fff;
-    --shadow: rgba(0, 0, 0, 0.1);
-    --shadow-darker: rgba(0, 0, 0, 0.2);
-    
-    /* Adding light-bg variable that was missing */
-    --light-bg: #ffffff;
-    
-    /* Dark mode variables */
-    --dark-bg: #0f172a;
-    --dark-secondary-bg: #16213e;
-    --dark-text: #f0f0f0;
-    --dark-text-light: #ccc;
-    --dark-border: #333;
-    --dark-primary: #5da0f7;
-    
-    /* Spacing */
-    --spacing-xs: 5px;
-    --spacing-sm: 10px;
-    --spacing-md: 15px;
-    --spacing-lg: 20px;
-    --spacing-xl: 30px;
-    
-    /* Border radius */
-    --radius-sm: 5px;
-    --radius-md: 10px;
-    --radius-lg: 25px;
-    
-    /* Transitions */
-    --transition-fast: 0.2s;
-    --transition-normal: 0.3s;
-}
+/* Base styles, typography, containers, buttons */
 
 * {
     margin: 0;
@@ -47,83 +6,133 @@
     box-sizing: border-box;
 }
 
-/* Add this to your base.css file */
 body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
     font-family: 'Poppins', sans-serif;
-    background-color: #1a1a2e; /* Direct color instead of variable */
-    color: var(--text-color);
+    margin: 0;
+    padding: 0;
     line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
     overflow-x: hidden;
-    background-image: url(''); /* Changed file extension */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-blend-mode: soft-light;
-    background-color: rgba(26, 26, 46, 0.4);
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(126, 87, 194, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(41, 121, 255, 0.1) 0%, transparent 50%);
+    transition: background-color var(--transition-speed);
 }
 
-a {
-    text-decoration: none;
-    color: var(--primary-color);
-    transition: color var(--transition-normal);
-}
-
-a:hover {
-    color: var(--primary-dark);
-}
-
-ul {
-    list-style: none;
-}
-
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    line-height: 1.3;
+    font-family: var(--heading-font);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 h1 {
     font-size: 2.5rem;
-    margin-bottom: var(--spacing-lg);
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(126, 87, 194, 0.3);
 }
 
 h2 {
     font-size: 2rem;
-    margin-bottom: var(--spacing-lg);
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+h2:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
 }
 
 h3 {
     font-size: 1.5rem;
-    margin-bottom: var(--spacing-md);
 }
 
 p {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
 }
 
-img {
-    max-width: 100%;
-    height: auto;
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: all var(--transition-speed);
 }
 
-button {
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Dark mode base styles */
-body.dark-mode {
-    background-color: var(--dark-bg);
-    color: var(--dark-text);
-}
-
-body.dark-mode a {
-    color: var(--dark-primary);
-}
-
-body.dark-mode a:hover {
+a:hover {
     color: var(--primary-color);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all var(--transition-speed);
+    cursor: pointer;
+    font-family: var(--heading-font);
+    position: relative;
+    overflow: hidden;
+    border: none;
+    outline: none;
+}
+
+.btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s;
+}
+
+.btn:hover:before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 4px 15px rgba(126, 87, 194, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(126, 87, 194, 0.6);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(5px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
 }

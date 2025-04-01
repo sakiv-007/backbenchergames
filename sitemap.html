@@ -56,9 +56,104 @@
     </style>
 </head>
 <body>
-    <!-- Sidebar (same as in index.html) -->
+    <!-- Sidebar -->
     <div id="sidebar">
-        <!-- Sidebar content would be here, same as index.html -->
+        <!-- User Avatar at the top for mini-sidebar view -->
+        <div class="user-card">
+            <div class="user-avatar" title="Toggle sidebar">
+                <img src="assets/avatar.png" alt="User Avatar">
+                <div class="level-badge">5</div>
+            </div>
+            <div class="user-info">
+                <h3>Vikas</h3>
+                <p>Level 5 Player</p>
+                <div class="xp-bar">
+                    <div class="xp-progress" style="width: 75%"></div>
+                </div>
+                <a href="javascript:void(0)" class="edit-profile-btn" data-feature="Edit Profile">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Edit Profile</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Play Online Section -->
+        <div class="play-online-section">
+            <h3><i class="fas fa-gamepad"></i> Play Online</h3>
+            <div class="play-online-buttons">
+                <a href="javascript:void(0)" class="play-btn play-with-friends" data-feature="Play with Friends" title="Start a game with your friends">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Play with Friends</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-with-randoms" data-feature="Play with Random Players" title="Find random players to play with">
+                    <i class="fas fa-random"></i>
+                    <span>Play with Randoms</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-vs-robot" data-feature="Play vs Robot" title="Play against AI opponent">
+                    <i class="fas fa-robot"></i>
+                    <span>Play vs Robot</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="index.html" title="Go to homepage">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Messaging" title="View your messages">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messaging</span>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Friends" title="Manage your friends">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Match History" title="View your game history">
+                        <i class="fas fa-history"></i>
+                        <span>Match History</span>
+                    </a>
+                </li>
+                <!-- Tournament Section -->
+                <li class="nav-section-title">
+                    <span>TOURNAMENTS</span>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Creation" title="Create a new tournament">
+                        <i class="fas fa-trophy"></i>
+                        <span>Create Tournament</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Play" title="Join existing tournaments">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Play Tournaments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="My Tournaments" title="View your tournaments">
+                        <i class="fas fa-medal"></i>
+                        <span>My Tournaments</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="javascript:void(0)" data-feature="Logout" class="logout-btn" title="Sign out of your account">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
     </div>
     
     <header>
@@ -200,6 +295,30 @@
     <footer>
         <!-- Footer content would be here, same as index.html -->
     </footer>
+    
+    <!-- Feature modal for coming soon features -->
+    <div id="feature-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h2>Feature Coming Soon!</h2>
+            <p>We're working hard to bring you this feature. Stay tuned for updates!</p>
+            <button class="modal-button">Got it</button>
+        </div>
+    </div>
+    
+    <!-- Game achievement notification -->
+    <div id="achievement-notification" class="achievement-notification">
+        <div class="achievement-icon">
+            <i class="fas fa-trophy"></i>
+        </div>
+        <div class="achievement-content">
+            <h4>Achievement Unlocked!</h4>
+            <p>First Visit: Welcome to BackbencherGames</p>
+        </div>
+    </div>
 
     <script src="js/main.js" type="module"></script>
 </body>

@@ -370,9 +370,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Adjust velocity and gravity based on device type
             const isMobile = window.innerWidth <= 768;
-            const baseVelocityY = isMobile ? -15 : -20; // Lower launch velocity on mobile
+            const baseVelocityY = isMobile ? -18 : -20; // Increased launch velocity on mobile (was -15)
             const velocityYRandom = isMobile ? 5 : 10; // Less random variation on mobile
-            const baseGravity = isMobile ? 0.5 : 0.4; // Higher gravity on mobile for lower arcs
+            const baseGravity = isMobile ? 0.4 : 0.4; // Reduced gravity on mobile for higher arcs (was 0.5)
             
             for (let i = 0; i < burstCount; i++) {
                 const fruit = {

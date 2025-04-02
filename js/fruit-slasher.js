@@ -173,13 +173,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         x: startX + (spawnWidth * (i / burstCount)) + (Math.random() * 200 - 100),
                         y: canvas.height + 30,
                         type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
-                        velocityY: isMobile ? -35 - Math.random() * 25 : -15 - Math.random() * 15, // Much higher launch on mobile
-                        velocityX: (Math.random() - 0.5) * 15,
+                        velocityY: isMobile ? -20 - Math.random() * 15 : -15 - Math.random() * 15, // Reduced launch speed on mobile
+                        velocityX: (Math.random() - 0.5) * (isMobile ? 8 : 15), // Reduced horizontal speed on mobile
                         rotation: Math.random() * Math.PI * 2,
-                        rotationSpeed: (Math.random() - 0.5) * 0.4,
+                        rotationSpeed: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.4), // Slower rotation on mobile
                         sliced: false,
                         opacity: 1,
-                        gravity: isMobile ? 0.01 + Math.random() * 0.1 : 1 + Math.random() * 0.01 // Even lower gravity on mobile for more height
+                        gravity: isMobile ? 0.08 + Math.random() * 0.05 : 1 + Math.random() * 0.01 // Adjusted gravity for mobile to reach top
                     };
                     fruits.push(fruit);
                 }, i * (Math.random() * 300 + 100)); // Random delay between fruits in burst

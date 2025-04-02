@@ -61,7 +61,7 @@
     
     /* Ensure section headers are visible */
     .section-header h2 {
-        font-size: 1.8rem;
+        font-size: 1rem;
         width: 100%;
         margin-bottom: 10px;
     }
@@ -169,8 +169,12 @@
     .section-header h2 {
         font-size: 1.5rem;
         width: 100%;
-        margin-bottom: 10px;
+        margin-top: -25px;
+        margin-bottom: 15px;
         display: block;
+        padding-top: 10px;
+        position: relative;
+        z-index: 1;
     }
     
     /* Rest of the mobile styles */

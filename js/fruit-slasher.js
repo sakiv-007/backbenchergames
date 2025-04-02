@@ -31,8 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.width = heroSection.offsetWidth;
         canvas.height = heroSection.offsetHeight;
         
-        // Set consistent fruit size
-        document.documentElement.style.setProperty('--fruit-size', '80px');
+        // Set responsive fruit size based on device width
+        const isMobile = window.innerWidth <= 768;
+        const fruitSize = isMobile ? '60px' : '80px';
+        document.documentElement.style.setProperty('--fruit-size', fruitSize);
     }
 
     resizeCanvas();
@@ -366,18 +368,24 @@ document.addEventListener('DOMContentLoaded', function() {
             const spawnWidth = canvas.width * 0.8; // Use 80% of canvas width
             const startX = canvas.width * 0.1; // Start from 10% of canvas width
             
+            // Adjust velocity and gravity based on device type
+            const isMobile = window.innerWidth <= 768;
+            const baseVelocityY = isMobile ? -15 : -20; // Lower launch velocity on mobile
+            const velocityYRandom = isMobile ? 5 : 10; // Less random variation on mobile
+            const baseGravity = isMobile ? 0.5 : 0.4; // Higher gravity on mobile for lower arcs
+            
             for (let i = 0; i < burstCount; i++) {
                 const fruit = {
                     x: startX + (spawnWidth * (i / burstCount)) + (Math.random() * 100 - 50),
                     y: canvas.height + 30,
                     type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
-                    velocityY: -20 - Math.random() * 10, // Consistent launch velocity
-                    velocityX: (Math.random() - 0.5) * 12,
+                    velocityY: baseVelocityY - Math.random() * velocityYRandom, // Adjusted launch velocity
+                    velocityX: (Math.random() - 0.5) * (isMobile ? 8 : 12), // Less horizontal movement on mobile
                     rotation: Math.random() * Math.PI * 2,
                     rotationSpeed: (Math.random() - 0.5) * 0.3,
                     sliced: false,
                     opacity: 1,
-                    gravity: 0.4 // Consistent gravity
+                    gravity: baseGravity // Adjusted gravity
                 };
                 fruits.push(fruit);
             }

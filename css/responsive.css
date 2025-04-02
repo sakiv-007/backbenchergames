@@ -59,6 +59,13 @@
         gap: 15px;
     }
     
+    /* Ensure section headers are visible */
+    .section-header h2 {
+        font-size: 1.8rem;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
     .games-grid, .features-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
@@ -153,6 +160,17 @@
     .search-box button {
         width: 30px;
         height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Ensure section headers are visible on mobile */
+    .section-header h2 {
+        font-size: 1.5rem;
+        width: 100%;
+        margin-bottom: 10px;
+        display: block;
     }
     
     /* Rest of the mobile styles */
@@ -195,6 +213,8 @@
     .features h2 {
         font-size: 1.4rem;
     }
+
+
 
 
 

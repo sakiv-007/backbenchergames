@@ -81,10 +81,11 @@
         overflow-x: hidden;
     }
     .logo a {
-        font-size: 0.7rem;
+        font-size: 1rem;
         width: 100%;
         text-align: center;
         display: block;
+        font-weight: 800;
     }
     
     /* Modify header layout for mobile */
@@ -93,7 +94,7 @@
         grid-template-columns: auto 1fr auto;
         align-items: center;
         gap: 5px;
-        padding: 8px 10px;
+        padding: 10px 10px;
     }
     
     .logo {
@@ -108,26 +109,27 @@
         flex: 1;
         display: flex;
         justify-content: center;
+        padding: 5px 0;
     }
     
     .mobile-sidebar-toggle {
         order: 1;
-        margin-right: 3px;
+        margin-right: 5px;
         font-size: 0.9rem;
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
     
     .theme-toggle {
         order: 3;
-        margin-left: 3px;
+        margin-left: 5px;
         font-size: 0.9rem;
     }
     
     .theme-toggle button {
-        width: 30px;
-        height: 30px;
-        padding: 5px;
+        width: 28px;
+        height: 28px;
+        padding: 4px;
     }
     
     .search-container {

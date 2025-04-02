@@ -5,11 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
         :root {
             --fruit-size: 80px;
         }
-        @media (max-width: 768px) {
-            :root {
-                --fruit-size: 60px;
-            }
-        }
     `;
     document.head.appendChild(style);
     
@@ -30,16 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Flag to detect if we're on a touch device
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    const isMobile = window.innerWidth <= 768;
 
     function resizeCanvas() {
         const heroSection = canvas.parentElement;
         canvas.width = heroSection.offsetWidth;
         canvas.height = heroSection.offsetHeight;
         
-        // Adjust fruit size based on screen size for better mobile experience
-        const baseFontSize = window.innerWidth <= 768 ? 60 : 80; // Smaller fruits on mobile
-        document.documentElement.style.setProperty('--fruit-size', `${baseFontSize}px`);
+        // Set consistent fruit size
+        document.documentElement.style.setProperty('--fruit-size', '80px');
     }
 
     resizeCanvas();
@@ -173,13 +166,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         x: startX + (spawnWidth * (i / burstCount)) + (Math.random() * 200 - 100),
                         y: canvas.height + 30,
                         type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
-                        velocityY: isMobile ? -20 - Math.random() * 15 : -15 - Math.random() * 15, // Reduced launch speed on mobile
-                        velocityX: (Math.random() - 0.5) * (isMobile ? 8 : 15), // Reduced horizontal speed on mobile
+                        velocityY: -15 - Math.random() * 15, // Consistent launch speed
+                        velocityX: (Math.random() - 0.5) * 15, // Consistent horizontal speed
                         rotation: Math.random() * Math.PI * 2,
-                        rotationSpeed: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.4), // Slower rotation on mobile
+                        rotationSpeed: (Math.random() - 0.5) * 0.4, // Consistent rotation speed
                         sliced: false,
                         opacity: 1,
-                        gravity: isMobile ? 0.08 + Math.random() * 0.05 : 1 + Math.random() * 0.01 // Adjusted gravity for mobile to reach top
+                        gravity: 1 + Math.random() * 0.01 // Consistent gravity
                     };
                     fruits.push(fruit);
                 }, i * (Math.random() * 300 + 100)); // Random delay between fruits in burst
@@ -378,13 +371,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     x: startX + (spawnWidth * (i / burstCount)) + (Math.random() * 100 - 50),
                     y: canvas.height + 30,
                     type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
-                    velocityY: isMobile ? -40 - Math.random() * 20 : -20 - Math.random() * 10, // Much higher launch on mobile
+                    velocityY: -20 - Math.random() * 10, // Consistent launch velocity
                     velocityX: (Math.random() - 0.5) * 12,
                     rotation: Math.random() * Math.PI * 2,
                     rotationSpeed: (Math.random() - 0.5) * 0.3,
                     sliced: false,
                     opacity: 1,
-                    gravity: isMobile ? 0.18 : 0.4 // Reduced gravity for mobile to achieve more height
+                    gravity: 0.4 // Consistent gravity
                 };
                 fruits.push(fruit);
             }
@@ -402,7 +395,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fruits.forEach(fruit => {
             fruit.y += fruit.velocityY * deltaTime / 16;
             fruit.x += fruit.velocityX * deltaTime / 16;
-            fruit.velocityY += fruit.gravity || (isMobile ? 0.25 : 0.4); // Use individual gravity or default based on device
+            fruit.velocityY += fruit.gravity || 0.4; // Use individual gravity or default value
             fruit.rotation += fruit.rotationSpeed;
             
             if (fruit.sliced && fruit.slicedPieces) {

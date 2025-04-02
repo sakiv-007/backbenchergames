@@ -70,8 +70,21 @@
 
 /* Small screens (mobile phones, 480px and below) */
 @media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 0 10px;
+    }
+    
+    footer .container {
+        width: 95%;
+        padding: 0 10px;
+        overflow-x: hidden;
+    }
     .logo a {
-        font-size: 1rem;
+        font-size: 0.7rem;
+        width: 100%;
+        text-align: center;
+        display: block;
     }
     
     /* Modify header layout for mobile */
@@ -79,25 +92,42 @@
         display: grid;
         grid-template-columns: auto 1fr auto;
         align-items: center;
-        gap: 10px;
-        padding: 10px 15px;
+        gap: 5px;
+        padding: 8px 10px;
     }
     
     .logo {
         order: 2;
         width: auto;
         text-align: center;
-        margin: 0 10px;
+        margin: 0 auto;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+        display: flex;
+        justify-content: center;
     }
     
     .mobile-sidebar-toggle {
         order: 1;
-        margin-right: 5px;
+        margin-right: 3px;
+        font-size: 0.9rem;
+        width: 30px;
+        height: 30px;
     }
     
     .theme-toggle {
         order: 3;
-        margin-left: 5px;
+        margin-left: 3px;
+        font-size: 0.9rem;
+    }
+    
+    .theme-toggle button {
+        width: 30px;
+        height: 30px;
+        padding: 5px;
     }
     
     .search-container {
@@ -105,21 +135,25 @@
         grid-column: 1 / -1;
         max-width: 100%;
         width: 100%;
-        margin: 10px 0 0 0;
+        margin: 8px 0 0 0;
     }
     
     .search-box {
         width: 100%;
+        height: 32px;
     }
     
-    .theme-toggle {
-        order: 2;
+    .search-box input {
+        font-size: 0.9rem;
+        padding: 5px 30px 5px 10px;
     }
     
-    .mobile-sidebar-toggle {
-        order: 0;
+    .search-box button {
+        width: 30px;
+        height: 30px;
     }
     
+    /* Rest of the mobile styles */
     .hero h1 {
         font-size: 1.8rem;
     }
@@ -133,19 +167,13 @@
         grid-template-columns: 1fr;
     }
 
-
-
-    .games-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .features-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 5px;
     }
     
     .feature {
-        padding: 15px;
+        padding: 5px;
     }
     
     .feature i {
@@ -178,6 +206,59 @@
     
     .newsletter-form {
         flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+        border-radius: 4px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-logo, .footer-links, .footer-social {
+        width: 100%;
+    }
+    
+    .footer-logo {
+        max-width: 100%;
+    }
+    
+    .footer-logo h3 {
+        font-size: 1.2rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
+        line-height: 1.3;
+    }
+    
+    .footer-logo {
+        width: 100%;
+        padding: 0 5px;
+        box-sizing: border-box;
+    }
+    
+    .footer-links h4:after, 
+    .footer-social h4:after,
+    .footer-feedback h4:after,
+    .footer-newsletter h4:after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .footer-links ul li a:before {
+        display: none;
+    }
+    
+    .social-icons {
+        justify-content: center;
     }
 }
 

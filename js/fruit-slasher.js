@@ -363,13 +363,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         fruitSpawnTimer += deltaTime;
-        if (fruitSpawnTimer > 1000 && fruits.length < 10) {
-            const burstCount = Math.floor(Math.random() * 5) + 1; // 2-4 fruits at once
+        // Adjust spawn timer threshold based on device type
+        const isMobile = window.innerWidth <= 768;
+        const spawnThreshold = isMobile ? 1500 : 1000; // Increased spawn interval on mobile
+        
+        if (fruitSpawnTimer > spawnThreshold && fruits.length < 10) {
+            // Reduce number of fruits in a burst for mobile
+            const burstCount = isMobile ? 
+                Math.floor(Math.random() * 3) + 1 : // 1-3 fruits at once on mobile
+                Math.floor(Math.random() * 5) + 1; // 1-5 fruits at once on desktop
             const spawnWidth = canvas.width * 0.8; // Use 80% of canvas width
             const startX = canvas.width * 0.1; // Start from 10% of canvas width
             
             // Adjust velocity and gravity based on device type
-            const isMobile = window.innerWidth <= 768;
             const baseVelocityY = isMobile ? -18 : -20; // Increased launch velocity on mobile (was -15)
             const velocityYRandom = isMobile ? 5 : 10; // Less random variation on mobile
             const baseGravity = isMobile ? 0.4 : 0.4; // Reduced gravity on mobile for higher arcs (was 0.5)

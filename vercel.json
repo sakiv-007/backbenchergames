@@ -2,7 +2,13 @@
   "routes": [
     {
       "src": "/games/fruit-slasher-game/(.*)",
-      "dest": "/games/fruit-slasher-game/$1"
+      "dest": "/games/fruit-slasher-game/index.html",
+      "status": 200
+    },
+    {
+      "src": "/games/fruit-slasher-game/.*\\.(js|css|png|jpg|jpeg|gif|ico|svg)",
+      "dest": "/games/fruit-slasher-game/$1",
+      "status": 200
     }
   ]
 }

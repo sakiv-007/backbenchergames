@@ -334,15 +334,15 @@
 /* Hero section responsive height adjustments */
 @media (max-width: 768px) {
     .hero {
-        min-height: 40vh; /* Reduced from 50vh */
-        max-height: 60vh; /* Reduced from 70vh */
+        min-height: 30vh; /* Reduced from 50vh */
+        max-height: 40vh; /* Reduced from 70vh */
         padding: 30px 0; /* Reduced from 40px */
     }
 }
 
 @media (max-height: 600px) {
     .hero {
-        min-height: 30vh; /* Reduced from 40vh */
+        min-height: 25vh; /* Reduced from 40vh */
         padding: 25px 0; /* Reduced from 30px */
     }
 }

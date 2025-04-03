@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Replace the entire draw function with this
+    // In the draw function, update the fruit drawing code
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -253,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.fill();
         });
 
-        // Draw fruits
+        // Draw fruits with visible color
         const fruitSize = window.getComputedStyle(document.documentElement).getPropertyValue('--fruit-size') || '80px';
         fruits.forEach(fruit => {
             if (fruit.sliced && fruit.slicedPieces) {
@@ -262,6 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ctx.translate(fruit.x + piece.offsetX, fruit.y + piece.offsetY);
                     ctx.rotate(piece.rotation);
                     ctx.font = fruitSize + ' Arial';
+                    ctx.fillStyle = 'white'; // Add white color for visibility
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText(fruit.type, 0, 0);
@@ -272,6 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ctx.translate(fruit.x, fruit.y);
                 ctx.rotate(fruit.rotation);
                 ctx.font = fruitSize + ' Arial';
+                ctx.fillStyle = 'white'; // Add white color for visibility
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(fruit.type, 0, 0);

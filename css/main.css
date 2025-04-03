@@ -21,6 +21,9 @@
 /* Import responsive styles */
 @import 'responsive.css';
 
+/* Import responsive styles */
+@import 'profile.css';
+
 .hero {
     min-height: 70vh;
     max-height: 80vh;

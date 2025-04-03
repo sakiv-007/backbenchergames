@@ -7,6 +7,7 @@ import { initModal } from './modal.js';
 import { initFeedback } from './feedback.js';
 import { initSearch } from './search.js';
 import { initGames } from './games.js';
+import { initProfile } from './profile.js';
 
 // Initialize all modules when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFeedback();
     initSearch();
     initGames();
+    initProfile();
     
     console.log('BackbencherGames initialized successfully!');
 });

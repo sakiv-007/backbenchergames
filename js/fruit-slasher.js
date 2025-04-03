@@ -539,12 +539,13 @@ document.addEventListener('DOMContentLoaded', function() {
             transform: translate(-50%, -50%);
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
             text-align: center;
             z-index: 1005;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            min-width: 300px;
+            width: 90%;
+            max-width: 300px;
             animation: fadeIn 0.5s ease-in-out;
         `;
         
@@ -552,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.createElement('h2');
         title.textContent = 'GAME OVER';
         title.style.cssText = `
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 15px;
             color: #FF4136;
             text-shadow: 0 0 10px rgba(255, 65, 54, 0.7);
@@ -561,8 +562,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const scoreText = document.createElement('p');
         scoreText.textContent = `Your Score: ${finalScore}`;
         scoreText.style.cssText = `
-            font-size: 24px;
-            margin-bottom: 25px;
+            font-size: 20px;
+            margin-bottom: 20px;
             color: #FFDC00;
         `;
         
@@ -574,18 +575,32 @@ document.addEventListener('DOMContentLoaded', function() {
             border: none;
             padding: 12px 25px;
             border-radius: 25px;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 10px;
+            width: 80%;
+            max-width: 200px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         `;
         
-        // Add hover effect
+        // Add hover effect for desktop
         playAgainBtn.onmouseover = () => {
             playAgainBtn.style.backgroundColor = '#27AE60';
             playAgainBtn.style.transform = 'scale(1.05)';
         };
         playAgainBtn.onmouseout = () => {
+            playAgainBtn.style.backgroundColor = '#2ECC40';
+            playAgainBtn.style.transform = 'scale(1)';
+        };
+        
+        // Add active effect for mobile
+        playAgainBtn.ontouchstart = () => {
+            playAgainBtn.style.backgroundColor = '#27AE60';
+            playAgainBtn.style.transform = 'scale(1.05)';
+        };
+        playAgainBtn.ontouchend = () => {
             playAgainBtn.style.backgroundColor = '#2ECC40';
             playAgainBtn.style.transform = 'scale(1)';
         };
@@ -622,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.appendChild(countdownText);
         
         // Add popup to the document
-        canvas.parentElement.appendChild(popup);
+        document.body.appendChild(popup);
         
         // Set up countdown timer
         let secondsLeft = 5;
@@ -638,10 +653,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 1000);
         
-        // Play Again button click handler
-        playAgainBtn.addEventListener('click', () => {
+        // Play Again button click handler for both mouse and touch
+        const handleRestart = () => {
             clearInterval(countdownInterval);
             closePopupAndRestart();
+        };
+        
+        playAgainBtn.addEventListener('click', handleRestart);
+        playAgainBtn.addEventListener('touchend', (e) => {
+            e.preventDefault(); // Prevent default touch behavior
+            handleRestart();
         });
         
         // Function to close popup and restart game

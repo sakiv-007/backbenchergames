@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastTime = 0;
     let fruitSpawnTimer = 0;
     let particles = [];
-    const fruitTypes = ['🍎', '🍊', '🍇', '🍓', '🍐', '🍑', '🍉', '❤️', '🫐'];
+    const fruitTypes = ['🍎', '🍊', '🍇', '🍓', '🍐', '🍑', '🍉', '❤️', '🫐'];  
+    // Add bomb as a separate item (not in fruitTypes) to control spawn rate
+    const bombEmoji = '💣';
     const particleColors = ['#FF4136', '#FFDC00', '#2ECC40', '#FF851B', '#7FDBFF'];
     
     // Flag to detect if we're on a touch device
@@ -140,6 +142,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update the update function to manage trail length
     function update(deltaTime) {
+        // Handle screen shake effect
+        if (screenShakeTime > 0) {
+            screenShakeTime -= deltaTime;
+            if (screenShakeTime <= 0) {
+                // Reset canvas position when shake is done
+                canvas.style.transform = 'translate(0px, 0px)';
+            } else {
+                // Apply random shake effect
+                const shakeX = (Math.random() - 0.5) * screenShakeIntensity;
+                const shakeY = (Math.random() - 0.5) * screenShakeIntensity;
+                canvas.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
+            }
+        }
+        
         // Keep trail at a reasonable length
         if (trail.length > 20) {
             trail = trail.slice(-20);
@@ -295,6 +311,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add at the top with other variables
     let score = 0;
+    let isGameOver = false;
+    let screenShakeTime = 0;
+    let screenShakeIntensity = 0;
+    let bombHitCount = 0; // Track how many times bombs have been hit
+    const maxBombHits = 3; // Number of bomb hits before score reset
     
     function createScoreDisplay() {
         const scoreDisplay = document.createElement('div');
@@ -313,6 +334,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const scoreDisplay = createScoreDisplay();
+    
+    // Create bomb hit display to show how many bomb hits remain
+    function createBombHitDisplay() {
+        const bombHitDisplay = document.createElement('div');
+        bombHitDisplay.id = 'bomb-hit-display';
+        bombHitDisplay.style.cssText = `
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 20px;
+            color: #FF4136;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        `;
+        canvas.parentElement.appendChild(bombHitDisplay);
+        updateBombHitDisplay(); // Initialize with correct text
+        return bombHitDisplay;
+    }
+    
+    // Update the bomb hit display with current hit count
+    function updateBombHitDisplay() {
+        const bombHitDisplay = document.getElementById('bomb-hit-display');
+        if (bombHitDisplay) {
+            bombHitDisplay.innerHTML = `Bomb Hits: ${bombHitCount}/${maxBombHits}`;
+            
+            // Change color based on hit count
+            if (bombHitCount === 0) {
+                bombHitDisplay.style.color = '#2ECC40'; // Green when safe
+            } else if (bombHitCount === 1) {
+                bombHitDisplay.style.color = '#FFDC00'; // Yellow for warning
+            } else if (bombHitCount === 2) {
+                bombHitDisplay.style.color = '#FF851B'; // Orange for danger
+            } else {
+                bombHitDisplay.style.color = '#FF4136'; // Red for critical
+            }
+        }
+    }
+    
+    const bombHitDisplay = createBombHitDisplay();
 
     // Update the checkCollisions function
     function checkCollisions(x, y) {
@@ -327,25 +387,308 @@ document.addEventListener('DOMContentLoaded', function() {
                     fruit.velocityY *= 0.5;
                     fruit.velocityX = (Math.random() - 0.5) * 15;
                     
-                    fruit.slicedPieces = [
-                        { offsetX: -20, offsetY: -20, rotation: fruit.rotation - 0.5 },
-                        { offsetX: 20, offsetY: 20, rotation: fruit.rotation + 0.5 }
-                    ];
-                    
-                    const randomColor = particleColors[Math.floor(Math.random() * particleColors.length)];
-                    spawnParticles(fruit.x, fruit.y, randomColor);
-                    
-                    // Increment score
-                    score += 10;
-                    scoreDisplay.textContent = `Score: ${score}`;
+                    // Check if the sliced object is a bomb
+                    if (fruit.type === bombEmoji) {
+                        // Bomb was sliced!
+                        handleBombSliced(fruit);
+                    } else {
+                        // Regular fruit was sliced
+                        fruit.slicedPieces = [
+                            { offsetX: -20, offsetY: -20, rotation: fruit.rotation - 0.5 },
+                            { offsetX: 20, offsetY: 20, rotation: fruit.rotation + 0.5 }
+                        ];
+                        
+                        const randomColor = particleColors[Math.floor(Math.random() * particleColors.length)];
+                        spawnParticles(fruit.x, fruit.y, randomColor);
+                        
+                        // Increment score
+                        score += 10;
+                        scoreDisplay.textContent = `Score: ${score}`;
+                    }
                 }
             }
         });
     }
+    
+    // Handle bomb sliced event
+    function handleBombSliced(bomb) {
+        // Increment bomb hit counter
+        bombHitCount++;
+        
+        // Update bomb hit display
+        updateBombHitDisplay();
+        
+        // Create explosion effect with increasing intensity based on hit count
+        createExplosion(bomb.x, bomb.y, bombHitCount);
+        
+        // Apply screen shake with increasing intensity
+        screenShakeTime = 300 + (bombHitCount * 100); // shake duration increases with each hit
+        screenShakeIntensity = 5 + (bombHitCount * 3); // shake intensity increases with each hit
+        
+        // Only reset score after third hit
+        if (bombHitCount >= maxBombHits) {
+            // Store the current score before resetting
+            const finalScore = score;
+            
+            // Show game over popup after explosion animation completes (1 second)
+            setTimeout(() => {
+                showGameOverPopup(finalScore);
+            }, 1000);
+            
+            // Reset score
+            score = 0;
+            scoreDisplay.textContent = `Score: ${score}`;
+            
+            // Reset bomb hit counter
+            bombHitCount = 0;
+            
+            // Update bomb hit display after reset
+            updateBombHitDisplay();
+        }
+    }
+    
+    // Create explosion particles
+    function createExplosion(x, y, hitCount = 1) {
+        // Create more particles for explosion with intensity based on hit count
+        const explosionColors = ['#FF4136', '#FF851B', '#FFDC00', '#FF0000', '#FFA500'];
+        
+        // Create many particles in all directions - more particles for higher hit counts
+        const particleCount = 30 + (hitCount * 20); // More particles with each hit
+        for (let i = 0; i < particleCount; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 5 + Math.random() * (10 + hitCount * 5); // Faster particles with each hit
+            particles.push({
+                x: x,
+                y: y,
+                velocityX: Math.cos(angle) * speed,
+                velocityY: Math.sin(angle) * speed,
+                size: Math.random() * (6 + hitCount * 2) + 2, // Larger particles with each hit
+                color: explosionColors[Math.floor(Math.random() * explosionColors.length)],
+                life: 1.0
+            });
+        }
+        
+        // Create text explosion effect
+        createTextExplosion(x, y, hitCount);
+    }
+    
+    // Create text explosion effect (BOOM, KABOOM)
+    function createTextExplosion(x, y, hitCount) {
+        const explosionText = document.createElement('div');
+        explosionText.className = 'explosion-text';
+        
+        // Different text and styles based on hit count
+        if (hitCount === 3) {
+            explosionText.textContent = 'KABOOM!';
+            explosionText.style.fontSize = '80px';
+            explosionText.style.color = '#FF0000';
+        } else if (hitCount === 2) {
+            explosionText.textContent = 'BOOM!';
+            explosionText.style.fontSize = '60px';
+            explosionText.style.color = '#FF6600';
+        } else {
+            explosionText.textContent = 'BOOM';
+            explosionText.style.fontSize = '40px';
+            explosionText.style.color = '#FFCC00';
+        }
+        
+        explosionText.style.cssText += `
+            position: absolute;
+            top: ${y}px;
+            left: ${x}px;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            z-index: 1003;
+            animation: textExplode 1s forwards;
+        `;
+        
+        // Add animation keyframes if they don't exist
+        if (!document.getElementById('explosion-animations')) {
+            const style = document.createElement('style');
+            style.id = 'explosion-animations';
+            style.textContent = `
+                @keyframes textExplode {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+                    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        canvas.parentElement.appendChild(explosionText);
+        
+        // Remove the text after animation completes
+        setTimeout(() => {
+            if (explosionText.parentElement) {
+                explosionText.parentElement.removeChild(explosionText);
+            }
+        }, 1000);
+    }
+    
+    // Show game over popup with score and play again button
+    function showGameOverPopup(finalScore) {
+        // Create popup container
+        const popup = document.createElement('div');
+        popup.className = 'game-over-popup';
+        popup.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 1005;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            min-width: 300px;
+            animation: fadeIn 0.5s ease-in-out;
+        `;
+        
+        // Create popup content
+        const title = document.createElement('h2');
+        title.textContent = 'GAME OVER';
+        title.style.cssText = `
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #FF4136;
+            text-shadow: 0 0 10px rgba(255, 65, 54, 0.7);
+        `;
+        
+        const scoreText = document.createElement('p');
+        scoreText.textContent = `Your Score: ${finalScore}`;
+        scoreText.style.cssText = `
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #FFDC00;
+        `;
+        
+        const playAgainBtn = document.createElement('button');
+        playAgainBtn.textContent = 'Play Again';
+        playAgainBtn.style.cssText = `
+            background-color: #2ECC40;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        `;
+        
+        // Add hover effect
+        playAgainBtn.onmouseover = () => {
+            playAgainBtn.style.backgroundColor = '#27AE60';
+            playAgainBtn.style.transform = 'scale(1.05)';
+        };
+        playAgainBtn.onmouseout = () => {
+            playAgainBtn.style.backgroundColor = '#2ECC40';
+            playAgainBtn.style.transform = 'scale(1)';
+        };
+        
+        // Add countdown text
+        const countdownText = document.createElement('p');
+        countdownText.style.cssText = `
+            font-size: 14px;
+            margin-top: 15px;
+            color: #7FDBFF;
+        `;
+        
+        // Add animation keyframes if they don't exist
+        if (!document.getElementById('popup-animations')) {
+            const style = document.createElement('style');
+            style.id = 'popup-animations';
+            style.textContent = `
+                @keyframes fadeIn {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                }
+                @keyframes fadeOut {
+                    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Append elements to popup
+        popup.appendChild(title);
+        popup.appendChild(scoreText);
+        popup.appendChild(playAgainBtn);
+        popup.appendChild(countdownText);
+        
+        // Add popup to the document
+        canvas.parentElement.appendChild(popup);
+        
+        // Set up countdown timer
+        let secondsLeft = 5;
+        countdownText.textContent = `Game will restart in ${secondsLeft} seconds...`;
+        
+        const countdownInterval = setInterval(() => {
+            secondsLeft--;
+            countdownText.textContent = `Game will restart in ${secondsLeft} seconds...`;
+            
+            if (secondsLeft <= 0) {
+                clearInterval(countdownInterval);
+                closePopupAndRestart();
+            }
+        }, 1000);
+        
+        // Play Again button click handler
+        playAgainBtn.addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            closePopupAndRestart();
+        });
+        
+        // Function to close popup and restart game
+        function closePopupAndRestart() {
+            // Add fade out animation
+            popup.style.animation = 'fadeOut 0.5s ease-in-out';
+            
+            // Remove popup after animation completes
+            setTimeout(() => {
+                if (popup.parentElement) {
+                    popup.parentElement.removeChild(popup);
+                }
+                
+                // Reset game state
+                fruits = [];
+                particles = [];
+                trail = [];
+                fruitSpawnTimer = 0;
+                score = 0;
+                bombHitCount = 0;
+                scoreDisplay.textContent = `Score: ${score}`;
+                updateBombHitDisplay();
+            }, 500);
+        }
+    }
+    
+    // Empty functions to maintain compatibility
+    function showGameOverMessage() {}
+    function showBombWarningMessage() {}
 
     // Update the update function to handle continuous gameplay
     // Modify the update function's fruit spawning section
     function update(deltaTime) {
+        // Handle screen shake effect
+        if (screenShakeTime > 0) {
+            screenShakeTime -= deltaTime;
+            if (screenShakeTime <= 0) {
+                // Reset canvas position when shake is done
+                canvas.style.transform = 'translate(0px, 0px)';
+            } else {
+                // Apply random shake effect
+                const shakeX = (Math.random() - 0.5) * screenShakeIntensity;
+                const shakeY = (Math.random() - 0.5) * screenShakeIntensity;
+                canvas.style.transform = `translate(${shakeX}px, ${shakeY}px)`;
+            }
+        }
+        
         // Keep trail at a reasonable length
         if (trail.length > 20) {
             trail = trail.slice(-20);
@@ -380,18 +723,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const velocityYRandom = isMobile ? 5 : 10; // Less random variation on mobile
             const baseGravity = isMobile ? 0.4 : 0.4; // Reduced gravity on mobile for higher arcs (was 0.5)
             
+            // Chance to spawn a bomb (approximately 1 in 8 objects)
+            const shouldSpawnBomb = Math.random() < 0.125;
+            
             for (let i = 0; i < burstCount; i++) {
+                // Determine if this specific item should be a bomb
+                // Only spawn one bomb per burst at most
+                const isBomb = shouldSpawnBomb && i === Math.floor(Math.random() * burstCount);
+                
                 const fruit = {
                     x: startX + (spawnWidth * (i / burstCount)) + (Math.random() * 100 - 50),
                     y: canvas.height + 30,
-                    type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
+                    type: isBomb ? bombEmoji : fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
                     velocityY: baseVelocityY - Math.random() * velocityYRandom, // Adjusted launch velocity
                     velocityX: (Math.random() - 0.5) * (isMobile ? 8 : 12), // Less horizontal movement on mobile
                     rotation: Math.random() * Math.PI * 2,
                     rotationSpeed: (Math.random() - 0.5) * 0.3,
                     sliced: false,
                     opacity: 1,
-                    gravity: baseGravity // Adjusted gravity
+                    gravity: baseGravity, // Adjusted gravity
+                    isBomb: isBomb
                 };
                 fruits.push(fruit);
             }

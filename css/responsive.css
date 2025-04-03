@@ -382,6 +382,8 @@
         transform: translateX(-100%); /* Ensure sidebar is hidden by default on mobile */
         width: 260px;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1001; /* Higher than overlay to appear on top */
+        position: fixed; /* Ensure it's fixed position */
     }
     
     #sidebar.active {
@@ -413,7 +415,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
+        z-index: 1000; /* Below sidebar but above content */
     }
     
     body.sidebar-open .sidebar-overlay {
@@ -424,7 +426,8 @@
     main, header, footer {
         width: 100% !important;
         margin-left: 0 !important;
-        transition: transform var(--transition-speed);
+        position: relative;
+        z-index: 999; /* Below overlay and sidebar */
     }
 }
 
@@ -463,4 +466,70 @@
     flex-direction: row !important;
     justify-content: center;
     padding: 10px 0;
+}
+
+/* Profile edit modal responsive styles */
+@media (max-width: 768px) {
+    .profile-edit-modal .modal-content {
+        width: 90%;
+        max-width: 450px;
+    }
+    
+    .avatar-upload {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .avatar-preview {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-edit-modal .modal-content {
+        width: 95%;
+        max-width: 320px;
+        padding: 15px;
+    }
+    
+    .profile-edit-modal .modal-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .avatar-preview {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .avatar-upload-btn {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    
+    .form-group input {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .modal-footer button {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .notification {
+        width: 90%;
+        left: 5%;
+        bottom: 20px;
+        font-size: 0.9rem;
+        padding: 10px;
+    }
 }

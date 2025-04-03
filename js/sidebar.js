@@ -44,16 +44,19 @@ export function initSidebar() {
             sidebar.classList.remove('collapsed');
         }
         if (window.innerWidth <= 768) {
-            // Mobile layout
-            if (sidebar.classList.contains('active')) {
-                mainContent.style.transform = 'translateX(280px)';
-                header.style.transform = 'translateX(280px)';
-                footer.style.transform = 'translateX(280px)';
-            } else {
-                mainContent.style.transform = 'translateX(0)';
-                header.style.transform = 'translateX(0)';
-                footer.style.transform = 'translateX(0)';
-            }
+            // Mobile layout - ensure sidebar overlays content without pushing it
+            // Reset all margin and width styles to ensure content takes full width
+            mainContent.style.marginLeft = '0';
+            mainContent.style.width = '100%';
+            header.style.marginLeft = '0';
+            header.style.width = '100%';
+            footer.style.marginLeft = '0';
+            footer.style.width = '100%';
+            
+            // Ensure transform is reset
+            mainContent.style.transform = 'translateX(0)';
+            header.style.transform = 'translateX(0)';
+            footer.style.transform = 'translateX(0)';
         } else {
             // Desktop layout
             if (sidebar.classList.contains('expanded')) {

@@ -8,6 +8,7 @@ import { initFeedback } from './feedback.js';
 import { initSearch } from './search.js';
 import { initGames } from './games.js';
 import { initProfile } from './profile.js';
+import { initNotice } from './notice.js';
 
 // Initialize all modules when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearch();
     initGames();
     initProfile();
+    initNotice();
     
     console.log('BackbencherGames initialized successfully!');
 });

@@ -5,7 +5,7 @@ let notifications = [];
 let unseenCount = 0;
 
 // Version control for default notification
-const DEFAULT_NOTIFICATION_VERSION = '1.4'; // Increment this when default notification changes
+const DEFAULT_NOTIFICATION_VERSION = '1.5'; // Increment this when default notification changes
 
 // Check if we have stored notifications in localStorage
 function loadNotifications() {
@@ -18,8 +18,7 @@ function loadNotifications() {
 
     const title = 'New Feature Alert!';
 
-    const content = `We Updated and made the hero section game fully functional <br> <br>
-    And we also added the feature to edit your profile that will store your data locally`;
+    const content = `testing 1`;
 
     const date = 'Released: April 5, 2025';
 

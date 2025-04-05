@@ -24,8 +24,8 @@
 /* Import User Profile */
 @import 'profile.css';
 
-/* Import notice styles */
-@import 'notice.css';
+/* Import notifcations styles */
+@import 'notifications.css';
 
 .hero {
     min-height: 70vh;

@@ -644,7 +644,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Set up countdown timer
         let secondsLeft = 5;
-        countdownText.textContent = `Game will restart in ${secondsLeft} seconds...`;
+        countdownText.textContent = `Score will Reset in ${secondsLeft} seconds...`;
         
         const countdownInterval = setInterval(() => {
             secondsLeft--;

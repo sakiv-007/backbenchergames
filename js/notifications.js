@@ -30,25 +30,33 @@ function saveNotifications(notifications) {
 function parseNotificationsFromHTML(notificationsBody) {
     if (!notificationsBody) return [];
     
-    const noticeContent = notificationsBody.querySelector('.notice-content');
-    if (!noticeContent) return [];
+    // Look for all notice-content sections or groups within the HTML
+    const noticeContents = notificationsBody.querySelectorAll('.notice-content');
+    if (!noticeContents || noticeContents.length === 0) return [];
     
-    const title = noticeContent.querySelector('h3')?.textContent || '';
-    const paragraphs = Array.from(noticeContent.querySelectorAll('p:not(.notice-date)'));
-    const content = paragraphs.map(p => p.textContent.trim()).join(' ');
-    const date = noticeContent.querySelector('.notice-date')?.textContent || '';
+    const notifications = [];
     
-    // Create a unique ID based on content to identify this notification
-    const id = btoa(title + content).substring(0, 20);
+    // Process each notice content section
+    noticeContents.forEach(noticeContent => {
+        const title = noticeContent.querySelector('h3')?.textContent || '';
+        const paragraphs = Array.from(noticeContent.querySelectorAll('p:not(.notice-date)'));
+        const content = paragraphs.map(p => p.textContent.trim()).join(' ');
+        const date = noticeContent.querySelector('.notice-date')?.textContent || '';
+        
+        // Create a unique ID based on content to identify this notification
+        const id = btoa(title + content).substring(0, 20);
+        
+        notifications.push({
+            id,
+            title,
+            content,
+            date,
+            timestamp: new Date().getTime(),
+            read: false
+        });
+    });
     
-    return [{
-        id,
-        title,
-        content,
-        date,
-        timestamp: new Date().getTime(),
-        read: false
-    }];
+    return notifications;
 }
 
 // Check for new notifications by comparing with stored ones
@@ -133,12 +141,29 @@ function initNotifications() {
     
     if (!notificationsBtn || !notificationsDropdown) return;
     
-    // Parse current notifications from HTML
-    const currentNotifications = parseNotificationsFromHTML(notificationsBody);
-    
-    // Check for new notifications and update counter
-    const unreadCount = countUnreadNotifications();
-    updateNotificationCounter(unreadCount);
+    // Fetch notifications from notifications.html file
+    fetch('notifications.html')
+        .then(response => response.text())
+        .then(html => {
+            // Create a temporary element to parse the HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Clear existing notifications in the dropdown
+            notificationsBody.innerHTML = '';
+            
+            // Copy the notice-content from the loaded HTML to the notifications body
+            const noticeContent = tempDiv.querySelector('.notice-content');
+            if (noticeContent) {
+                notificationsBody.appendChild(noticeContent.cloneNode(true));
+            }
+            
+            // Parse current notifications from the updated HTML
+            const currentNotifications = parseNotificationsFromHTML(notificationsBody);
+            
+            // Check for new notifications and update counter
+            const unreadCount = countUnreadNotifications();
+            updateNotificationCounter(unreadCount);
     
     // Toggle notifications dropdown when bell icon is clicked
     notificationsBtn.addEventListener('click', (e) => {
@@ -177,6 +202,10 @@ function initNotifications() {
             updateNotificationCounter(unreadCount + newCount);
         }
     }
+        })
+        .catch(error => {
+            console.error('Error loading notifications:', error);
+        });
 }
 
 export { initNotice, initNotifications };

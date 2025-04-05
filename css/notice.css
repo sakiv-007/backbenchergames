@@ -5,8 +5,9 @@
     top: 70px;
     right: 20px;
     width: 300px;
-    background-color: var(--primary-color);
-    color: var(--text-secondary);
+    max-height: 40vh;
+    background-color: none;
+    color: var(--primary-color);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     z-index: 1001;
@@ -14,6 +15,33 @@
     transform: translateY(-20px);
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar styles */
+.notice-popup::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notice-popup::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.notice-popup::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.notice-popup::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Firefox scrollbar styles */
+.notice-popup {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) rgba(0, 0, 0, 0.2);
 }
 
 .notice-popup.show {

@@ -195,18 +195,65 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .notification-toggle {
-        margin-right: 15px;
+        order: 3;
+        margin-right: 0;
     }
     
     #notification-toggle-btn {
-        font-size: 1rem;
-        width: 36px;
-        height: 36px;
+        font-size: 0.9rem;
+        width: 28px;
+        height: 28px;
+        padding: 4px;
     }
     
     .notice-popup {
-        width: 300px;
-        right: 10px;
+        width: calc(100% - 30px);
+        max-width: none;
+        right: 15px;
+        left: 15px;
+        top: 60px;
+    }
+    
+    .notice-header {
+        padding: 12px 15px;
+    }
+    
+    .notice-content {
+        padding: 12px 15px;
+    }
+    
+    .notice-content h3 {
+        font-size: 0.95rem;
+    }
+    
+    .notice-content p {
+        font-size: 0.85rem;
+    }
+    
+    .notification-badge {
+        min-width: 16px;
+        height: 16px;
+        font-size: 0.65rem;
+    }
+}
+
+/* Sidebar theme toggle positioning for mobile */
+@media (max-width: 768px) {
+    header .theme-toggle {
+        display: none;
+    }
+    
+    #sidebar .theme-toggle {
+        display: flex;
+        justify-content: flex-start;
+        padding: 12px 20px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+        order: -1; /* Places it at the top of the flex container */
+    }
+    
+    #sidebar .logout-button {
+        margin-top: 0;
     }
 }
 

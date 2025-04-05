@@ -18,7 +18,8 @@ function loadNotifications() {
 
     const title = 'New Feature Alert!';
 
-    const content = `testing 1`;
+    const content = `We Updated and made the hero section game fully functional <br> <br>
+    And we also added the feature to edit your profile that will store your data locally`;
 
     const date = 'Released: April 5, 2025';
 

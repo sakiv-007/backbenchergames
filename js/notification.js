@@ -5,7 +5,7 @@ let notifications = [];
 let unseenCount = 0;
 
 // Version control for default notification
-const DEFAULT_NOTIFICATION_VERSION = '1.1'; // Increment this when default notification changes
+const DEFAULT_NOTIFICATION_VERSION = '1.2'; // Increment this when default notification changes
 
 // Check if we have stored notifications in localStorage
 function loadNotifications() {
@@ -18,7 +18,7 @@ function loadNotifications() {
 
     const title = 'New Feature Alert!';
 
-    const content = `Testing 1`;
+    const content = `Testing 2`;
 
     const date = 'Released: April 5, 2025';
 

@@ -5,7 +5,7 @@ let notifications = [];
 let unseenCount = 0;
 
 // Version control for default notification
-const DEFAULT_NOTIFICATION_VERSION = '1.5'; // Increment this when default notification changes
+const DEFAULT_NOTIFICATION_VERSION = '1.6'; // Increment this when default notification changes
 
 // Check if we have stored notifications in localStorage
 function loadNotifications() {

@@ -533,3 +533,35 @@
         padding: 10px;
     }
 }
+
+
+.web-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .web-stats-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding-bottom: 15px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .web-stats-grid::-webkit-scrollbar {
+        height: 5px;
+    }
+    
+    .web-stats-grid::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 10px;
+    }
+    
+    .web-stat-item {
+        min-width: 200px;
+        scroll-snap-align: start;
+    }
+}

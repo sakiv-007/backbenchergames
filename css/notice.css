@@ -26,7 +26,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    background-color: var(--accent-color);
+    background-color: var(--primary-color);
 }
 
 .notice-header h4 {
@@ -58,6 +58,7 @@
 
 .notice-body {
     padding: 15px;
+    background-color: black;
 }
 
 .notice-content h3 {

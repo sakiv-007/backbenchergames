@@ -486,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.style.animationDuration = `${randomDuration}s`;
             
             // Make icons more visible when hero content is hidden
-            icon.style.opacity = '0.6';
+            icon.style.opacity = '0.4';
             icon.style.color = 'rgba(255, 255, 255, 0.15)';
             
             // Add a subtle glow effect

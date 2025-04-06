@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Different text and styles based on hit count
         if (hitCount === 3) {
-            explosionText.textContent = 'KABOOM!';
+            explosionText.textContent = 'KHATAM! TATA BYE-BYE GAYA';
             explosionText.style.fontSize = '80px';
             explosionText.style.color = '#FF0000';
         } else if (hitCount === 2) {
@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgb(0, 0, 0);
             color: white;
             padding: 20px;
             border-radius: 15px;

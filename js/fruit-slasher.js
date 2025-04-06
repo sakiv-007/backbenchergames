@@ -319,20 +319,43 @@ document.addEventListener('DOMContentLoaded', function() {
     let screenShakeIntensity = 0;
     let bombHitCount = 0; // Track how many times bombs have been hit
     const maxBombHits = 3; // Number of bomb hits before score reset
-    
+    let highScore = parseInt(localStorage.getItem('fruitSlasherHighScore')) || 0; // Load high score from localStorage
+
     function createScoreDisplay() {
-        const scoreDisplay = document.createElement('div');
-        scoreDisplay.id = 'score-display';
-        scoreDisplay.style.cssText = `
+        const scoreContainer = document.createElement('div');
+        scoreContainer.id = 'score-container';
+        scoreContainer.style.cssText = `
             position: absolute;
             bottom: 20px;
             right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            z-index: 1001;
+        `;
+        
+        const scoreDisplay = document.createElement('div');
+        scoreDisplay.id = 'score-display';
+        scoreDisplay.style.cssText = `
             font-size: 24px;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            z-index: 1001;
         `;
-        canvas.parentElement.appendChild(scoreDisplay);
+        scoreDisplay.textContent = `Score: ${score}`;
+        
+        const highScoreDisplay = document.createElement('div');
+        highScoreDisplay.id = 'high-score-display';
+        highScoreDisplay.style.cssText = `
+            font-size: 18px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        `;
+        highScoreDisplay.textContent = `High Score: ${highScore}`;
+        
+        scoreContainer.appendChild(scoreDisplay);
+        scoreContainer.appendChild(highScoreDisplay);
+        canvas.parentElement.appendChild(scoreContainer);
         return scoreDisplay;
     }
 
@@ -406,19 +429,68 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Increment score
                         score += 10;
+                        
+                        // Update high score if needed
+                        if (score > highScore) {
+                            highScore = score;
+                            localStorage.setItem('fruitSlasherHighScore', highScore);
+                            document.getElementById('high-score-display').textContent = `High Score: ${highScore}`;
+                        }
+                        
                         scoreDisplay.textContent = `Score: ${score}`;
                         
-                        // Hide hero content when score reaches 10 or more
+                        // Hide hero content when score reaches 20 or more
                         if (score >= 20) {
                             const heroContent = document.querySelector('.hero-content');
-                            
-                            
                             if (heroContent) heroContent.style.display = 'none';
                             
+                            // Randomize positions of floating icons
+                            randomizeFloatingIcons();
                         }
                     }
                 }
             }
+        });
+    }
+    
+    // Function to randomize positions of floating icons
+    function randomizeFloatingIcons() {
+        const heroBgIcons = document.querySelector('.hero-bg-icons');
+        if (!heroBgIcons) return;
+        
+        // Get all background icons
+        const bgIcons = heroBgIcons.querySelectorAll('.bg-icon');
+        
+        // Get the dimensions of the hero section
+        const heroSection = document.querySelector('.hero');
+        const heroWidth = heroSection.offsetWidth;
+        const heroHeight = heroSection.offsetHeight;
+        
+        // Randomize position for each icon
+        bgIcons.forEach(icon => {
+            // Generate random positions within the hero section
+            const randomTop = Math.random() * 90; // 0-90% from top
+            const randomLeft = Math.random() * 90; // 0-90% from left
+            
+            // Generate random font size between 2rem and 5rem
+            const randomSize = 2 + Math.random() * 3;
+            
+            // Generate random animation duration between 15s and 30s
+            const randomDuration = 15 + Math.random() * 15;
+            
+            // Apply random styles
+            icon.style.position = 'absolute';
+            icon.style.top = `${randomTop}%`;
+            icon.style.left = `${randomLeft}%`;
+            icon.style.fontSize = `${randomSize}rem`;
+            icon.style.animationDuration = `${randomDuration}s`;
+            
+            // Make icons more visible when hero content is hidden
+            icon.style.opacity = '0.6';
+            icon.style.color = 'rgba(255, 255, 255, 0.15)';
+            
+            // Add a subtle glow effect
+            icon.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.3)';
         });
     }
     
@@ -465,6 +537,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (heroContent) heroContent.style.display = '';
             if (heroDecoration) heroDecoration.style.display = '';
             if (heroBgIcons) heroBgIcons.style.display = '';
+            
+            // Reset the icons to their original positions (defined in CSS)
+            const bgIcons = document.querySelectorAll('.bg-icon');
+            bgIcons.forEach(icon => {
+                icon.removeAttribute('style');
+            });
         }
     }
     

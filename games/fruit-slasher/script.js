@@ -15,7 +15,7 @@ const backgroundImage = new Image();
 backgroundImage.src = "assets/bg.png";
 
 // Fruit emojis and bomb symbol
-const fruitTypes = ['🍎', '🍊', '🍇', '🍓', '🍐', '🍑', '🍉', '❤️', '🫐'];
+const fruitTypes = ['🍎', '🍊', '🍇', '🍓', '🍐', '🍑', '🍉', '🫐'];
 const bombEmoji = '💣';
 
 // Particle colors for juice effects
@@ -224,9 +224,9 @@ class Fruit {
                 particles.push(new Particle(this.x, this.y, particleColor));
             }
             
-            // Add score
+            // Add score (changed from 1 to 10)
             if (!this.isBomb) {
-                score += 1;
+                score += 10;
                 document.getElementById("score").innerText = "Score: " + score;
                 
                 // Show score popup with enhanced effect
@@ -241,7 +241,7 @@ function showScorePopup(x, y) {
     popup.className = "score-popup";
     
     // Randomly select a positive emoji for variety
-    const scoreEmojis = ['+1 ✨', '+1 🔥', '+1 ⚡', '+1 💯', '+1 🎯'];
+    const scoreEmojis = ['+10 ✨', '+10 🔥', '+10 ⚡', '+10 💯', '+10 🎯'];
     popup.innerText = scoreEmojis[Math.floor(Math.random() * scoreEmojis.length)];
     
     // Random slight position offset for more dynamic feel
@@ -526,6 +526,11 @@ canvas.addEventListener("touchmove", (event) => {
     lastMousePosition = currentPosition;
 });
 
+// Add at the top with other global variables
+let bombHits = 0;
+const maxBombHits = 3;
+
+// Update the checkCollisions function
 function checkCollisions(x, y) {
     fruits.forEach(fruit => {
         if (!fruit.sliced) {
@@ -535,7 +540,11 @@ function checkCollisions(x, y) {
             
             if (distance < fruit.size / 2) {
                 if (fruit.isBomb) {
-                    gameOver = true;
+                    bombHits++;
+                    fruit.slice();
+                    if (bombHits >= maxBombHits) {
+                        gameOver = true;
+                    }
                 } else {
                     fruit.slice();
                 }
@@ -544,9 +553,11 @@ function checkCollisions(x, y) {
     });
 }
 
+// Update the restartGame function to reset bomb hits
 function restartGame() {
     fruits = [];
     score = 0;
+    bombHits = 0;
     swipeTrail = [];
     particles = [];
     bladeTrail = [];

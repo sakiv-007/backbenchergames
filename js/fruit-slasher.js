@@ -407,6 +407,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Increment score
                         score += 10;
                         scoreDisplay.textContent = `Score: ${score}`;
+                        
+                        // Hide hero content when score reaches 10 or more
+                        if (score >= 20) {
+                            const heroContent = document.querySelector('.hero-content');
+                            
+                            
+                            if (heroContent) heroContent.style.display = 'none';
+                            
+                        }
                     }
                 }
             }
@@ -447,6 +456,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Update bomb hit display after reset
             updateBombHitDisplay();
+            
+            // Show hero content elements when score resets
+            const heroContent = document.querySelector('.hero-content');
+            const heroDecoration = document.querySelector('.hero-decoration');
+            const heroBgIcons = document.querySelector('.hero-bg-icons');
+            
+            if (heroContent) heroContent.style.display = '';
+            if (heroDecoration) heroDecoration.style.display = '';
+            if (heroBgIcons) heroBgIcons.style.display = '';
         }
     }
     

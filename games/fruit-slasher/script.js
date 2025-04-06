@@ -9,6 +9,7 @@ let swipeTrail = [];
 let gameOver = false;
 let particles = [];
 let lastTime = 0;
+let highScore = 0; // Add high score variable
 
 // Load background image
 const backgroundImage = new Image();
@@ -229,6 +230,9 @@ class Fruit {
                 score += 10;
                 document.getElementById("score").innerText = "Score: " + score;
                 
+                // Update high score if current score is higher
+                updateHighScore();
+                
                 // Show score popup with enhanced effect
                 showScorePopup(this.x, this.y);
             }
@@ -388,6 +392,15 @@ function animate(currentTime = 0) {
     ctx.textAlign = "center";
     ctx.fillText("Score: " + score, canvas.width / 2, 50);
     
+    // Draw high score in bottom right corner
+    ctx.fillStyle = "#FFDC00"; // Gold color for high score
+    ctx.font = "bold 28px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "bottom";
+    ctx.fillText("High Score: " + highScore, canvas.width - 20, canvas.height - 20);
+    ctx.textAlign = "center"; // Reset text alignment
+    ctx.textBaseline = "middle"; // Reset textBaseline
+    
     // Manage swipe trail length
     if (swipeTrail.length > 20) {
         swipeTrail = swipeTrail.slice(-20);
@@ -422,8 +435,14 @@ function drawGameOver() {
     ctx.font = "bold 48px Arial";
     ctx.fillText("Final Score: " + score, canvas.width / 2, canvas.height / 2 + 50);
     
+    // Display high score in game over screen
+    ctx.fillStyle = "#FFDC00"; // Gold color
+    ctx.font = "bold 36px Arial";
+    ctx.fillText("High Score: " + highScore, canvas.width / 2, canvas.height / 2 + 100);
+    
+    ctx.fillStyle = "#ffffff";
     ctx.font = "24px Arial";
-    ctx.fillText("Click anywhere to restart", canvas.width / 2, canvas.height / 2 + 120);
+    ctx.fillText("Click anywhere to restart", canvas.width / 2, canvas.height / 2 + 150);
 }
 
 // Mouse and touch events
@@ -561,13 +580,15 @@ style.textContent = `
 }
 
 #score {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 24px;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 2;
+    // position: absolute;
+    // top: 20px;
+    // right: 20px;
+    // font-size: 24px;
+    // color: white;
+    // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    // z-index: 2;
+
+    display: none;
 }
 
 #gameOver {
@@ -583,7 +604,7 @@ style.textContent = `
 }
 .bomb-counter {
     position: absolute;
-    top: 20px;
+    bottom: 20px;
     left: 20px;
     font-size: 24px;
     color: #FF4136;
@@ -634,6 +655,8 @@ function checkCollisions(x, y) {
                     fruit.slice();
                     if (bombHits >= maxBombHits) {
                         gameOver = true;
+                        // Update high score when game is over
+                        updateHighScore();
                     }
                 } else {
                     fruit.slice();
@@ -656,10 +679,6 @@ function restartGame() {
     document.getElementById("score").innerText = "Score: 0";
     animate();
 }
-
-// Add this line before the animate() call at the end of the file
-createBombCounter();
-document.head.appendChild(style);
 
 // Create a separator line at the bottom
 function createSeparatorLine() {
@@ -697,6 +716,34 @@ function createSeparatorLine() {
     document.head.appendChild(breatheStyle);
     document.body.appendChild(separator);
 }
+
+// Load high score from localStorage if available
+function loadHighScore() {
+    const savedHighScore = localStorage.getItem('fruitSlasherHighScore');
+    if (savedHighScore !== null) {
+        highScore = parseInt(savedHighScore);
+    }
+}
+
+// Save high score to localStorage
+function saveHighScore() {
+    localStorage.setItem('fruitSlasherHighScore', highScore.toString());
+}
+
+// Update high score if current score is higher
+function updateHighScore() {
+    if (score > highScore) {
+        highScore = score;
+        saveHighScore();
+    }
+}
+
+// Add this line before the animate() call at the end of the file
+createBombCounter();
+document.head.appendChild(style);
+
+// Load high score when the game starts
+loadHighScore();
 
 // Adjust spawn rate based on screen size
 const spawnInterval = Math.max(1000, Math.min(1800, window.innerWidth / 1.5));

@@ -166,10 +166,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         particles = particles.filter(particle => particle.life > 0);
         particles.forEach(particle => {
-            particle.x += particle.velocityX;
-            particle.y += particle.velocityY;
-            particle.life -= 0.02;
-            particle.velocityY += 0.2;
+            // Add gravity effect
+            particle.velocityY += 0.15;
+            
+            // Update position with deltaTime for consistent speed
+            particle.x += particle.velocityX * (deltaTime / 16);
+            particle.y += particle.velocityY * (deltaTime / 16);
+            
+            // Faster life reduction for quicker fade
+            particle.life -= 0.015 * (deltaTime / 16);
+            
+            // Update rotation if available
+            if (particle.rotation !== undefined) {
+                particle.rotation += particle.rotationSpeed * (deltaTime / 16);
+            }
+            
+            // Gradually reduce size
+            if (particle.size > 0.5) {
+                particle.size -= 0.08 * (deltaTime / 16);
+            }
         });
 
         fruitSpawnTimer += deltaTime;
@@ -206,13 +221,27 @@ document.addEventListener('DOMContentLoaded', function() {
             fruit.rotation += fruit.rotationSpeed;
             
             if (fruit.sliced && fruit.slicedPieces) {
-                fruit.slicedPieces[0].offsetX -= 1.5;
-                fruit.slicedPieces[0].offsetY -= 1.5;
-                fruit.slicedPieces[1].offsetX += 1.5;
-                fruit.slicedPieces[1].offsetY += 1.5;
-                fruit.slicedPieces[0].rotation += 0.08;
-                fruit.slicedPieces[1].rotation -= 0.08;
+                // More dynamic movement for sliced pieces
+                fruit.slicedPieces[0].offsetX -= (2.0 + Math.random() * 0.5) * (deltaTime / 16);
+                fruit.slicedPieces[0].offsetY -= (2.0 + Math.random() * 0.5) * (deltaTime / 16);
+                fruit.slicedPieces[1].offsetX += (2.0 + Math.random() * 0.5) * (deltaTime / 16);
+                fruit.slicedPieces[1].offsetY += (2.0 + Math.random() * 0.5) * (deltaTime / 16);
+                fruit.slicedPieces[0].rotation += 0.1 * (deltaTime / 16);
+                fruit.slicedPieces[1].rotation -= 0.1 * (deltaTime / 16);
+                
+                // Fade out sliced pieces
+                if (fruit.opacity > 0) {
+                    fruit.opacity -= 0.008 * (deltaTime / 16);
+                }
             }
+        });
+        
+        // Filter out fruits that are off-screen or fully faded
+        fruits = fruits.filter(fruit => {
+            if (fruit.sliced) {
+                return fruit.y < canvas.height + 200 && fruit.opacity > 0;
+            }
+            return fruit.y < canvas.height + 100;
         });
     }
 
@@ -232,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
             ctx.lineWidth = 20;
             ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
             ctx.stroke();
 
             // Inner bright line
@@ -243,18 +273,43 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
             ctx.lineWidth = 3;
             ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
             ctx.stroke();
         }
 
-        // Draw particles
+        // Draw particles with enhanced effects
         particles.forEach(particle => {
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${hexToRgb(particle.color)}, ${particle.life})`;
-            ctx.fill();
+            ctx.save();
+            ctx.translate(particle.x, particle.y);
+            
+            // Add rotation if available
+            if (particle.rotation !== undefined) {
+                ctx.rotate(particle.rotation);
+            }
+            
+            // Add glow effect
+            ctx.shadowColor = particle.color;
+            ctx.shadowBlur = 5;
+            
+            // Use rgba for better color control
+            const rgbaColor = `rgba(${hexToRgb(particle.color)}, ${particle.life})`;
+            ctx.fillStyle = rgbaColor;
+            
+            if (particle.shape === 'square') {
+                // Draw a square
+                const halfSize = particle.size / 2;
+                ctx.fillRect(-halfSize, -halfSize, particle.size, particle.size);
+            } else {
+                // Draw a circle
+                ctx.beginPath();
+                ctx.arc(0, 0, particle.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            ctx.restore();
         });
 
-        // Draw fruits with visible color
+        // Draw fruits with visible color and glow effects
         const fruitSize = window.getComputedStyle(document.documentElement).getPropertyValue('--fruit-size') || '80px';
         fruits.forEach(fruit => {
             if (fruit.sliced && fruit.slicedPieces) {
@@ -262,17 +317,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     ctx.save();
                     ctx.translate(fruit.x + piece.offsetX, fruit.y + piece.offsetY);
                     ctx.rotate(piece.rotation);
+                    ctx.globalAlpha = fruit.opacity || 1;
                     ctx.font = fruitSize + ' Arial';
                     ctx.fillStyle = 'white'; // Add white color for visibility
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText(fruit.type, 0, 0);
+                    ctx.globalAlpha = 1;
                     ctx.restore();
                 });
             } else {
                 ctx.save();
                 ctx.translate(fruit.x, fruit.y);
                 ctx.rotate(fruit.rotation);
+                
+                // Add glow effect for unsliced fruits
+                if (fruit.type === bombEmoji) {
+                    ctx.shadowColor = 'rgba(255, 0, 0, 0.7)';
+                } else {
+                    ctx.shadowColor = 'rgba(255, 255, 255, 0.7)';
+                }
+                ctx.shadowBlur = 10;
+                
                 ctx.font = fruitSize + ' Arial';
                 ctx.fillStyle = 'white'; // Add white color for visibility
                 ctx.textAlign = 'center';
@@ -284,30 +350,71 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function spawnFruit() {
-        const fruit = {
-            x: Math.random() * canvas.width,
-            y: canvas.height + 30,
-            type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
-            velocityY: -25 - Math.random() * 8,
-            velocityX: (Math.random() - 0.5) * 8,
-            rotation: Math.random() * Math.PI * 2,
-            rotationSpeed: (Math.random() - 0.5) * 0.2,
-            sliced: false,
-            opacity: 1
-        };
-        fruits.push(fruit);
+        // Create a burst of fruits for more dynamic gameplay
+        const burstCount = Math.floor(Math.random() * 3) + 1; // 1-3 fruits at once
+        const spawnWidth = canvas.width * 0.8;
+        const startX = canvas.width * 0.1;
+        
+        for (let i = 0; i < burstCount; i++) {
+            setTimeout(() => {
+                const x = startX + (spawnWidth * (i / burstCount)) + (Math.random() * 200 - 100);
+                const y = canvas.height + 30;
+                
+                // Randomly select a fruit type or bomb (less frequent)
+                const isBomb = Math.random() < 0.15;
+                const type = isBomb ? bombEmoji : fruitTypes[Math.floor(Math.random() * fruitTypes.length)];
+                
+                const fruit = {
+                    x: x,
+                    y: y,
+                    type: type,
+                    // Reduce horizontal speed by 40% for more controlled movement
+                    velocityX: (Math.random() * 6 - 3) * 0.6,
+                    // Increase upward velocity for higher reach but make it slower overall
+                    velocityY: (Math.random() * -25 - 20) * 0.6,
+                    rotation: Math.random() * Math.PI * 2,
+                    // Reduce rotation speed for more natural spinning
+                    rotationSpeed: (Math.random() - 0.5) * 0.14,
+                    // Reduce gravity for slower falling and higher arcs
+                    gravity: (0.2 + Math.random() * 0.2) * 0.8,
+                    sliced: false,
+                    opacity: 1
+                };
+                
+                fruits.push(fruit);
+            }, i * (Math.random() * 200 + 50)); // Random delay between fruits in burst
+        }
+    }
+
+    // Helper function to convert hex to RGB for particle effects
+    function hexToRgb(hex) {
+        // Remove the # if present
+        hex = hex.replace(/^#/, '');
+        
+        // Parse the hex values
+        const bigint = parseInt(hex, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        
+        return `${r}, ${g}, ${b}`;
     }
 
     function spawnParticles(x, y, color) {
-        for (let i = 0; i < 8; i++) {
+        // Create more particles for a more dramatic effect
+        for (let i = 0; i < 25; i++) {
+            const shape = Math.random() > 0.7 ? 'square' : 'circle'; // Random shapes for variety
             particles.push({
                 x: x,
                 y: y,
                 velocityX: (Math.random() - 0.5) * 10,
                 velocityY: (Math.random() - 0.5) * 10,
-                size: Math.random() * 4 + 2,
+                size: Math.random() * 8 + 2, // Larger particles
                 color: color,
-                life: 1.0
+                life: 1.0,
+                shape: shape,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.2
             });
         }
     }
@@ -400,6 +507,57 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const bombHitDisplay = createBombHitDisplay();
 
+    // Create score popup function
+    function showScorePopup(x, y) {
+        const popup = document.createElement("div");
+        popup.className = "score-popup";
+        
+        // Randomly select a positive emoji for variety
+        const scoreEmojis = ['+10 ✨', '+10 🔥', '+10 ⚡', '+10 💯', '+10 🎯'];
+        popup.innerText = scoreEmojis[Math.floor(Math.random() * scoreEmojis.length)];
+        
+        // Random slight position offset for more dynamic feel
+        const offsetX = (Math.random() - 0.5) * 40;
+        const offsetY = (Math.random() - 0.5) * 20;
+        
+        popup.style.left = (x + offsetX) + "px";
+        popup.style.top = (y + offsetY) + "px";
+        document.body.appendChild(popup);
+        
+        // Random color for each popup
+        const colors = ['#FF4136', '#FFDC00', '#2ECC40', '#FF851B', '#7FDBFF', '#F012BE'];
+        popup.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        setTimeout(() => {
+            popup.remove();
+        }, 1000);
+    }
+
+    // Add score popup CSS
+    const scorePopupStyle = document.createElement('style');
+    scorePopupStyle.textContent = `
+        .score-popup {
+            position: absolute;
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: popup 1s ease-out;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.7),
+                        0 0 15px rgba(255, 255, 255, 0.5);
+            z-index: 1000;
+            letter-spacing: 1px;
+        }
+
+        @keyframes popup {
+            0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+            20% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+            50% { transform: scale(1.5) rotate(-2deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg) translateY(-80px); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(scorePopupStyle);
+
     // Update the checkCollisions function
     function checkCollisions(x, y) {
         fruits.forEach(fruit => {
@@ -412,20 +570,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     fruit.sliced = true;
                     fruit.velocityY *= 0.5;
                     fruit.velocityX = (Math.random() - 0.5) * 15;
+                    fruit.opacity = 1; // Initialize opacity for fade out effect
                     
                     // Check if the sliced object is a bomb
                     if (fruit.type === bombEmoji) {
                         // Bomb was sliced!
                         handleBombSliced(fruit);
                     } else {
-                        // Regular fruit was sliced
+                        // Regular fruit was sliced with more dynamic initial positions
                         fruit.slicedPieces = [
-                            { offsetX: -20, offsetY: -20, rotation: fruit.rotation - 0.5 },
-                            { offsetX: 20, offsetY: 20, rotation: fruit.rotation + 0.5 }
+                            { offsetX: -15, offsetY: -15, rotation: fruit.rotation - 0.8 },
+                            { offsetX: 15, offsetY: 15, rotation: fruit.rotation + 0.8 }
                         ];
                         
                         const randomColor = particleColors[Math.floor(Math.random() * particleColors.length)];
                         spawnParticles(fruit.x, fruit.y, randomColor);
+                        
+                        // Show score popup with enhanced effect
+                        showScorePopup(fruit.x, fruit.y);
                         
                         // Increment score
                         score += 10;
@@ -819,10 +981,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         particles = particles.filter(particle => particle.life > 0);
         particles.forEach(particle => {
-            particle.x += particle.velocityX;
-            particle.y += particle.velocityY;
-            particle.life -= 0.02;
-            particle.velocityY += 0.2;
+            // Add gravity effect
+            particle.velocityY += 0.15;
+            
+            // Update position with deltaTime for consistent speed
+            particle.x += particle.velocityX * (deltaTime / 16);
+            particle.y += particle.velocityY * (deltaTime / 16);
+            
+            // Faster life reduction for quicker fade
+            particle.life -= 0.015 * (deltaTime / 16);
+            
+            // Update rotation if available
+            if (particle.rotation !== undefined) {
+                particle.rotation += particle.rotationSpeed * (deltaTime / 16);
+            }
+            
+            // Gradually reduce size
+            if (particle.size > 0.5) {
+                particle.size -= 0.08 * (deltaTime / 16);
+            }
         });
 
         fruitSpawnTimer += deltaTime;

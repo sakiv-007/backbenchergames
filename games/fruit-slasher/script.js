@@ -526,47 +526,11 @@ canvas.addEventListener("touchmove", (event) => {
     lastMousePosition = currentPosition;
 });
 
-// Add at the top with other global variables
+// Add after the other global variables
 let bombHits = 0;
 const maxBombHits = 3;
 
-// Update the checkCollisions function
-function checkCollisions(x, y) {
-    fruits.forEach(fruit => {
-        if (!fruit.sliced) {
-            const dx = x - fruit.x;
-            const dy = y - fruit.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < fruit.size / 2) {
-                if (fruit.isBomb) {
-                    bombHits++;
-                    fruit.slice();
-                    if (bombHits >= maxBombHits) {
-                        gameOver = true;
-                    }
-                } else {
-                    fruit.slice();
-                }
-            }
-        }
-    });
-}
-
-// Update the restartGame function to reset bomb hits
-function restartGame() {
-    fruits = [];
-    score = 0;
-    bombHits = 0;
-    swipeTrail = [];
-    particles = [];
-    bladeTrail = [];
-    gameOver = false;
-    document.getElementById("score").innerText = "Score: 0";
-    animate();
-}
-
-// Add CSS for score popup with enhanced effects
+// Add after the score display CSS
 const style = document.createElement('style');
 style.textContent = `
 .score-popup {
@@ -617,7 +581,84 @@ style.textContent = `
     z-index: 3;
     display: none;
 }
+.bomb-counter {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #FF4136;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    padding: 10px;
+    border-radius: 5px;
+    transition: color 0.3s ease;
+}
 `;
+
+// Add after createSeparatorLine function
+function createBombCounter() {
+    const bombCounter = document.createElement('div');
+    bombCounter.className = 'bomb-counter';
+    bombCounter.id = 'bomb-counter';
+    updateBombCounter();
+    document.body.appendChild(bombCounter);
+}
+
+function updateBombCounter() {
+    const bombCounter = document.getElementById('bomb-counter');
+    if (bombCounter) {
+        bombCounter.textContent = `Bombs: ${bombHits}/${maxBombHits}`;
+        // Change color based on number of hits
+        if (bombHits === 0) {
+            bombCounter.style.color = '#2ECC40'; // Green
+        } else if (bombHits === 1) {
+            bombCounter.style.color = '#FFDC00'; // Yellow
+        } else if (bombHits === 2) {
+            bombCounter.style.color = '#FF851B'; // Orange
+        }
+    }
+}
+
+// Update the checkCollisions function
+function checkCollisions(x, y) {
+    fruits.forEach(fruit => {
+        if (!fruit.sliced) {
+            const dx = x - fruit.x;
+            const dy = y - fruit.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < fruit.size / 2) {
+                if (fruit.isBomb) {
+                    bombHits++;
+                    updateBombCounter();
+                    fruit.slice();
+                    if (bombHits >= maxBombHits) {
+                        gameOver = true;
+                    }
+                } else {
+                    fruit.slice();
+                }
+            }
+        }
+    });
+}
+
+// Update the restartGame function
+function restartGame() {
+    fruits = [];
+    score = 0;
+    bombHits = 0;
+    updateBombCounter();
+    swipeTrail = [];
+    particles = [];
+    bladeTrail = [];
+    gameOver = false;
+    document.getElementById("score").innerText = "Score: 0";
+    animate();
+}
+
+// Add this line before the animate() call at the end of the file
+createBombCounter();
 document.head.appendChild(style);
 
 // Create a separator line at the bottom

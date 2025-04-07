@@ -8,111 +8,270 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/fevicon.png" type="image/x-icon">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            
-        }
-        *{
-            margin: 0;
-            padding: 0;
-            
-        }
-        .game-container {
-            width: 100%;
-            height: calc(100vh - 80px); /* Adjust based on header height */
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .game-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .back-button:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary-color);
-            color: whitesmoke;
-        }
-        h3 {
-            display: flex;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            position: relative;
-        }
-        
-        .logo a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            position: absolute;
-        }
-        
-        .game-title {
-            flex: 1;
-            text-align: center;
-            margin: 0;
-            padding-right: 60px;
-            font-size: 1.5rem;
-            font-weight: 500;
-        }
-
-    </style>
+    <!-- Added gaming-specific font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/theme-toggle.css">
 </head>
 <body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <!-- User Avatar at the top for mini-sidebar view -->
+        <div class="user-card">
+            <div class="user-avatar" title="Toggle sidebar">
+                <img src="../assets/avatar.png" alt="User Avatar">
+                <div class="level-badge">5</div>
+            </div>
+            <div class="user-info">
+                <h3>Vikas</h3>
+                <p>Level 5 Player</p>
+                <div class="xp-bar">
+                    <div class="xp-progress" style="width: 75%"></div>
+                </div>
+                <a href="javascript:void(0)" class="edit-profile-btn" data-feature="Edit Profile">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Edit Profile</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Play Online Section -->
+        <div class="play-online-section">
+            <h3><i class="fas fa-gamepad"></i> Play Online</h3>
+            <div class="play-online-buttons">
+                <a href="javascript:void(0)" class="play-btn play-with-friends" data-feature="Play with Friends" title="Start a game with your friends">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Play with Friends</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-with-randoms" data-feature="Play with Random Players" title="Find random players to play with">
+                    <i class="fas fa-random"></i>
+                    <span>Play with Randoms</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-vs-robot" data-feature="Play vs Robot" title="Play against AI opponent">
+                    <i class="fas fa-robot"></i>
+                    <span>Play vs Robot</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="../index.html" title="Go to homepage">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Messaging" title="View your messages">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messaging</span>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Friends" title="Manage your friends">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Match History" title="View your game history">
+                        <i class="fas fa-history"></i>
+                        <span>Match History</span>
+                    </a>
+                </li>
+                <!-- Tournament Section -->
+                <li class="nav-section-title">
+                    <span>TOURNAMENTS</span>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Creation" title="Create a new tournament">
+                        <i class="fas fa-trophy"></i>
+                        <span>Create Tournament</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Play" title="Join existing tournaments">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Play Tournaments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="My Tournaments" title="View your tournaments">
+                        <i class="fas fa-medal"></i>
+                        <span>My Tournaments</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="javascript:void(0)" data-feature="Logout" class="logout-btn" title="Sign out of your account">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
     <header>
         <div class="container">
-            <a href="../index.html" class="back-button" title="Back to Home">
-                <i class="fas fa-arrow-left"></i>
-            </a>
+            <button class="mobile-sidebar-toggle" id="mobile-sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="logo">
                 <a href="../index.html">
-                    BackbencherGames</a>
-
-                    <!-- for new game addition just change the title -->
-                    <h3 class="game-title">Fruit Slasher</h3>     
+                     BackbencherGames</a>
             </div>
-            
+            <!-- Search button replacing navigation menu and language selector -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="game-search" placeholder="Search games...">
+                    <button id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
     </header>
     
-    <div class="game-container">
+    <!-- Main Content -->
+    <main>
 
-            <!-- for new game addition just change the path of the game file -->        
-        <iframe src="fruit-slasher/game.html" class="game-iframe" allowfullscreen></iframe>
+        <!-- Game Details Section -->
+        <section class="game-details">
+            <div class="container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <h2>Fruit Slasher</h2>
+                        <div class="game-meta">
+                            <span><i class="fas fa-users"></i> 1 Player</span>
+                            <span style="margin-left: 15px;"><i class="fas fa-clock"></i> 2-5 min</span>
+                            <span style="margin-left: 15px;"><i class="fas fa-star"></i> 4.7/5</span>
+                        </div>
+                    </div>
+                    <a href="fruit-slasher/game.html" class="play-now-btn">Play Now</a>
+                </div>
+
+                <div class="game-description">
+                    <div class="game-image">
+                        <img src="../assets/fruit-slasher.avif" alt="Fruit Slasher Game">
+                    </div>
+                    <div class="game-text">
+                        <h3>About the Game</h3>
+                        <p>Fruit Slasher is an exciting arcade game where you slice fruits with swift swipes while avoiding bombs. Test your reflexes and precision as you cut through flying fruits to rack up points. The faster and more accurate your slices, the higher your score!</p>
+                        
+                        <h3>How to Play</h3>
+                        <ul>
+                            <li>Swipe across fruits to slice them in half</li>
+                            <li>Slice multiple fruits with a single swipe for combo points</li>
+                            <li>Avoid slicing bombs or it's game over</li>
+                            <li>Try to slice all fruits before they fall off the screen</li>
+                            <li>Beat your high score with each playthrough</li>
+                        </ul>
+                        
+                        <h3>Features</h3>
+                        <ul>
+                            <li>Colorful fruit emojis with satisfying slicing effects</li>
+                            <li>Particle juice effects when fruits are sliced</li>
+                            <li>Progressive difficulty as your score increases</li>
+                            <li>High score tracking to challenge yourself</li>
+                            <li>Smooth animations and responsive controls</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="game-actions">
+                    <a href="fruit-slasher/game.html" class="btn primary-btn"><i class="fas fa-play"></i> Play Now</a>
+                    <a href="../index.html" class="btn secondary-btn"><i class="fas fa-th"></i> More Games</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>BackbencherGames</h3>
+                    <p>Play classic paper games online with friends anywhere, anytime!</p>
+                    <p class="copyright">© 2025 BackbencherGames. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">All Games</a></li>
+                        <li><a href="#">Popular Games</a></li>
+                        <li><a href="#">Tournaments</a></li>
+                        <li><a href="#">Leaderboards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Made with <i class="fas fa-heart" style="color: #e25555;"></i> by BackbencherGames Team | <a href="../sitemap.html">Sitemap</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add this modal HTML at the end of the body but before the script tag -->
+    <div id="feature-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h2>Coming Soon!</h2>
+            <p>We're working hard to bring you this feature. Stay tuned for updates!</p>
+            <button class="modal-button">Got it</button>
+        </div>
+    </div>
+    
+    <!-- Game achievement notification -->
+    <div id="achievement-notification" class="achievement-notification">
+        <div class="achievement-icon">
+            <i class="fas fa-trophy"></i>
+        </div>
+        <div class="achievement-content">
+            <h4>Achievement Unlocked!</h4>
+            <p>First Visit: Welcome to BackbencherGames</p>
+        </div>
     </div>
 
+    <!-- JavaScript imports -->
+    <script src="../js/main.js" type="module"></script>
+    <script src="../js/theme.js" type="module"></script>
+    <script src="../js/profile.js" type="module"></script>
+    <script src="../js/modal.js" type="module"></script>
+    <script src="../js/feedback.js" type="module"></script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

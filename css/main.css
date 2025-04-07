@@ -30,6 +30,9 @@
 /* Import notification styles */
 @import 'notification.css';
 
+/* Import game details styles */
+@import 'game-details.css';
+
 .hero {
     min-height: 70vh;
     max-height: 80vh;

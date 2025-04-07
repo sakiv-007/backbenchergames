@@ -1,7 +1,7 @@
 /* Notification toggle styles */
 
 .notification-toggle {
-    margin-right: -80px;
+    margin-right: -100px;
     position: relative;
     /* Ensure proper positioning relative to theme toggle */
     display: inline-flex;

@@ -216,16 +216,22 @@ function renderGrid() {
             cell.dataset.x = x;
             cell.dataset.y = y;
             
-            // Add event listeners
+            // Add mouse event listeners
             cell.addEventListener('mousedown', startSelection);
             cell.addEventListener('mouseover', updateSelection);
+            
+            // Add touch event listeners for mobile devices
+            cell.addEventListener('touchstart', handleTouchStart, { passive: false });
+            cell.addEventListener('touchmove', handleTouchMove, { passive: false });
             
             wordGridElement.appendChild(cell);
         }
     }
     
-    // Add mouseup event to the document
+    // Add mouseup and touchend events to the document
     document.addEventListener('mouseup', endSelection);
+    document.addEventListener('touchend', endTouchSelection);
+    document.addEventListener('touchcancel', endTouchSelection);
 }
 
 // Render the word list
@@ -299,8 +305,92 @@ function updateSelection(e) {
     }
 }
 
+// Handle touch start event for mobile devices
+function handleTouchStart(e) {
+    if (!gameActive) return;
+    
+    // Prevent default to avoid scrolling
+    e.preventDefault();
+    
+    // Clear previous selection
+    clearSelection();
+    
+    // Get touch coordinates
+    const touch = e.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    if (element && element.classList.contains('grid-cell')) {
+        const x = parseInt(element.dataset.x);
+        const y = parseInt(element.dataset.y);
+        
+        selectedCells.push({ x, y, element: element });
+        element.classList.add('selected');
+    }
+}
+
+// Handle touch move event for mobile devices
+function handleTouchMove(e) {
+    if (!gameActive || selectedCells.length === 0) return;
+    
+    // Prevent default to avoid scrolling
+    e.preventDefault();
+    
+    // Get touch coordinates
+    const touch = e.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    if (!element || !element.classList.contains('grid-cell')) return;
+    
+    const x = parseInt(element.dataset.x);
+    const y = parseInt(element.dataset.y);
+    
+    // Check if cell is already in selection
+    const isSelected = selectedCells.some(c => c.x === x && c.y === y);
+    if (isSelected) return;
+    
+    // Check if cell is in a valid direction from the first cell
+    const firstCell = selectedCells[0];
+    const dx = x - firstCell.x;
+    const dy = y - firstCell.y;
+    
+    // Only allow straight lines (horizontal, vertical, diagonal)
+    if (dx !== 0 && dy !== 0 && Math.abs(dx) !== Math.abs(dy)) return;
+    
+    // Clear previous selection except the first cell
+    while (selectedCells.length > 1) {
+        const cell = selectedCells.pop();
+        cell.element.classList.remove('selected');
+    }
+    
+    // Calculate all cells in the line between first cell and current cell
+    const stepX = dx === 0 ? 0 : dx > 0 ? 1 : -1;
+    const stepY = dy === 0 ? 0 : dy > 0 ? 1 : -1;
+    const steps = Math.max(Math.abs(dx), Math.abs(dy));
+    
+    for (let i = 1; i <= steps; i++) {
+        const newX = firstCell.x + i * stepX;
+        const newY = firstCell.y + i * stepY;
+        const newCell = document.querySelector(`.grid-cell[data-x="${newX}"][data-y="${newY}"]`);
+        
+        if (newCell) {
+            selectedCells.push({ x: newX, y: newY, element: newCell });
+            newCell.classList.add('selected');
+        }
+    }
+}
+
+// End touch selection for mobile devices
+function endTouchSelection(e) {
+    validateSelection();
+}
+
 // End word selection
 function endSelection() {
+    validateSelection();
+}
+
+// Validate the current selection
+function validateSelection() {
     if (!gameActive || selectedCells.length === 0) return;
     
     // Check if selected cells form a word
@@ -500,3 +590,16 @@ window.addEventListener('load', initGame);
 wordGridElement.addEventListener('contextmenu', (e) => {
     e.preventDefault();
 });
+
+// Prevent default touch behavior on the word grid to avoid scrolling issues on mobile
+wordGridElement.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+}, { passive: false });
+
+wordGridElement.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+}, { passive: false });
+
+wordGridElement.addEventListener('touchend', (e) => {
+    e.preventDefault();
+}, { passive: false });

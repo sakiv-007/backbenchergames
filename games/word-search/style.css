@@ -156,6 +156,12 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.2s;
+    min-width: 30px; /* Ensure cells are large enough for touch */
+    min-height: 30px;
+    user-select: none; /* Prevent text selection during touch */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .grid-cell:hover {

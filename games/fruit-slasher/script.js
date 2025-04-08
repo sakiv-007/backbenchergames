@@ -3,6 +3,12 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+// Detect if device is mobile
+const isMobile = window.innerWidth <= 768;
+
+// Responsive scaling factor based on screen width
+const scaleFactor = Math.min(1, window.innerWidth / 1024);
+
 let fruits = [];
 let score = 0;
 let swipeTrail = [];
@@ -14,6 +20,26 @@ let highScore = 0; // Add high score variable
 // Load background image
 const backgroundImage = new Image();
 backgroundImage.src = "assets/bg.png";
+
+// Handle window resize to maintain responsiveness
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Update responsive variables
+    const newIsMobile = window.innerWidth <= 768;
+    if (newIsMobile !== isMobile) {
+        // Only update if mobile state changed
+        isMobile = newIsMobile;
+    }
+    
+    // Recalculate scale factor
+    const newScaleFactor = Math.min(1, window.innerWidth / 1024);
+    if (newScaleFactor !== scaleFactor) {
+        // Only update if scale factor changed significantly
+        scaleFactor = newScaleFactor;
+    }
+});
 
 // Fruit emojis and bomb symbol
 const fruitTypes = ['🍎', '🍊', '🍇', '🍓', '🍐', '🍑', '🍉', '🫐'];
@@ -40,15 +66,17 @@ class Particle {
     constructor(x, y, color) {
         this.x = x;
         this.y = y;
-        this.size = Math.random() * 8 + 2; // Larger particles
+        // Scale particle size based on device
+        this.size = (Math.random() * 8 + 2) * scaleFactor; // Adjust particle size for mobile
         this.color = color;
-        this.speedX = Math.random() * 10 - 5; // Faster horizontal movement
-        this.speedY = Math.random() * 10 - 5; // Faster vertical movement
-        this.gravity = 0.15;
+        // Scale particle speed based on device
+        this.speedX = (Math.random() * 10 - 5) * scaleFactor; // Adjust horizontal movement
+        this.speedY = (Math.random() * 10 - 5) * scaleFactor; // Adjust vertical movement
+        this.gravity = 0.15 * scaleFactor;
         this.life = 100;
         this.shape = Math.random() > 0.7 ? 'square' : 'circle'; // Random shapes for variety
         this.rotation = Math.random() * Math.PI * 2;
-        this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.2 * scaleFactor;
     }
 
     update(deltaTime) {
@@ -96,24 +124,25 @@ class Fruit {
     constructor(x, y, size, type) {
         this.x = x;
         this.y = y;
-        // Increase base size by 30%
-        this.size = size * 1.3;
+        // Adjust size based on screen width using scaleFactor
+        const baseSize = isMobile ? size * 0.8 : size * 1.3;
+        this.size = baseSize * scaleFactor;
         this.type = type;
         this.isBomb = type === "bomb";
         this.emoji = this.isBomb ? bombEmoji : fruitTypes[type];
         this.velocity = {
-            // Reduce horizontal speed by 40%
-            x: (Math.random() * 6 - 3) * 0.6,
-            // Increase upward velocity by 20% for higher reach but make it slower overall
-            y: (Math.random() * -25 - 20) * 0.6
+            // Adjust horizontal speed based on screen width
+            x: (Math.random() * 6 - 3) * 0.6 * scaleFactor,
+            // Adjust vertical velocity based on screen height
+            y: (Math.random() * -25 - 20) * 0.6 * scaleFactor
         };
-        // Reduce gravity for slower falling and higher arcs
-        this.gravity = (0.2 + Math.random() * 0.2) * 0.8;
+        // Adjust gravity based on screen height
+        this.gravity = (0.2 + Math.random() * 0.2) * 0.8 * scaleFactor;
         this.sliced = false;
         this.slicedPieces = null;
         this.rotation = Math.random() * Math.PI * 2;
-        // Reduce rotation speed by 30%
-        this.rotationSpeed = (Math.random() - 0.5) * 0.14;
+        // Adjust rotation speed based on screen width
+        this.rotationSpeed = (Math.random() - 0.5) * 0.14 * scaleFactor;
         this.opacity = 1;
         this.scale = 1;
         this.pulseDirection = 1;
@@ -212,16 +241,20 @@ class Fruit {
             this.sliced = true;
             
             // Create sliced pieces effect with more dynamic initial positions
+            // Scale offset based on device size
+            const offsetValue = 15 * scaleFactor;
             this.slicedPieces = [
-                { offsetX: -15, offsetY: -15, rotation: this.rotation - 0.8 },
-                { offsetX: 15, offsetY: 15, rotation: this.rotation + 0.8 }
+                { offsetX: -offsetValue, offsetY: -offsetValue, rotation: this.rotation - 0.8 },
+                { offsetX: offsetValue, offsetY: offsetValue, rotation: this.rotation + 0.8 }
             ];
             
             // Create juice particles with random colors from the palette
             const particleColor = particleColors[Math.floor(Math.random() * particleColors.length)];
             
             // Create more particles for a more dramatic effect
-            for (let i = 0; i < 25; i++) {
+            // Reduce particle count on mobile for better performance
+            const particleCount = isMobile ? 15 : 25;
+            for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle(this.x, this.y, particleColor));
             }
             
@@ -248,9 +281,9 @@ function showScorePopup(x, y) {
     const scoreEmojis = ['+10 ✨', '+10 🔥', '+10 ⚡', '+10 💯', '+10 🎯'];
     popup.innerText = scoreEmojis[Math.floor(Math.random() * scoreEmojis.length)];
     
-    // Random slight position offset for more dynamic feel
-    const offsetX = (Math.random() - 0.5) * 40;
-    const offsetY = (Math.random() - 0.5) * 20;
+    // Random slight position offset for more dynamic feel - scale based on device size
+    const offsetX = (Math.random() - 0.5) * 40 * scaleFactor;
+    const offsetY = (Math.random() - 0.5) * 20 * scaleFactor;
     
     popup.style.left = (x + offsetX) + "px";
     popup.style.top = (y + offsetY) + "px";
@@ -259,6 +292,9 @@ function showScorePopup(x, y) {
     // Random color for each popup
     const colors = ['#FF4136', '#FFDC00', '#2ECC40', '#FF851B', '#7FDBFF', '#F012BE'];
     popup.style.color = colors[Math.floor(Math.random() * colors.length)];
+    
+    // Adjust font size based on device
+    popup.style.fontSize = isMobile ? '20px' : '28px';
     
     setTimeout(() => {
         popup.remove();
@@ -269,18 +305,25 @@ function spawnFruit() {
     if (gameOver) return;
     
     // Create a burst of fruits for more dynamic gameplay
-    const burstCount = Math.floor(Math.random() * 3) + 1; // 1-3 fruits at once
-    const spawnWidth = canvas.width * 0.8;
-    const startX = canvas.width * 0.1;
+    // Reduce burst count on mobile for less cluttered gameplay
+    const burstCount = isMobile ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 1; // 1-2 fruits on mobile, 1-3 on desktop
+    
+    // Adjust spawn width based on screen size
+    const spawnWidth = canvas.width * (isMobile ? 0.6 : 0.8);
+    const startX = canvas.width * (isMobile ? 0.2 : 0.1);
     
     for (let i = 0; i < burstCount; i++) {
         setTimeout(() => {
             if (gameOver) return;
             
-            const x = startX + (spawnWidth * (i / burstCount)) + (Math.random() * 200 - 100);
+            // Adjust random offset based on screen width to keep fruits in view
+            const randomOffset = Math.random() * (isMobile ? 100 : 200) - (isMobile ? 50 : 100);
+            const x = startX + (spawnWidth * (i / burstCount)) + randomOffset;
             const y = canvas.height;
-            // Use a consistent, larger size for all fruits (was: 60 + Math.random() * 20)
-            const size = 100; 
+            
+            // Adjust size based on screen width
+            // Smaller size on mobile devices
+            const size = isMobile ? 70 : 100;
             
             // Randomly select a fruit type or bomb
             const type = Math.random() < 0.15 ? "bomb" : Math.floor(Math.random() * fruitTypes.length);
@@ -295,13 +338,15 @@ class BladeTrail {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.size = 20;
+        // Adjust blade trail size based on device
+        this.size = 20 * scaleFactor;
         this.life = 20;
     }
     
     update() {
         this.life -= 1;
-        this.size -= 0.5;
+        // Adjust size reduction based on scale factor
+        this.size -= 0.5 * scaleFactor;
     }
     
     draw() {
@@ -341,26 +386,26 @@ function animate(currentTime = 0) {
     
     // Draw swipe trail
     if (swipeTrail.length > 1) {
-        // Outer glow
+        // Outer glow - adjust size based on device
         ctx.beginPath();
         ctx.moveTo(swipeTrail[0].x, swipeTrail[0].y);
         for (let i = 1; i < swipeTrail.length; i++) {
             ctx.lineTo(swipeTrail[i].x, swipeTrail[i].y);
         }
         ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
-        ctx.lineWidth = 20;
+        ctx.lineWidth = 20 * scaleFactor; // Scale based on device size
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.stroke();
         
-        // Inner bright line
+        // Inner bright line - adjust size based on device
         ctx.beginPath();
         ctx.moveTo(swipeTrail[0].x, swipeTrail[0].y);
         for (let i = 1; i < swipeTrail.length; i++) {
             ctx.lineTo(swipeTrail[i].x, swipeTrail[i].y);
         }
         ctx.strokeStyle = "rgba(255, 255, 255, 0.9)";
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 3 * scaleFactor; // Scale based on device size
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.stroke();
@@ -386,15 +431,17 @@ function animate(currentTime = 0) {
         fruit.draw();
     });
     
-    // Draw score
+    // Draw score - adjust font size based on screen width
     ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 36px Arial";
+    const scoreFontSize = isMobile ? 24 : 36;
+    ctx.font = `bold ${scoreFontSize}px Arial`;
     ctx.textAlign = "center";
-    ctx.fillText("Score: " + score, canvas.width / 2, 50);
+    ctx.fillText("Score: " + score, canvas.width / 2, isMobile ? 30 : 50);
     
-    // Draw high score in bottom right corner
+    // Draw high score in bottom right corner - adjust font size based on screen width
     ctx.fillStyle = "#FFDC00"; // Gold color for high score
-    ctx.font = "bold 28px Arial";
+    const highScoreFontSize = isMobile ? 18 : 28;
+    ctx.font = `bold ${highScoreFontSize}px Arial`;
     ctx.textAlign = "right";
     ctx.textBaseline = "bottom";
     ctx.fillText("High Score: " + highScore, canvas.width - 20, canvas.height - 20);
@@ -428,21 +475,26 @@ function drawGameOver() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 72px Arial";
+    // Adjust font size based on screen width
+    const gameOverFontSize = isMobile ? 48 : 72;
+    ctx.font = `bold ${gameOverFontSize}px Arial`;
     ctx.textAlign = "center";
-    ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 50);
+    ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - (isMobile ? 30 : 50));
     
-    ctx.font = "bold 48px Arial";
-    ctx.fillText("Final Score: " + score, canvas.width / 2, canvas.height / 2 + 50);
+    const finalScoreFontSize = isMobile ? 32 : 48;
+    ctx.font = `bold ${finalScoreFontSize}px Arial`;
+    ctx.fillText("Final Score: " + score, canvas.width / 2, canvas.height / 2 + (isMobile ? 30 : 50));
     
     // Display high score in game over screen
     ctx.fillStyle = "#FFDC00"; // Gold color
-    ctx.font = "bold 36px Arial";
-    ctx.fillText("High Score: " + highScore, canvas.width / 2, canvas.height / 2 + 100);
+    const highScoreFontSize = isMobile ? 24 : 36;
+    ctx.font = `bold ${highScoreFontSize}px Arial`;
+    ctx.fillText("High Score: " + highScore, canvas.width / 2, canvas.height / 2 + (isMobile ? 70 : 100));
     
     ctx.fillStyle = "#ffffff";
-    ctx.font = "24px Arial";
-    ctx.fillText("Click anywhere to restart", canvas.width / 2, canvas.height / 2 + 150);
+    const restartFontSize = isMobile ? 18 : 24;
+    ctx.font = `${restartFontSize}px Arial`;
+    ctx.fillText("Click anywhere to restart", canvas.width / 2, canvas.height / 2 + (isMobile ? 100 : 150));
 }
 
 // Mouse and touch events
@@ -555,7 +607,7 @@ style.textContent = `
 .score-popup {
     position: absolute;
     color: #fff;
-    font-size: 28px;
+    font-size: ${isMobile ? '20px' : '28px'};
     font-weight: bold;
     pointer-events: none;
     animation: popup 1s ease-out;
@@ -621,6 +673,10 @@ function createBombCounter() {
     const bombCounter = document.createElement('div');
     bombCounter.className = 'bomb-counter';
     bombCounter.id = 'bomb-counter';
+    // Set font size based on device type
+    bombCounter.style.fontSize = isMobile ? '20px' : '24px';
+    // Adjust padding for mobile
+    bombCounter.style.padding = isMobile ? '5px' : '10px';
     updateBombCounter();
     document.body.appendChild(bombCounter);
 }
@@ -648,7 +704,11 @@ function checkCollisions(x, y) {
             const dy = y - fruit.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < fruit.size / 2) {
+            // Make collision detection more forgiving on mobile devices
+            // Increase hit area by 20% on mobile for easier gameplay
+            const hitRadius = fruit.size / 2 * (isMobile ? 1.2 : 1);
+            
+            if (distance < hitRadius) {
                 if (fruit.isBomb) {
                     bombHits++;
                     updateBombCounter();

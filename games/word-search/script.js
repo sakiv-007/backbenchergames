@@ -11,6 +11,7 @@ let seconds = 0;
 let score = 0;
 let hintsUsed = 0;
 let gameActive = false;
+let selectionMode = 'drag'; // 'drag' or 'click'
 
 // Word lists by difficulty
 const wordLists = {
@@ -25,6 +26,10 @@ const wordLists = {
     hard: [
         'AMAZING', 'BICYCLE', 'CRYSTAL', 'DOLPHIN', 'ELEGANT', 'FANTASY', 'GRAVITY', 'HARMONY', 'JOURNEY', 'KINGDOM',
         'MYSTERY', 'NETWORK', 'OLYMPIC', 'PYRAMID', 'QUANTUM', 'RAINBOW', 'SYMPHONY', 'TORNADO', 'UNIVERSE', 'VOLCANO'
+    ],
+    devs: [
+        'ALGORITHM', 'BLOCKCHAIN', 'COMPILER', 'DEBUGGING', 'ENCRYPTION', 'FRAMEWORK', 'GITIGNORE', 'HYPERTEXT', 'ITERATION', 'JAVASCRIPT',
+        'KUBERNETES', 'LOCALHOST', 'MIDDLEWARE', 'NAMESPACE', 'OVERLOADING', 'PROTOTYPE', 'RECURSION', 'SERVERLESS', 'TYPESCRIPT', 'VIRTUALIZATION'
     ]
 };
 
@@ -32,7 +37,8 @@ const wordLists = {
 const gridSizes = {
     easy: 8,
     medium: 12,
-    hard: 15
+    hard: 15,
+    devs: 18
 };
 
 // DOM elements
@@ -49,6 +55,33 @@ const messageText = document.getElementById('message-text');
 const finalTimeElement = document.getElementById('final-time');
 const finalScoreElement = document.getElementById('final-score');
 const playAgainBtn = document.getElementById('play-again-btn');
+const selectionModeToggle = document.createElement('button');
+selectionModeToggle.id = 'selection-mode-toggle';
+selectionModeToggle.className = 'btn';
+selectionModeToggle.innerHTML = '<i class="fas fa-hand-pointer"></i> Click Mode';
+selectionModeToggle.title = 'Toggle between drag and click selection modes';
+
+// Add selection mode toggle button to game controls
+document.querySelector('.game-controls').appendChild(selectionModeToggle);
+
+// Add event listener for selection mode toggle
+selectionModeToggle.addEventListener('click', toggleSelectionMode);
+
+// Function to toggle selection mode
+function toggleSelectionMode() {
+    selectionMode = selectionMode === 'drag' ? 'click' : 'drag';
+    updateSelectionModeButton();
+    clearSelection();
+}
+
+// Update selection mode button text and icon
+function updateSelectionModeButton() {
+    if (selectionMode === 'drag') {
+        selectionModeToggle.innerHTML = '<i class="fas fa-hand-pointer"></i> Click Mode';
+    } else {
+        selectionModeToggle.innerHTML = '<i class="fas fa-arrows-alt"></i> Drag Mode';
+    }
+}
 
 // Initialize the game
 function initGame() {
@@ -65,6 +98,7 @@ function initGame() {
     // Update UI
     updateScore();
     updateTimer();
+    updateSelectionModeButton();
     
     // Get difficulty
     difficulty = difficultySelector.value;
@@ -96,7 +130,9 @@ function generateGrid(size) {
     
     // Select random words based on difficulty
     const availableWords = [...wordLists[difficulty]];
-    const numWords = difficulty === 'easy' ? 6 : (difficulty === 'medium' ? 8 : 10);
+    const numWords = difficulty === 'easy' ? 6 : 
+                     (difficulty === 'medium' ? 8 : 
+                     (difficulty === 'hard' ? 10 : 12)); // 12 words for devs challenge
     words = [];
     
     for (let i = 0; i < numWords; i++) {
@@ -123,6 +159,12 @@ function generateGrid(size) {
 function placeWords(words, size) {
     // Sort words by length (longest first)
     words.sort((a, b) => b.length - a.length);
+    
+    // For DEV's Challenge, use non-linear word placement
+    if (difficulty === 'devs') {
+        placeNonLinearWords(words, size);
+        return;
+    }
     
     for (const word of words) {
         let placed = false;
@@ -164,6 +206,100 @@ function placeWords(words, size) {
             }
         }
     }
+}
+
+// Place words in non-linear patterns for DEV's Challenge
+function placeNonLinearWords(words, size) {
+    // Store the path of each word for validation later
+    window.wordPaths = {};
+    
+    for (const word of words) {
+        let placed = false;
+        let attempts = 0;
+        const maxAttempts = 150; // More attempts for complex placement
+        
+        while (!placed && attempts < maxAttempts) {
+            attempts++;
+            
+            // Random starting position
+            const startX = Math.floor(Math.random() * size);
+            const startY = Math.floor(Math.random() * size);
+            
+            // Try to place the word using a random path
+            const path = generateRandomPath(word, startX, startY, size);
+            
+            if (path.length === word.length) {
+                // Place the word along the path
+                for (let i = 0; i < path.length; i++) {
+                    const {x, y} = path[i];
+                    grid[y][x] = word[i];
+                }
+                
+                // Store the path for this word
+                window.wordPaths[word] = path;
+                placed = true;
+            }
+        }
+        
+        // If word couldn't be placed after max attempts, remove it from the list
+        if (!placed) {
+            const index = words.indexOf(word);
+            if (index !== -1) {
+                words.splice(index, 1);
+            }
+        }
+    }
+}
+
+// Generate a random path for a word
+function generateRandomPath(word, startX, startY, size) {
+    const path = [{x: startX, y: startY}];
+    const visited = new Set([`${startX},${startY}`]);
+    
+    // Direction vectors for all 8 directions
+    const directions = [
+        {dx: 1, dy: 0},   // right
+        {dx: 1, dy: 1},   // down-right
+        {dx: 0, dy: 1},   // down
+        {dx: -1, dy: 1},  // down-left
+        {dx: -1, dy: 0},  // left
+        {dx: -1, dy: -1}, // up-left
+        {dx: 0, dy: -1},  // up
+        {dx: 1, dy: -1}   // up-right
+    ];
+    
+    for (let i = 1; i < word.length; i++) {
+        const lastPos = path[path.length - 1];
+        const validMoves = [];
+        
+        // Shuffle directions for randomness
+        const shuffledDirections = [...directions].sort(() => Math.random() - 0.5);
+        
+        for (const {dx, dy} of shuffledDirections) {
+            const newX = lastPos.x + dx;
+            const newY = lastPos.y + dy;
+            const key = `${newX},${newY}`;
+            
+            // Check if position is valid and not visited
+            if (newX >= 0 && newX < size && newY >= 0 && newY < size && 
+                !visited.has(key) && 
+                (grid[newY][newX] === '' || grid[newY][newX] === word[i])) {
+                validMoves.push({x: newX, y: newY});
+            }
+        }
+        
+        if (validMoves.length === 0) {
+            // No valid moves, path failed
+            return [];
+        }
+        
+        // Choose a random valid move
+        const nextMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+        path.push(nextMove);
+        visited.add(`${nextMove.x},${nextMove.y}`);
+    }
+    
+    return path;
 }
 
 // Check if a word fits in the grid at the given position and direction
@@ -219,6 +355,7 @@ function renderGrid() {
             // Add mouse event listeners
             cell.addEventListener('mousedown', startSelection);
             cell.addEventListener('mouseover', updateSelection);
+            cell.addEventListener('click', handleCellClick);
             
             // Add touch event listeners for mobile devices
             cell.addEventListener('touchstart', handleTouchStart, { passive: false });
@@ -248,7 +385,7 @@ function renderWordList() {
 
 // Start word selection
 function startSelection(e) {
-    if (!gameActive) return;
+    if (!gameActive || selectionMode === 'click') return;
     
     // Clear previous selection
     clearSelection();
@@ -264,7 +401,7 @@ function startSelection(e) {
 
 // Update word selection
 function updateSelection(e) {
-    if (!gameActive || selectedCells.length === 0) return;
+    if (!gameActive || selectedCells.length === 0 || selectionMode === 'click') return;
     
     const cell = e.target;
     const x = parseInt(cell.dataset.x);
@@ -274,6 +411,22 @@ function updateSelection(e) {
     const isSelected = selectedCells.some(c => c.x === x && c.y === y);
     if (isSelected) return;
     
+    // For DEV's Challenge, allow non-linear selection
+    if (difficulty === 'devs') {
+        // Check if the cell is adjacent to the last selected cell
+        const lastCell = selectedCells[selectedCells.length - 1];
+        const dx = Math.abs(x - lastCell.x);
+        const dy = Math.abs(y - lastCell.y);
+        
+        // Cell must be adjacent (including diagonals)
+        if (dx <= 1 && dy <= 1 && !(dx === 0 && dy === 0)) {
+            selectedCells.push({ x, y, element: cell });
+            cell.classList.add('selected');
+        }
+        return;
+    }
+    
+    // For other difficulties, maintain the original straight-line selection
     // Check if cell is in a valid direction from the first cell
     const firstCell = selectedCells[0];
     const dx = x - firstCell.x;
@@ -312,6 +465,17 @@ function handleTouchStart(e) {
     // Prevent default to avoid scrolling
     e.preventDefault();
     
+    // If in click mode, handle as a click
+    if (selectionMode === 'click') {
+        const touch = e.touches[0];
+        const element = document.elementFromPoint(touch.clientX, touch.clientY);
+        
+        if (element && element.classList.contains('grid-cell')) {
+            handleCellClick({ target: element });
+        }
+        return;
+    }
+    
     // Clear previous selection
     clearSelection();
     
@@ -330,7 +494,7 @@ function handleTouchStart(e) {
 
 // Handle touch move event for mobile devices
 function handleTouchMove(e) {
-    if (!gameActive || selectedCells.length === 0) return;
+    if (!gameActive || selectedCells.length === 0 || selectionMode === 'click') return;
     
     // Prevent default to avoid scrolling
     e.preventDefault();
@@ -348,6 +512,22 @@ function handleTouchMove(e) {
     const isSelected = selectedCells.some(c => c.x === x && c.y === y);
     if (isSelected) return;
     
+    // For DEV's Challenge, allow non-linear selection
+    if (difficulty === 'devs') {
+        // Check if the cell is adjacent to the last selected cell
+        const lastCell = selectedCells[selectedCells.length - 1];
+        const dx = Math.abs(x - lastCell.x);
+        const dy = Math.abs(y - lastCell.y);
+        
+        // Cell must be adjacent (including diagonals)
+        if (dx <= 1 && dy <= 1 && !(dx === 0 && dy === 0)) {
+            selectedCells.push({ x, y, element: element });
+            element.classList.add('selected');
+        }
+        return;
+    }
+    
+    // For other difficulties, maintain the original straight-line selection
     // Check if cell is in a valid direction from the first cell
     const firstCell = selectedCells[0];
     const dx = x - firstCell.x;
@@ -381,16 +561,111 @@ function handleTouchMove(e) {
 
 // End touch selection for mobile devices
 function endTouchSelection(e) {
-    validateSelection();
+    if (selectionMode === 'drag') {
+        validateSelection();
+    } else if (selectionMode === 'click' && selectedCells.length >= 2) {
+        // Also validate in click mode if we have enough cells selected
+        checkForValidWord();
+    }
 }
 
 // End word selection
 function endSelection() {
-    validateSelection();
+    if (selectionMode === 'drag') {
+        validateSelection();
+    } else if (selectionMode === 'click' && selectedCells.length >= 2) {
+        // Also validate in click mode if we have enough cells selected
+        checkForValidWord();
+    }
+}
+
+// Handle cell click for click selection mode
+function handleCellClick(e) {
+    if (!gameActive || selectionMode !== 'click') return;
+    
+    const cell = e.target;
+    const x = parseInt(cell.dataset.x);
+    const y = parseInt(cell.dataset.y);
+    
+    // Check if cell is already in selection
+    const existingIndex = selectedCells.findIndex(c => c.x === x && c.y === y);
+    
+    if (existingIndex !== -1) {
+        // If clicking the last cell added, remove it
+        if (existingIndex === selectedCells.length - 1) {
+            const removedCell = selectedCells.pop();
+            removedCell.element.classList.remove('selected');
+            updateSelectionNumbers();
+        } 
+        // If clicking any other selected cell, clear all cells after it
+        else {
+            for (let i = selectedCells.length - 1; i > existingIndex; i--) {
+                const removedCell = selectedCells.pop();
+                removedCell.element.classList.remove('selected');
+            }
+            updateSelectionNumbers();
+        }
+    } else {
+        // Add cell to selection if it's valid
+        if (difficulty === 'devs') {
+            // For DEV's Challenge, cell must be adjacent to the last selected cell
+            if (selectedCells.length === 0 || isAdjacent(x, y, selectedCells[selectedCells.length - 1])) {
+                selectedCells.push({ x, y, element: cell });
+                cell.classList.add('selected');
+                updateSelectionNumbers();
+            }
+        } else {
+            // For other difficulties, first cell can be anywhere
+            if (selectedCells.length === 0) {
+                selectedCells.push({ x, y, element: cell });
+                cell.classList.add('selected');
+                updateSelectionNumbers();
+            } 
+            // Subsequent cells must form a straight line from the first cell
+            else if (selectedCells.length === 1 || isInLine(x, y, selectedCells[0], selectedCells[selectedCells.length - 1])) {
+                selectedCells.push({ x, y, element: cell });
+                cell.classList.add('selected');
+                updateSelectionNumbers();
+            }
+        }
+    }
+    
+    // Check for valid word after any click interaction if we have enough letters
+    if (selectedCells.length >= 2) {
+        checkForValidWord();
+    }
+}
+
+// Check if a cell is adjacent to another cell
+function isAdjacent(x, y, cell) {
+    const dx = Math.abs(x - cell.x);
+    const dy = Math.abs(y - cell.y);
+    return dx <= 1 && dy <= 1 && !(dx === 0 && dy === 0);
+}
+
+// Check if a cell is in line with the first and last cells
+function isInLine(x, y, firstCell, lastCell) {
+    // Calculate direction from first cell to last cell
+    const dirX = lastCell.x - firstCell.x;
+    const dirY = lastCell.y - firstCell.y;
+    
+    // If first and last cell are the same, any direction is valid
+    if (dirX === 0 && dirY === 0) return true;
+    
+    // Check if new point is in the same direction
+    const newDirX = x - firstCell.x;
+    const newDirY = y - firstCell.y;
+    
+    // For straight lines (horizontal, vertical, diagonal)
+    if (dirX === 0) return newDirX === 0; // Vertical line
+    if (dirY === 0) return newDirY === 0; // Horizontal line
+    
+    // For diagonal lines
+    return Math.abs(newDirX / dirX - newDirY / dirY) < 0.001; // Allow small floating point errors
 }
 
 // Validate the current selection
-function validateSelection() {
+function validateSelection(clearIfInvalid = true) {
     if (!gameActive || selectedCells.length === 0) return;
     
     // Check if selected cells form a word
@@ -398,12 +673,19 @@ function validateSelection() {
         return grid[cell.y][cell.x];
     }).join('');
     
+    // For DEV's Challenge, check if the letters match any word in any order
+    if (difficulty === 'devs') {
+        validateNonLinearSelection();
+        return;
+    }
+    
     // Check if word is in the list and not already found
     const wordIndex = words.findIndex(word => 
-        word === selectedWord || word === selectedWord.split('').reverse().join('')
+        (word === selectedWord || word === selectedWord.split('').reverse().join('')) &&
+        !foundWords.includes(word)
     );
     
-    if (wordIndex !== -1 && !foundWords.includes(words[wordIndex])) {
+    if (wordIndex !== -1) {
         // Word found!
         foundWords.push(words[wordIndex]);
         
@@ -422,22 +704,179 @@ function validateSelection() {
         // Update score
         updateScore(words[wordIndex]);
         
+        // Reset selection
+        selectedCells = [];
+        
         // Check if all words are found
         if (foundWords.length === words.length) {
             endGame(true);
         }
-    } else {
+    } else if (clearIfInvalid) {
         // Word not found, clear selection
         clearSelection();
     }
+}
+
+// Validate non-linear word selection for DEV's Challenge
+function validateNonLinearSelection() {
+    if (selectedCells.length === 0) return;
+    
+    // Get the letters from selected cells
+    const selectedLetters = selectedCells.map(cell => grid[cell.y][cell.x]);
+    const selectedPositions = selectedCells.map(cell => ({x: cell.x, y: cell.y}));
+    
+    // Check each word that hasn't been found yet
+    for (const word of words) {
+        if (foundWords.includes(word)) continue;
+        
+        // Check if the selected letters match the word (regardless of order)
+        if (selectedLetters.length === word.length) {
+            // Create a copy of the word's letters to mark off as we find matches
+            const wordLetters = word.split('');
+            const matchedIndices = [];
+            
+            // Try to match each selected letter to a letter in the word
+            for (let i = 0; i < selectedLetters.length; i++) {
+                const letterIndex = wordLetters.indexOf(selectedLetters[i]);
+                if (letterIndex !== -1) {
+                    // Found a match, remove this letter from wordLetters so we don't match it again
+                    wordLetters.splice(letterIndex, 1);
+                    matchedIndices.push(i);
+                }
+            }
+            
+            // If all letters matched, we found the word
+            if (wordLetters.length === 0) {
+                // Word found!
+                foundWords.push(word);
+                
+                // Mark cells as found
+                selectedCells.forEach(cell => {
+                    cell.element.classList.remove('selected');
+                    cell.element.classList.add('found');
+                });
+                
+                // Mark word as found in the list
+                const wordElement = document.querySelector(`li[data-word="${word}"]`);
+                if (wordElement) {
+                    wordElement.classList.add('found');
+                }
+                
+                // Update score
+                updateScore(word);
+                
+                // Check if all words are found
+                if (foundWords.length === words.length) {
+                    endGame(true);
+                }
+                
+                return; // Exit after finding a word
+            }
+        }
+    }
+    
+    // If we get here, no word was found
+    clearSelection();
 }
 
 // Clear cell selection
 function clearSelection() {
     selectedCells.forEach(cell => {
         cell.element.classList.remove('selected');
+        // Remove any selection number indicators
+        const indicator = cell.element.querySelector('.selection-number');
+        if (indicator) {
+            cell.element.removeChild(indicator);
+        }
     });
     selectedCells = [];
+}
+
+// Check if current selection forms a valid word
+function checkForValidWord() {
+    if (selectedCells.length < 2) return; // Need at least 2 letters to start checking
+    
+    // Get the selected word
+    const selectedWord = selectedCells.map(cell => {
+        return grid[cell.y][cell.x];
+    }).join('');
+    
+    // For DEV's Challenge, check if the letters match any word in any order
+    if (difficulty === 'devs') {
+        // Only validate if we have enough letters to potentially form a word
+        const minWordLength = Math.min(...words.filter(w => !foundWords.includes(w)).map(w => w.length));
+        if (selectedCells.length >= minWordLength) {
+            validateNonLinearSelection();
+        }
+        return;
+    }
+    
+    // For other difficulties, check if the selected letters form a word
+    // Check if the selected word matches any word in the list (forward or backward)
+    const wordIndex = words.findIndex(word => 
+        (word === selectedWord || word === selectedWord.split('').reverse().join('')) && 
+        !foundWords.includes(word)
+    );
+    
+    // If we found a match, validate the selection
+    if (wordIndex !== -1) {
+        // Word found!
+        foundWords.push(words[wordIndex]);
+        
+        // Mark cells as found
+        selectedCells.forEach(cell => {
+            cell.element.classList.remove('selected');
+            cell.element.classList.add('found');
+        });
+        
+        // Mark word as found in the list
+        const wordElement = document.querySelector(`li[data-word="${words[wordIndex]}"]`);
+        if (wordElement) {
+            wordElement.classList.add('found');
+        }
+        
+        // Update score
+        updateScore(words[wordIndex]);
+        
+        // Reset selection
+        selectedCells = [];
+        
+        // Check if all words are found
+        if (foundWords.length === words.length) {
+            endGame(true);
+        }
+    }
+    // If we're in click mode and have a complete word length but no match, provide visual feedback
+    else if (selectionMode === 'click' && selectedCells.length >= 3) {
+        // Check if we have a complete word length but no match
+        const matchingLengthWord = words.find(word => 
+            word.length === selectedWord.length && !foundWords.includes(word)
+        );
+        
+        if (matchingLengthWord) {
+            // Briefly highlight cells in red to indicate invalid word
+            selectedCells.forEach(cell => {
+                cell.element.classList.add('invalid');
+                setTimeout(() => {
+                    cell.element.classList.remove('invalid');
+                }, 300);
+            });
+        }
+    }
+}
+
+// Update selection numbers for click mode
+function updateSelectionNumbers() {
+    // First remove all existing selection numbers
+    document.querySelectorAll('.selection-number').forEach(el => el.remove());
+    
+    // Then add new ones based on current selection
+    selectedCells.forEach((cell, index) => {
+        const numberIndicator = document.createElement('span');
+        numberIndicator.className = 'selection-number';
+        numberIndicator.textContent = index + 1;
+        cell.element.appendChild(numberIndicator);
+    });
 }
 
 // Update the score
@@ -452,6 +891,7 @@ function updateScore(foundWord = null) {
         // Bonus points based on difficulty
         if (difficulty === 'medium') points *= 1.5;
         if (difficulty === 'hard') points *= 2;
+        if (difficulty === 'devs') points *= 3; // Higher bonus for DEV's Challenge
         
         // Penalty for using hints
         if (hintsUsed > 0) {
@@ -492,16 +932,34 @@ function giveHint() {
     // Find the word in the grid
     const wordCells = findWordInGrid(wordToHint);
     
-    // Highlight the first letter of the word
     if (wordCells.length > 0) {
-        const firstCell = wordCells[0];
-        const cellElement = document.querySelector(`.grid-cell[data-x="${firstCell.x}"][data-y="${firstCell.y}"]`);
-        
-        if (cellElement) {
-            cellElement.classList.add('hint-highlight');
-            setTimeout(() => {
-                cellElement.classList.remove('hint-highlight');
-            }, 3000);
+        // For DEV's Challenge, highlight more letters to help with non-linear patterns
+        if (difficulty === 'devs') {
+            // Highlight the first 2-3 letters (depending on word length)
+            const numToHighlight = Math.min(Math.ceil(wordToHint.length / 3), 3);
+            
+            for (let i = 0; i < numToHighlight; i++) {
+                const cell = wordCells[i];
+                const cellElement = document.querySelector(`.grid-cell[data-x="${cell.x}"][data-y="${cell.y}"]`);
+                
+                if (cellElement) {
+                    cellElement.classList.add('hint-highlight');
+                    setTimeout(() => {
+                        cellElement.classList.remove('hint-highlight');
+                    }, 3000);
+                }
+            }
+        } else {
+            // For other difficulties, just highlight the first letter
+            const firstCell = wordCells[0];
+            const cellElement = document.querySelector(`.grid-cell[data-x="${firstCell.x}"][data-y="${firstCell.y}"]`);
+            
+            if (cellElement) {
+                cellElement.classList.add('hint-highlight');
+                setTimeout(() => {
+                    cellElement.classList.remove('hint-highlight');
+                }, 3000);
+            }
         }
     }
 }
@@ -510,6 +968,11 @@ function giveHint() {
 function findWordInGrid(word) {
     const size = grid.length;
     const cells = [];
+    
+    // For DEV's Challenge, use stored word paths
+    if (difficulty === 'devs' && window.wordPaths && window.wordPaths[word]) {
+        return window.wordPaths[word];
+    }
     
     // Check all possible directions and starting positions
     for (let y = 0; y < size; y++) {

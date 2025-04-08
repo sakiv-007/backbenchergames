@@ -172,6 +172,47 @@ body {
     background-color: var(--primary-color);
     color: white;
     transform: scale(0.95);
+    position: relative;
+}
+
+.grid-cell.invalid {
+    background-color: var(--danger-color);
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+}
+
+.grid-cell.selected::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.selection-number {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    z-index: 2;
 }
 
 .grid-cell.found {

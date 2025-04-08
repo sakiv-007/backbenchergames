@@ -125,16 +125,16 @@ class Fruit {
         this.x = x;
         this.y = y;
         // Adjust size based on screen width using scaleFactor
-        const baseSize = isMobile ? size * 0.8 : size * 1.3;
+        const baseSize = isMobile ? size * 3.5 : size * 1.3;
         this.size = baseSize * scaleFactor;
         this.type = type;
         this.isBomb = type === "bomb";
         this.emoji = this.isBomb ? bombEmoji : fruitTypes[type];
         this.velocity = {
             // Adjust horizontal speed based on screen width
-            x: (Math.random() * 6 - 3) * 0.6 * scaleFactor,
+            x: (Math.random() * 6 - 3) * 0.8 * scaleFactor,
             // Adjust vertical velocity based on screen height
-            y: (Math.random() * -25 - 20) * 0.6 * scaleFactor
+            y: (Math.random() * -25 - 20) * 0.8 * scaleFactor
         };
         // Adjust gravity based on screen height
         this.gravity = (0.2 + Math.random() * 0.2) * 0.8 * scaleFactor;

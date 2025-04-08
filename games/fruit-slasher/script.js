@@ -3,16 +3,6 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Detect if device is mobile with more precise detection
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
-
-// Improved responsive scaling factor based on screen size
-// More aggressive scaling for smaller screens
-const scaleFactor = Math.min(1, Math.pow(window.innerWidth / 1024, 1.2));
-
-// Additional scaling factor specifically for fruit size on mobile
-const fruitSizeScaleFactor = isMobile ? Math.min(0.6, window.innerWidth / 768) : 1;
-
 let fruits = [];
 let score = 0;
 let swipeTrail = [];
@@ -50,19 +40,15 @@ class Particle {
     constructor(x, y, color) {
         this.x = x;
         this.y = y;
-        // Scale particle size based on device - smaller on mobile
-        const particleSizeMultiplier = isMobile ? 0.6 : 1;
-        this.size = (Math.random() * 6 + 2) * particleSizeMultiplier; // Adjusted particle size
+        this.size = Math.random() * 8 + 2; // Larger particles
         this.color = color;
-        // Adjust particle speed based on screen size
-        const speedMultiplier = isMobile ? 0.7 : 1;
-        this.speedX = (Math.random() * 10 - 5) * speedMultiplier; // Adjusted horizontal movement
-        this.speedY = (Math.random() * 10 - 5) * speedMultiplier; // Adjusted vertical movement
-        this.gravity = 0.15 * (isMobile ? 0.8 : 1);
+        this.speedX = Math.random() * 10 - 5; // Faster horizontal movement
+        this.speedY = Math.random() * 10 - 5; // Faster vertical movement
+        this.gravity = 0.15;
         this.life = 100;
         this.shape = Math.random() > 0.7 ? 'square' : 'circle'; // Random shapes for variety
         this.rotation = Math.random() * Math.PI * 2;
-        this.rotationSpeed = (Math.random() - 0.5) * 0.2 * (isMobile ? 0.7 : 1);
+        this.rotationSpeed = (Math.random() - 0.5) * 0.2;
     }
 
     update(deltaTime) {
@@ -110,27 +96,24 @@ class Fruit {
     constructor(x, y, size, type) {
         this.x = x;
         this.y = y;
-        // Apply responsive sizing based on screen dimensions with improved scaling
-        // Much smaller size on mobile devices, appropriate size on desktop
-        const responsiveSize = isMobile ? size * 0.6 : size * 1.2;
-        // Apply both the general scaleFactor and the specific fruitSizeScaleFactor
-        this.size = responsiveSize * scaleFactor * fruitSizeScaleFactor;
+        // Increase base size by 30%
+        this.size = size * 1.3;
         this.type = type;
         this.isBomb = type === "bomb";
         this.emoji = this.isBomb ? bombEmoji : fruitTypes[type];
         this.velocity = {
-            // Adjust horizontal speed based on screen width
-            x: (Math.random() * 6 - 3) * 0.6 * scaleFactor,
-            // Adjust vertical velocity based on screen height
-            y: (Math.random() * -25 - 20) * 0.6 * scaleFactor
+            // Reduce horizontal speed by 40%
+            x: (Math.random() * 6 - 3) * 0.6,
+            // Increase upward velocity by 20% for higher reach but make it slower overall
+            y: (Math.random() * -25 - 20) * 0.6
         };
-        // Adjust gravity for responsive falling speed
-        this.gravity = (0.2 + Math.random() * 0.2) * 0.8 * scaleFactor;
+        // Reduce gravity for slower falling and higher arcs
+        this.gravity = (0.2 + Math.random() * 0.2) * 0.8;
         this.sliced = false;
         this.slicedPieces = null;
         this.rotation = Math.random() * Math.PI * 2;
-        // Scale rotation speed based on device
-        this.rotationSpeed = (Math.random() - 0.5) * 0.14 * scaleFactor;
+        // Reduce rotation speed by 30%
+        this.rotationSpeed = (Math.random() - 0.5) * 0.14;
         this.opacity = 1;
         this.scale = 1;
         this.pulseDirection = 1;
@@ -286,26 +269,18 @@ function spawnFruit() {
     if (gameOver) return;
     
     // Create a burst of fruits for more dynamic gameplay
-    // Further reduce burst count on mobile for less cluttered experience
-    const burstCount = isMobile ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 2;
-    
-    // Adjust spawn width based on screen size - narrower area for mobile
-    const spawnWidth = canvas.width * (isMobile ? 0.6 : 0.8);
-    const startX = canvas.width * (isMobile ? 0.2 : 0.1);
+    const burstCount = Math.floor(Math.random() * 3) + 1; // 1-3 fruits at once
+    const spawnWidth = canvas.width * 0.8;
+    const startX = canvas.width * 0.1;
     
     for (let i = 0; i < burstCount; i++) {
         setTimeout(() => {
             if (gameOver) return;
             
-            // Adjust random offset based on screen width to keep fruits in view
-            // Smaller offset for mobile to prevent fruits from going off-screen
-            const randomOffset = Math.random() * (isMobile ? 60 : 200) - (isMobile ? 30 : 100);
-            const x = startX + (spawnWidth * (i / burstCount)) + randomOffset;
+            const x = startX + (spawnWidth * (i / burstCount)) + (Math.random() * 200 - 100);
             const y = canvas.height;
-            
-            // Responsive size based on device - significantly smaller on mobile
-            const baseSize = isMobile ? 50 : 90;
-            const size = baseSize * scaleFactor * (isMobile ? 0.9 : 1);
+            // Use a consistent, larger size for all fruits (was: 60 + Math.random() * 20)
+            const size = 100; 
             
             // Randomly select a fruit type or bomb
             const type = Math.random() < 0.15 ? "bomb" : Math.floor(Math.random() * fruitTypes.length);
@@ -772,38 +747,10 @@ loadHighScore();
 
 // Adjust spawn rate based on screen size
 const spawnInterval = Math.max(1000, Math.min(1800, window.innerWidth / 1.5));
-let spawnIntervalId = setInterval(spawnFruit, spawnInterval);
+setInterval(spawnFruit, spawnInterval);
 
 // Create separator line
 createSeparatorLine();
-
-// Handle window resize and device orientation changes
-window.addEventListener('resize', function() {
-    // Update canvas dimensions
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    // Update mobile detection
-    const wasIsMobile = isMobile;
-    const newIsMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
-    
-    // Only update if mobile status changed
-    if (wasIsMobile !== newIsMobile) {
-        // Clear and restart spawn interval with appropriate timing
-        clearInterval(spawnIntervalId);
-        const newSpawnInterval = Math.max(1000, Math.min(1800, window.innerWidth / 1.5));
-        spawnIntervalId = setInterval(spawnFruit, newSpawnInterval);
-    }
-});
-
-// Handle device orientation change specifically for mobile
-window.addEventListener('orientationchange', function() {
-    // Short timeout to allow the browser to complete the orientation change
-    setTimeout(() => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }, 100);
-});
 
 // Start the game
 animate();

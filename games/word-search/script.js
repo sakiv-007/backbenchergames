@@ -29,7 +29,7 @@ const wordLists = {
     ],
     devs: [
         'ALGORITHM', 'BLOCKCHAIN', 'COMPILER', 'DEBUGGING', 'ENCRYPTION', 'FRAMEWORK', 'GITIGNORE', 'HYPERTEXT', 'ITERATION', 'JAVASCRIPT',
-        'KUBERNETES', 'LOCALHOST', 'MIDDLEWARE', 'NAMESPACE', 'OVERLOADING', 'PROTOTYPE', 'RECURSION', 'SERVERLESS', 'TYPESCRIPT', 'VIRTUALIZATION'
+        'KUBERNETES', 'LOCALHOST', 'MIDDLEWARE', 'NAMESPACE', 'OVERLOADING', 'PROTOTYPE', 'RECURSION', 'SERVERLESS', 'TYPESCRIPT', 'VIRTUALIZATION', 'VIKASKUMAR'
     ]
 };
 
@@ -49,6 +49,7 @@ const scoreElement = document.getElementById('score');
 const difficultySelector = document.getElementById('difficulty');
 const newGameBtn = document.getElementById('new-game-btn');
 const hintBtn = document.getElementById('hint-btn');
+const endGameBtn = document.getElementById('end-game-btn');
 const gameMessage = document.getElementById('game-message');
 const messageTitle = document.getElementById('message-title');
 const messageText = document.getElementById('message-text');
@@ -596,6 +597,13 @@ function handleCellClick(e) {
             const removedCell = selectedCells.pop();
             removedCell.element.classList.remove('selected');
             updateSelectionNumbers();
+            
+            // Check if remaining selection forms a valid word
+            if (selectedCells.length >= 2) {
+                checkForValidWord();
+            } else {
+                clearSelection();
+            }
         } 
         // If clicking any other selected cell, clear all cells after it
         else {
@@ -604,6 +612,13 @@ function handleCellClick(e) {
                 removedCell.element.classList.remove('selected');
             }
             updateSelectionNumbers();
+            
+            // Check if remaining selection forms a valid word
+            if (selectedCells.length >= 2) {
+                checkForValidWord();
+            } else {
+                clearSelection();
+            }
         }
     } else {
         // Add cell to selection if it's valid
@@ -613,6 +628,19 @@ function handleCellClick(e) {
                 selectedCells.push({ x, y, element: cell });
                 cell.classList.add('selected');
                 updateSelectionNumbers();
+                
+                // Get current selected letters
+                const currentWord = selectedCells.map(c => grid[c.y][c.x]).join('');
+                
+                // Check if current selection matches any word exactly
+                const exactMatch = words.find(word => 
+                    (word === currentWord || word === currentWord.split('').reverse().join('')) &&
+                    !foundWords.includes(word)
+                );
+                
+                if (exactMatch) {
+                    checkForValidWord();
+                }
             }
         } else {
             // For other difficulties, first cell can be anywhere
@@ -626,13 +654,21 @@ function handleCellClick(e) {
                 selectedCells.push({ x, y, element: cell });
                 cell.classList.add('selected');
                 updateSelectionNumbers();
+                
+                // Get current selected letters
+                const currentWord = selectedCells.map(c => grid[c.y][c.x]).join('');
+                
+                // Check if current selection matches any word exactly
+                const exactMatch = words.find(word => 
+                    (word === currentWord || word === currentWord.split('').reverse().join('')) &&
+                    !foundWords.includes(word)
+                );
+                
+                if (exactMatch) {
+                    checkForValidWord();
+                }
             }
         }
-    }
-    
-    // Check for valid word after any click interaction if we have enough letters
-    if (selectedCells.length >= 2) {
-        checkForValidWord();
     }
 }
 
@@ -668,7 +704,7 @@ function isInLine(x, y, firstCell, lastCell) {
 function validateSelection(clearIfInvalid = true) {
     if (!gameActive || selectedCells.length === 0) return;
     
-    // Check if selected cells form a word
+    // Get the letters from selected cells to form a word
     const selectedWord = selectedCells.map(cell => {
         return grid[cell.y][cell.x];
     }).join('');
@@ -679,7 +715,8 @@ function validateSelection(clearIfInvalid = true) {
         return;
     }
     
-    // Check if word is in the list and not already found
+    // Check if the selected letters form a word in our word list
+    // Compare the actual string of letters, not the specific cells
     const wordIndex = words.findIndex(word => 
         (word === selectedWord || word === selectedWord.split('').reverse().join('')) &&
         !foundWords.includes(word)
@@ -719,9 +756,9 @@ function validateSelection(clearIfInvalid = true) {
 
 // Validate non-linear word selection for DEV's Challenge
 function validateNonLinearSelection() {
-    if (selectedCells.length === 0) return;
+    if (selectedCells.length === 0) return false;
     
-    // Get the letters from selected cells
+    // Get the letters from selected cells - we focus on the actual letters, not the specific cells
     const selectedLetters = selectedCells.map(cell => grid[cell.y][cell.x]);
     const selectedPositions = selectedCells.map(cell => ({x: cell.x, y: cell.y}));
     
@@ -730,12 +767,14 @@ function validateNonLinearSelection() {
         if (foundWords.includes(word)) continue;
         
         // Check if the selected letters match the word (regardless of order)
+        // This validates based on the letters themselves, not the specific cells they came from
         if (selectedLetters.length === word.length) {
             // Create a copy of the word's letters to mark off as we find matches
             const wordLetters = word.split('');
             const matchedIndices = [];
             
             // Try to match each selected letter to a letter in the word
+            // This ensures we're comparing the actual letters, not the cell positions
             for (let i = 0; i < selectedLetters.length; i++) {
                 const letterIndex = wordLetters.indexOf(selectedLetters[i]);
                 if (letterIndex !== -1) {
@@ -770,13 +809,15 @@ function validateNonLinearSelection() {
                     endGame(true);
                 }
                 
-                return; // Exit after finding a word
+                return true; // Return true to indicate a match was found
             }
         }
     }
     
-    // If we get here, no word was found
-    clearSelection();
+    // Important: Don't clear selection if no word was found
+    // This allows users to continue selecting cells for longer words
+    // clearSelection(); - Removing this line to fix the selection limit issue
+    return false; // Return false to indicate no match was found
 }
 
 // Clear cell selection
@@ -794,9 +835,9 @@ function clearSelection() {
 
 // Check if current selection forms a valid word
 function checkForValidWord() {
-    if (selectedCells.length < 2) return; // Need at least 2 letters to start checking
+    if (selectedCells.length < 2) return false; // Need at least 2 letters to start checking
     
-    // Get the selected word
+    // Get the selected word by extracting letters from the selected cells
     const selectedWord = selectedCells.map(cell => {
         return grid[cell.y][cell.x];
     }).join('');
@@ -806,19 +847,26 @@ function checkForValidWord() {
         // Only validate if we have enough letters to potentially form a word
         const minWordLength = Math.min(...words.filter(w => !foundWords.includes(w)).map(w => w.length));
         if (selectedCells.length >= minWordLength) {
-            validateNonLinearSelection();
+            // Check if the selection matches any word
+            const wordMatch = validateNonLinearSelection();
+            if (wordMatch) {
+                // Word found - handled in validateNonLinearSelection
+                return true;
+            }
+            // Don't clear selection if no match - allow user to continue selecting
         }
-        return;
+        return false;
     }
     
     // For other difficulties, check if the selected letters form a word
+    // Compare the actual string of letters, not the specific cells
     // Check if the selected word matches any word in the list (forward or backward)
     const wordIndex = words.findIndex(word => 
         (word === selectedWord || word === selectedWord.split('').reverse().join('')) && 
         !foundWords.includes(word)
     );
     
-    // If we found a match, validate the selection
+    // If we found a match, validate the selection immediately
     if (wordIndex !== -1) {
         // Word found!
         foundWords.push(words[wordIndex]);
@@ -845,9 +893,13 @@ function checkForValidWord() {
         if (foundWords.length === words.length) {
             endGame(true);
         }
+        
+        // Return true to indicate a word was found
+        return true;
     }
-    // If we're in click mode and have a complete word length but no match, provide visual feedback
-    else if (selectionMode === 'click' && selectedCells.length >= 3) {
+    
+    // In click mode, check if we have a complete word length (even if not matching)
+    if (selectionMode === 'click') {
         // Check if we have a complete word length but no match
         const matchingLengthWord = words.find(word => 
             word.length === selectedWord.length && !foundWords.includes(word)
@@ -863,6 +915,12 @@ function checkForValidWord() {
             });
         }
     }
+    
+    // Don't clear selection if no match is found
+    // This allows users to select words longer than the current selection
+    
+    // Return false to indicate no word was found
+    return false;
 }
 
 // Update selection numbers for click mode
@@ -1044,7 +1102,14 @@ difficultySelector.addEventListener('change', () => {
 
 newGameBtn.addEventListener('click', initGame);
 hintBtn.addEventListener('click', giveHint);
+endGameBtn.addEventListener('click', endGameEarly);
 playAgainBtn.addEventListener('click', initGame);
+
+// Close message button event listener
+const closeMessageBtn = document.getElementById('close-message-btn');
+closeMessageBtn.addEventListener('click', () => {
+    gameMessage.classList.remove('show');
+});
 
 // Initialize the game when the page loads
 window.addEventListener('load', initGame);
@@ -1066,3 +1131,44 @@ wordGridElement.addEventListener('touchmove', (e) => {
 wordGridElement.addEventListener('touchend', (e) => {
     e.preventDefault();
 }, { passive: false });
+
+
+// Function to end game early and highlight all remaining words
+function endGameEarly() {
+    if (!gameActive) return;
+    
+    // Find all remaining words and highlight them
+    const remainingWords = words.filter(word => !foundWords.includes(word));
+    
+    // Highlight each remaining word
+    remainingWords.forEach(word => {
+        const wordCells = findWordInGrid(word);
+        
+        if (wordCells.length > 0) {
+            // Mark cells as found with a different class for visual distinction
+            wordCells.forEach(cell => {
+                const cellElement = document.querySelector(`.grid-cell[data-x="${cell.x}"][data-y="${cell.y}"]`);
+                if (cellElement) {
+                    cellElement.classList.add('auto-found');
+                }
+            });
+            
+            // Mark word as found in the list with a different class
+            const wordElement = document.querySelector(`li[data-word="${word}"]`);
+            if (wordElement) {
+                wordElement.classList.add('auto-found');
+            }
+        }
+    });
+    
+    // End the game
+    gameActive = false;
+    clearInterval(timer);
+    
+    // Show game message
+    messageTitle.textContent = 'Game Ended';
+    messageText.textContent = 'You ended the game early. All remaining words have been highlighted.';
+    finalTimeElement.textContent = timeElement.textContent;
+    finalScoreElement.textContent = score;
+    gameMessage.classList.add('show');
+}

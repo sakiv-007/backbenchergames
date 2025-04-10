@@ -91,6 +91,21 @@
     margin-top: 30px;
 }
 
+/* Related Games Section */
+.related-games {
+    margin-top: 50px;
+}
+
+.related-games h3 {
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.related-games .games-grid {
+    display: grid;
+    gap: 25px;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .game-header {
@@ -116,5 +131,29 @@
     
     .game-meta {
         justify-content: center;
+    }
+    
+    /* Make related-games section responsive for tablets */
+    .related-games .games-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Make related-games section responsive for mobile */
+    .related-games .games-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+    
+    .related-games h3 {
+        font-size: 1.3rem;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .game-card .game-image {
+        height: 160px;
     }
 }

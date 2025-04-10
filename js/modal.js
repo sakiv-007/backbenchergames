@@ -8,8 +8,8 @@ export function initModal() {
     // Get all sidebar links with data-feature attribute
     const sidebarLinks = document.querySelectorAll('#sidebar a[data-feature]');
     
-    // Get all "Coming soon" buttons
-    const comingSoonButtons = document.querySelectorAll('.play-button');
+    // Get all play buttons
+    const playButtons = document.querySelectorAll('.play-button');
     
     // Add click event to all sidebar links with data-feature
     sidebarLinks.forEach(link => {
@@ -27,8 +27,10 @@ export function initModal() {
         });
     });
     
-    // Add click event to "Coming soon" buttons
-    comingSoonButtons.forEach(button => {
+    // Add click event to "Coming soon" buttons only
+    playButtons.forEach(button => {
+        // Only add modal event to buttons with 'Coming soon' text
+        // This ensures buttons with href attributes pointing to detail pages work normally
         if (button.textContent.trim() === 'Coming soon') {
             button.addEventListener('click', (e) => {
                 e.preventDefault();

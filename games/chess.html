@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess - BackbencherGames</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/fevicon.png" type="image/x-icon">
+    <!-- Added gaming-specific font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/theme-toggle.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <!-- User Avatar at the top for mini-sidebar view -->
+        <div class="user-card">
+            <div class="user-avatar" title="Toggle sidebar">
+                <img src="../assets/avatar.png" alt="User Avatar">
+                <div class="level-badge">5</div>
+            </div>
+            <div class="user-info">
+                <h3>Vikas</h3>
+                <p>Level 5 Player</p>
+                <div class="xp-bar">
+                    <div class="xp-progress" style="width: 75%"></div>
+                </div>
+                <a href="javascript:void(0)" class="edit-profile-btn" data-feature="Edit Profile">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Edit Profile</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Play Online Section -->
+        <div class="play-online-section">
+            <h3><i class="fas fa-gamepad"></i> Play Online</h3>
+            <div class="play-online-buttons">
+                <a href="javascript:void(0)" class="play-btn play-with-friends" data-feature="Play with Friends" title="Start a game with your friends">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Play with Friends</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-with-randoms" data-feature="Play with Random Players" title="Find random players to play with">
+                    <i class="fas fa-random"></i>
+                    <span>Play with Randoms</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-vs-robot" data-feature="Play vs Robot" title="Play against AI opponent">
+                    <i class="fas fa-robot"></i>
+                    <span>Play vs Robot</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="../index.html" title="Go to homepage">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Messaging" title="View your messages">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messaging</span>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Friends" title="Manage your friends">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Match History" title="View your game history">
+                        <i class="fas fa-history"></i>
+                        <span>Match History</span>
+                    </a>
+                </li>
+                <!-- Tournament Section -->
+                <li class="nav-section-title">
+                    <span>TOURNAMENTS</span>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Creation" title="Create a new tournament">
+                        <i class="fas fa-trophy"></i>
+                        <span>Create Tournament</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Play" title="Join existing tournaments">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Play Tournaments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="My Tournaments" title="View your tournaments">
+                        <i class="fas fa-medal"></i>
+                        <span>My Tournaments</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="javascript:void(0)" data-feature="Logout" class="logout-btn" title="Sign out of your account">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <button class="mobile-sidebar-toggle" id="mobile-sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <a href="../index.html">
+                     BackbencherGames</a>
+            </div>
+            <!-- Search button replacing navigation menu and language selector -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="game-search" placeholder="Search games...">
+                    <button id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+
+        <!-- Game Details Section -->
+        <section class="game-details">
+            <div class="container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <h2>Chess</h2>
+                        <div class="game-meta">
+                            <span><i class="fas fa-users"></i> 2 Players</span>
+                            <span style="margin-left: 15px;"><i class="fas fa-clock"></i> 10-60 min</span>
+                            <span style="margin-left: 15px;"><i class="fas fa-star"></i> 4.9/5</span>
+                        </div>
+                    </div>
+                    <a href="Chess/game.html" class="play-now-btn">Play Now</a>
+                </div>
+
+                <div class="game-description">
+                    <div class="game-image">
+                        <img src="../assets/chess thumbnail.jpeg" alt="Chess Game">
+                    </div>
+                    <div class="game-text">
+                        <h3>About the Game</h3>
+                        <p>Chess is a classic strategy board game played between two players on an 8×8 grid with 64 squares. Each player begins with 16 pieces: one king, one queen, two rooks, two knights, two bishops, and eight pawns. The objective is to checkmate your opponent's king, where the king is under immediate attack and has no legal move to escape.</p>
+                        
+                        <h3>How to Play</h3>
+                        <ul>
+                            <li>White always moves first, followed by alternating turns with Black</li>
+                            <li>Each piece has its own unique movement pattern</li>
+                            <li>Capture opponent's pieces by moving your piece to their square</li>
+                            <li>Special moves include castling, en passant, and pawn promotion</li>
+                            <li>The game ends when a king is checkmated, a stalemate occurs, or players agree to a draw</li>
+                        </ul>
+                        
+                        <h3>Features</h3>
+                        <ul>
+                            <li>Beautiful, responsive chessboard with intuitive drag-and-drop interface</li>
+                            <li>Move validation and highlighting of legal moves</li>
+                            <li>Game timer with customizable time controls</li>
+                            <li>Move history with algebraic notation</li>
+                            <li>Piece promotion options when pawns reach the opposite rank</li>
+                            <li>Board flipping to view from either player's perspective</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="game-actions">
+                    <a href="Chess/game.html" class="btn primary-btn"><i class="fas fa-play"></i> Play Now</a>
+                    <a href="../index.html" class="btn secondary-btn"><i class="fas fa-th"></i> More Games</a>
+                </div>
+                
+                <!-- You May Also Like Section -->
+                <div class="related-games">
+                    <h3>You May Also Like</h3>
+                    <div class="games-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <!-- Word Search Game Card -->
+                        <div class="game-card">
+                            <div class="game-image">
+                                <img loading="lazy" src="../assets/word-search.png" alt="Word Search">
+                            </div>
+                            <div class="game-info">
+                                <h3>Word Search</h3>
+                                <p>Find hidden words in a grid</p>
+                                <div class="game-stats">
+                                    <span><i class="fas fa-users"></i> 620</span>
+                                    <span><i class="fas fa-heart"></i> 415</span>
+                                </div>
+                                <a href="word-search.html" class="play-button">Play Now</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Fruit Slasher Game Card -->
+                        <div class="game-card">
+                            <div class="game-image">
+                                <img loading="lazy" src="../assets/fruit-slasher.avif" alt="Fruit Slasher">
+                            </div>
+                            <div class="game-info">
+                                <h3>Fruit Slasher</h3>
+                                <p>Slice fruits, dodge bombs! 🍉🔪</p>
+                                <div class="game-stats">
+                                    <span><i class="fas fa-users"></i> 5000</span>
+                                    <span><i class="fas fa-heart"></i> 3200</span>
+                                </div>
+                                <a href="fruit-slasher.html" class="play-button">Play Now</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom Tic Tac Toe Game Card -->
+                        <div class="game-card">
+                            <div class="game-image">
+                                <img loading="lazy" src="../assets/custom-tic-tac-toe.png" alt="Custom Tic Tac Toe">
+                            </div>
+                            <div class="game-info">
+                                <h3>Custom Tic Tac Toe</h3>
+                                <p>Tic tac toe but with better features</p>
+                                <div class="game-stats">
+                                    <span><i class="fas fa-users"></i> 875</span>
+                                    <span><i class="fas fa-heart"></i> 620</span>
+                                </div>
+                                <a href="https://custom-tic-tac-toe-game.vercel.app/" class="play-button">Play Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">            
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>BackbencherGames</h3>
+                    <p>Play classic paper games online with friends anywhere, anytime!</p>
+                    <p class="copyright">© 2025 BackbencherGames. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">All Games</a></li>
+                        <li><a href="#">Popular Games</a></li>
+                        <li><a href="#">Tournaments</a></li>
+                        <li><a href="#">Leaderboards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Made with <i class="fas fa-heart" style="color: #e25555;"></i> by BackbencherGames Team | <a href="../sitemap.html">Sitemap</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add this modal HTML at the end of the body but before the script tag -->
+    <div id="feature-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h2>Coming Soon!</h2>
+            <p>We're working hard to bring you this feature. Stay tuned for updates!</p>
+            <button class="modal-button">Got it</button>
+        </div>
+    </div>
+    
+    <!-- Game achievement notification -->
+    <div id="achievement-notification" class="achievement-notification">
+        <div class="achievement-icon">
+            <i class="fas fa-trophy"></i>
+        </div>
+        <div class="achievement-content">
+            <h4>Achievement Unlocked!</h4>
+            <p>First Visit: Welcome to BackbencherGames</p>
+        </div>
+    </div>
+
+    <!-- JavaScript imports -->
+    <script src="../js/main.js" type="module"></script>
+    <script src="../js/theme.js" type="module"></script>
+    <script src="../js/profile.js" type="module"></script>
+    <script src="../js/modal.js" type="module"></script>
+    <script src="../js/feedback.js" type="module"></script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -1133,6 +1133,30 @@ wordGridElement.addEventListener('touchend', (e) => {
 }, { passive: false });
 
 
+// Distinct colors for highlighting different words
+const wordColors = [
+    '#FF5252', // Red
+    '#4CAF50', // Green
+    '#2196F3', // Blue
+    '#FFC107', // Amber
+    '#9C27B0', // Purple
+    '#00BCD4', // Cyan
+    '#FF9800', // Orange
+    '#E91E63', // Pink
+    '#3F51B5', // Indigo
+    '#009688', // Teal
+    '#795548', // Brown
+    '#607D8B', // Blue Grey
+    '#CDDC39', // Lime
+    '#F44336', // Deep Red
+    '#8BC34A', // Light Green
+    '#673AB7', // Deep Purple
+    '#FFEB3B', // Yellow
+    '#03A9F4', // Light Blue
+    '#FF4081', // Pink Accent
+    '#64FFDA'  // Teal Accent
+];
+
 // Function to end game early and highlight all remaining words
 function endGameEarly() {
     if (!gameActive) return;
@@ -1140,23 +1164,30 @@ function endGameEarly() {
     // Find all remaining words and highlight them
     const remainingWords = words.filter(word => !foundWords.includes(word));
     
-    // Highlight each remaining word
-    remainingWords.forEach(word => {
+    // Highlight each remaining word with a different color
+    remainingWords.forEach((word, index) => {
         const wordCells = findWordInGrid(word);
+        const wordColor = wordColors[index % wordColors.length];
         
         if (wordCells.length > 0) {
-            // Mark cells as found with a different class for visual distinction
+            // Mark cells as found with a unique color
             wordCells.forEach(cell => {
                 const cellElement = document.querySelector(`.grid-cell[data-x="${cell.x}"][data-y="${cell.y}"]`);
                 if (cellElement) {
                     cellElement.classList.add('auto-found');
+                    cellElement.style.backgroundColor = wordColor;
+                    cellElement.style.color = '#ffffff';
                 }
             });
             
-            // Mark word as found in the list with a different class
+            // Mark word as found in the list with the same color
             const wordElement = document.querySelector(`li[data-word="${word}"]`);
             if (wordElement) {
                 wordElement.classList.add('auto-found');
+                wordElement.style.backgroundColor = wordColor;
+                wordElement.style.color = '#ffffff';
+                wordElement.style.padding = '2px 8px';
+                wordElement.style.borderRadius = '4px';
             }
         }
     });
@@ -1167,7 +1198,7 @@ function endGameEarly() {
     
     // Show game message
     messageTitle.textContent = 'Game Ended';
-    messageText.textContent = 'You ended the game early. All remaining words have been highlighted.';
+    messageText.textContent = 'You ended the game early. All remaining words have been highlighted in different colors.';
     finalTimeElement.textContent = timeElement.textContent;
     finalScoreElement.textContent = score;
     gameMessage.classList.add('show');

@@ -497,42 +497,63 @@ function updateSelection(e) {
 function handleTouchStart(e) {
     if (!gameActive) return;
     
-    // Prevent default to avoid scrolling
-    e.preventDefault();
+    // Store touch start position for detecting scrolling vs clicking
+    window.touchStartX = e.touches[0].clientX;
+    window.touchStartY = e.touches[0].clientY;
+    window.isTouchScrolling = false;
     
-    // If in click mode, handle as a click
+    // If in click mode, don't prevent default to allow scrolling
+    // We'll handle the click on touchend instead
     if (selectionMode === 'click') {
+        return;
+    }
+    
+    // In drag mode, prevent default to enable dragging selection
+    if (selectionMode === 'drag') {
+        e.preventDefault();
+        
+        // Clear previous selection
+        clearSelection();
+        
+        // Get touch coordinates
         const touch = e.touches[0];
         const element = document.elementFromPoint(touch.clientX, touch.clientY);
         
         if (element && element.classList.contains('grid-cell')) {
-            handleCellClick({ target: element });
+            const x = parseInt(element.dataset.x);
+            const y = parseInt(element.dataset.y);
+            
+            selectedCells.push({ x, y, element: element });
+            element.classList.add('selected');
         }
-        return;
-    }
-    
-    // Clear previous selection
-    clearSelection();
-    
-    // Get touch coordinates
-    const touch = e.touches[0];
-    const element = document.elementFromPoint(touch.clientX, touch.clientY);
-    
-    if (element && element.classList.contains('grid-cell')) {
-        const x = parseInt(element.dataset.x);
-        const y = parseInt(element.dataset.y);
-        
-        selectedCells.push({ x, y, element: element });
-        element.classList.add('selected');
     }
 }
 
 // Handle touch move event for mobile devices
 function handleTouchMove(e) {
-    if (!gameActive || selectedCells.length === 0 || selectionMode === 'click') return;
+    if (!gameActive) return;
     
-    // Prevent default to avoid scrolling
-    e.preventDefault();
+    // Detect if user is scrolling by checking distance moved
+    if (window.touchStartX && window.touchStartY) {
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
+        const deltaX = Math.abs(touchX - window.touchStartX);
+        const deltaY = Math.abs(touchY - window.touchStartY);
+        
+        // If vertical movement is significantly more than horizontal, consider it scrolling
+        if (deltaY > deltaX && deltaY > 10) {
+            window.isTouchScrolling = true;
+            return; // Allow default scrolling behavior
+        }
+    }
+    
+    // In click mode, don't prevent default to allow scrolling
+    if (selectionMode === 'click') return;
+    
+    // In drag mode, if we have cells selected, prevent default to enable dragging
+    if (selectedCells.length > 0) {
+        e.preventDefault();
+    }
     
     // Get touch coordinates
     const touch = e.touches[0];
@@ -596,12 +617,26 @@ function handleTouchMove(e) {
 
 // End touch selection for mobile devices
 function endTouchSelection(e) {
-    if (selectionMode === 'drag') {
+    // Handle based on selection mode
+    if (selectionMode === 'click') {
+        // Only handle as a click if user wasn't scrolling
+        if (!window.isTouchScrolling && e.changedTouches && e.changedTouches.length > 0) {
+            // Get the element at the touch position
+            const touch = e.changedTouches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            if (element && element.classList.contains('grid-cell')) {
+                handleCellClick({ target: element });
+            }
+        }
+    } else if (selectionMode === 'drag') {
         validateSelection();
-    } else if (selectionMode === 'click' && selectedCells.length >= 2) {
-        // Also validate in click mode if we have enough cells selected
-        checkForValidWord();
     }
+    
+    // Reset touch tracking variables
+    window.touchStartX = null;
+    window.touchStartY = null;
+    window.isTouchScrolling = false;
 }
 
 // End word selection

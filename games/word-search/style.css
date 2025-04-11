@@ -152,9 +152,8 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    max-height: 60vh;
+    /* Scrolling only enabled on mobile devices via media query */
+    max-height: 70vh;
 }
 
 .word-grid {
@@ -163,8 +162,6 @@ body {
     width: 100%;
     height: 100%;
     user-select: none;
-    min-width: fit-content;
-    min-height: fit-content;
 }
 
 .grid-cell {
@@ -177,14 +174,12 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.2s;
-    min-width: 40px; /* Increased size for better touch interaction */
-    min-height: 40px;
-    aspect-ratio: 1;
+    min-width: 30px; /* Ensure cells are large enough for touch */
+    min-height: 30px;
     user-select: none; /* Prevent text selection during touch */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    touch-action: none; /* Prevent browser handling of touch events */
 }
 
 .grid-cell:hover {
@@ -412,6 +407,7 @@ body {
 }
 
 /* Responsive Styles */
+/* Mobile styles - enable scrolling only on small screens */
 @media (max-width: 768px) {
     .game-header {
         flex-direction: column;
@@ -428,6 +424,28 @@ body {
     
     .grid-cell {
         font-size: 1rem;
+        min-height: 40px; /* Larger touch target on mobile */
+        min-width: 40px;
+    }
+    
+    .word-grid-container {
+        max-height: 60vh; /* Slightly smaller on very small screens */
+        padding: 10px;
+        overflow: auto; /* Enable scrolling only on mobile */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    /* Ensure the grid container doesn't bounce when scrolling on iOS */
+    .word-grid-container::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Desktop styles - ensure no scrolling on larger screens */
+@media (min-width: 769px) {
+    .word-grid-container {
+        overflow: visible; /* Disable scrolling on desktop */
+        max-height: none; /* Remove height restriction on desktop */
     }
 }
 
@@ -451,4 +469,20 @@ body {
     0% { opacity: 0.7; }
     50% { opacity: 1; }
     100% { opacity: 0.7; }
+}
+
+
+@media (max-width: 768px) {
+    .word-grid-container {
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+
+@media (min-width: 769px) {
+    .word-grid-container {
+        overflow: visible;
+        max-height: none;
+    }
 }

@@ -102,6 +102,15 @@ function updateSelectionModeButton() {
 
 // Initialize the game
 function initGame() {
+    if (gameActive) {
+        // Highlight End Game button to show it must be clicked first
+        endGameBtn.classList.add('highlight-button');
+        setTimeout(() => {
+            endGameBtn.classList.remove('highlight-button');
+        }, 2000);
+        return;
+    }
+
     // Reset game state
     grid = [];
     words = [];
@@ -115,10 +124,15 @@ function initGame() {
     // Update UI
     updateScore();
     updateTimer();
-    updateSelectionModeButton();
     
     // Get difficulty
     difficulty = difficultySelector.value;
+    
+    // Set selection mode to 'click' by default for DEV mode
+    if (difficulty === 'devs') {
+        selectionMode = 'click';
+    }
+    updateSelectionModeButton();
     
     // Generate grid and words
     const gridSize = gridSizes[difficulty];
@@ -130,6 +144,10 @@ function initGame() {
     
     // Hide game message if visible
     gameMessage.classList.remove('show');
+    
+    // Disable New Game button until game ends
+    newGameBtn.disabled = true;
+    newGameBtn.classList.add('disabled');
 }
 
 // Generate the word search grid
@@ -953,24 +971,11 @@ function updateSelectionNumbers() {
 // Update the score
 function updateScore(foundWord = null) {
     if (foundWord) {
-        // Base points for finding a word
-        let points = 10;
-        
-        // Bonus points based on word length
-        points += foundWord.length * 5;
-        
-        // Bonus points based on difficulty
-        if (difficulty === 'medium') points *= 1.5;
-        if (difficulty === 'hard') points *= 2;
-        if (difficulty === 'devs') points *= 3; // Higher bonus for DEV's Challenge
-        
-        // Penalty for using hints
-        if (hintsUsed > 0) {
-            points *= (1 - (hintsUsed * 0.1));
-        }
+        // Simplified scoring system: +100 points for each word found
+        let points = 100;
         
         // Add to score
-        score += Math.floor(points);
+        score += points;
     }
     
     // Update score display
@@ -992,6 +997,11 @@ function giveHint() {
     
     // Increase hint counter
     hintsUsed++;
+    
+    // Deduct 50 points for using a hint
+    score -= 50;
+    if (score < 0) score = 0;
+    updateScore(); // Update the score display
     
     // Find a word that hasn't been found yet
     const remainingWords = words.filter(word => !foundWords.includes(word));
@@ -1106,6 +1116,10 @@ function endGame(won = false) {
     finalTimeElement.textContent = timeElement.textContent;
     finalScoreElement.textContent = score;
     gameMessage.classList.add('show');
+    
+    // Re-enable New Game button
+    newGameBtn.disabled = false;
+    newGameBtn.classList.remove('disabled');
 }
 
 // Event listeners
@@ -1215,4 +1229,8 @@ function endGameEarly() {
     finalTimeElement.textContent = timeElement.textContent;
     finalScoreElement.textContent = score;
     gameMessage.classList.add('show');
+    
+    // Re-enable New Game button
+    newGameBtn.disabled = false;
+    newGameBtn.classList.remove('disabled');
 }

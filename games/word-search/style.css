@@ -152,6 +152,9 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: 60vh;
 }
 
 .word-grid {
@@ -160,6 +163,8 @@ body {
     width: 100%;
     height: 100%;
     user-select: none;
+    min-width: fit-content;
+    min-height: fit-content;
 }
 
 .grid-cell {
@@ -172,12 +177,14 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.2s;
-    min-width: 30px; /* Ensure cells are large enough for touch */
-    min-height: 30px;
+    min-width: 40px; /* Increased size for better touch interaction */
+    min-height: 40px;
+    aspect-ratio: 1;
     user-select: none; /* Prevent text selection during touch */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    touch-action: none; /* Prevent browser handling of touch events */
 }
 
 .grid-cell:hover {

@@ -760,7 +760,6 @@ function validateNonLinearSelection() {
     
     // Get the letters from selected cells - we focus on the actual letters, not the specific cells
     const selectedLetters = selectedCells.map(cell => grid[cell.y][cell.x]);
-    const selectedPositions = selectedCells.map(cell => ({x: cell.x, y: cell.y}));
     
     // Check each word that hasn't been found yet
     for (const word of words) {
@@ -804,6 +803,9 @@ function validateNonLinearSelection() {
                 // Update score
                 updateScore(word);
                 
+                // Reset selection array to allow new selections
+                selectedCells = [];
+                
                 // Check if all words are found
                 if (foundWords.length === words.length) {
                     endGame(true);
@@ -814,9 +816,8 @@ function validateNonLinearSelection() {
         }
     }
     
-    // Important: Don't clear selection if no word was found
+    // Don't clear selection if no word was found
     // This allows users to continue selecting cells for longer words
-    // clearSelection(); - Removing this line to fix the selection limit issue
     return false; // Return false to indicate no match was found
 }
 
@@ -844,17 +845,13 @@ function checkForValidWord() {
     
     // For DEV's Challenge, check if the letters match any word in any order
     if (difficulty === 'devs') {
-        // Only validate if we have enough letters to potentially form a word
-        const minWordLength = Math.min(...words.filter(w => !foundWords.includes(w)).map(w => w.length));
-        if (selectedCells.length >= minWordLength) {
-            // Check if the selection matches any word
-            const wordMatch = validateNonLinearSelection();
-            if (wordMatch) {
-                // Word found - handled in validateNonLinearSelection
-                return true;
-            }
-            // Don't clear selection if no match - allow user to continue selecting
+        // Check if the selection matches any word
+        const wordMatch = validateNonLinearSelection();
+        if (wordMatch) {
+            // Word found - handled in validateNonLinearSelection
+            return true;
         }
+        // Don't clear selection if no match - allow user to continue selecting
         return false;
     }
     

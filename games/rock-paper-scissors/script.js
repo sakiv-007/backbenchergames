@@ -6,8 +6,8 @@ let computerScore = 0;
 let roundNumber = 1;
 let gameActive = true;
 let gameHistory = [];
-let difficulty = 'medium';
-let targetScore = 5; // First to reach this score wins
+let difficulty = 'medium';  // Remove duplicate declaration
+let targetScore = 5;       // Remove duplicate declaration
 let playerChoice = null;
 let computerChoice = null;
 
@@ -132,7 +132,14 @@ function handlePlayerChoice(choice) {
 function makeComputerChoice() {
     const choices = ['rock', 'paper', 'scissors'];
     
-    switch (difficulty) {
+    switch (difficultySelector.value) {  // Use the selector value directly
+        case 'cantWin':
+            // In "You Just Can't Win" mode, computer always chooses the winning option
+            if (playerChoice === 'rock') computerChoice = 'paper';
+            else if (playerChoice === 'paper') computerChoice = 'scissors';
+            else computerChoice = 'rock';
+            break;
+            
         case 'easy':
             // In easy mode, computer makes random choices with a slight bias towards losing
             const randomValue = Math.random();

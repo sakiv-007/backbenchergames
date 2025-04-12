@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors - BackbencherGames</title>
+    <title>Tic Tac Toe - BackbencherGames</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -151,44 +151,45 @@
                     <div class="game-info">
                         <h2>Rock Paper Scissors</h2>
                         <div class="game-meta">
-                            <span><i class="fas fa-users"></i> 1 Player</span>
-                            <span style="margin-left: 15px;"><i class="fas fa-clock"></i> 1-5 min</span>
-                            <span style="margin-left: 15px;"><i class="fas fa-star"></i> 4.7/5</span>
+                            <span><i class="fas fa-users"></i> 2 Players</span>
+                            <span style="margin-left: 15px;"><i class="fas fa-clock"></i> 1-2 min</span>
+                            <span style="margin-left: 15px;"><i class="fas fa-star"></i> 4.5/5</span>
                         </div>
                     </div>
-                    <a href="rock-paper-scissors/game.html" class="play-now-btn">Play Now</a>
+                    <a href="../games/rock-paper-scissors/game.html" class="play-now-btn">Play Now</a>
                 </div>
 
                 <div class="game-description">
                     <div class="game-image">
-                        <img src="../assets/custom-tic-tac-toe.png" alt="Rock Paper Scissors Game">
+                        <img src="../assets/rock-paper.jpeg" alt="Rock Paper Scissors Game">
                     </div>
                     <div class="game-text">
                         <h3>About the Game</h3>
-                        <p>Rock Paper Scissors is a classic hand game usually played between two people. Each player simultaneously forms one of three shapes with an outstretched hand. The game has been brought to digital life with our interactive version where you can play against the computer!</p>
+                        <p>Rock Paper Scissors is a fast-paced hand game that has been played for generations. This digital version brings the classic game to life with modern features and exciting gameplay. Players simultaneously choose between rock, paper, or scissors, with each option being able to defeat one other while being vulnerable to the third.</p>
                         
                         <h3>How to Play</h3>
                         <ul>
-                            <li>Choose one of three options: Rock, Paper, or Scissors</li>
-                            <li>Rock beats Scissors, Scissors beats Paper, Paper beats Rock</li>
-                            <li>The computer will make its choice after you</li>
-                            <li>First to reach the target score wins the game</li>
-                            <li>Track your win/loss history and improve your strategy</li>
+                            <li>Choose between Rock, Paper, or Scissors</li>
+                            <li>Rock crushes Scissors</li>
+                            <li>Scissors cuts Paper</li>
+                            <li>Paper covers Rock</li>
+                            <li>First player to win the set number of rounds wins the game</li>
                         </ul>
                         
                         <h3>Features</h3>
                         <ul>
-                            <li>Simple, intuitive gameplay</li>
-                            <li>Beautiful animations and visual effects</li>
-                            <li>Score tracking and game history</li>
-                            <li>Multiple difficulty levels</li>
-                            <li>Responsive design for all devices</li>
+                            <li>Sleek, modern interface with animated hand gestures</li>
+                            <li>Play against AI with multiple difficulty levels</li>
+                            <li>Online multiplayer mode</li>
+                            <li>Best of 3, 5, or 7 rounds options</li>
+                            <li>Statistics tracking for wins and favorite moves</li>
+                            <li>Achievement system with unlockable content</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="game-actions">
-                    <a href="rock-paper-scissors/game.html" class="btn primary-btn"><i class="fas fa-play"></i> Play Now</a>
+                    <a href="../games/tic-tac-toe/game.html" class="btn primary-btn"><i class="fas fa-play"></i> Play Now</a>
                     <a href="../index.html" class="btn secondary-btn"><i class="fas fa-th"></i> More Games</a>
                 </div>
                 
@@ -196,113 +197,140 @@
                 <div class="related-games">
                     <h3>You May Also Like</h3>
                     <div class="games-grid" style="grid-template-columns: repeat(3, 1fr);">
-                        <!-- Tic Tac Toe Game Card -->
-                        <div class="game-card">
-                            <div class="game-card-image">
-                                <img src="../assets/tic-tac-toe.png" alt="Tic Tac Toe">
-                                <div class="game-card-overlay">
-                                    <a href="tic-tac-toe.html" class="btn primary-btn">View Game</a>
-                                </div>
-                            </div>
-                            <div class="game-card-content">
-                                <h3>Tic Tac Toe</h3>
-                                <div class="game-card-meta">
-                                    <span><i class="fas fa-users"></i> 1-2 Players</span>
-                                    <span><i class="fas fa-star"></i> 4.5/5</span>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        
+                        
                         
                         <!-- Custom Tic Tac Toe Game Card -->
                         <div class="game-card">
-                            <div class="game-card-image">
-                                <img src="../assets/custom-tic-tac-toe.png" alt="Custom Tic Tac Toe">
-                                <div class="game-card-overlay">
-                                    <a href="custom-tic-tac-toe.html" class="btn primary-btn">View Game</a>
-                                </div>
+                            <div class="game-image">
+                                <img loading="lazy" src="../assets/custom-tic-tac-toe.png" alt="Custom Tic Tac Toe">
                             </div>
-                            <div class="game-card-content">
+                            <div class="game-info">
                                 <h3>Custom Tic Tac Toe</h3>
-                                <div class="game-card-meta">
-                                    <span><i class="fas fa-users"></i> 1-2 Players</span>
-                                    <span><i class="fas fa-star"></i> 4.6/5</span>
+                                <p>Tic tac toe but with better features</p>
+                                <div class="game-stats">
+                                    <span><i class="fas fa-users"></i> 875</span>
+                                    <span><i class="fas fa-heart"></i> 620</span>
                                 </div>
+                                <a href="custom-tic-tac-toe.html" class="play-button">Play Now</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Word Search Game Card -->
+                        <div class="game-card">
+                            <div class="game-image">
+                                <img loading="lazy" src="../assets/word-search.png" alt="Word Search">
+                            </div>
+                            <div class="game-info">
+                                <h3>Word Search</h3>
+                                <p>Find hidden words in a grid</p>
+                                <div class="game-stats">
+                                    <span><i class="fas fa-users"></i> 620</span>
+                                    <span><i class="fas fa-heart"></i> 415</span>
+                                </div>
+                                <a href="word-search.html" class="play-button">Play Now</a>
                             </div>
                         </div>
                         
                         <!-- Snake Game Card -->
                         <div class="game-card">
-                            <div class="game-card-image">
-                                <img src="../assets/snake.jpeg" alt="Snake Game">
-                                <div class="game-card-overlay">
-                                    <a href="snake.html" class="btn primary-btn">View Game</a>
-                                </div>
+                            <div class="game-image">
+                                <img loading="lazy" src="../assets/snake.jpeg" alt="Snake Game">
                             </div>
-                            <div class="game-card-content">
-                                <h3>Snake</h3>
-                                <div class="game-card-meta">
-                                    <span><i class="fas fa-users"></i> 1 Player</span>
-                                    <span><i class="fas fa-star"></i> 4.8/5</span>
+                            <div class="game-info">
+                                <h3>Snake Game</h3>
+                                <p>The oldschool snake game</p>
+                                <div class="game-stats">
+                                    <span><i class="fas fa-users"></i> 950</span>
+                                    <span><i class="fas fa-heart"></i> 680</span>
                                 </div>
+                                <a href="snake.html" class="play-button">Play Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
     </main>
 
+    <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container">            
             <div class="footer-content">
                 <div class="footer-logo">
-                    <h2>BackbencherGames</h2>
-                    <p>Your favorite gaming platform</p>
+                    <h3>BackbencherGames</h3>
+                    <p>Play classic paper games online with friends anywhere, anytime!</p>
+                    <p class="copyright">© 2025 BackbencherGames. All rights reserved.</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="../index.html">Home</a></li>
-                            <li><a href="javascript:void(0)" data-feature="Games">Games</a></li>
-                            <li><a href="javascript:void(0)" data-feature="Tournaments">Tournaments</a></li>
-                            <li><a href="javascript:void(0)" data-feature="Leaderboards">Leaderboards</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Support</h3>
-                        <ul>
-                            <li><a href="javascript:void(0)" data-feature="Help Center">Help Center</a></li>
-                            <li><a href="javascript:void(0)" data-feature="Contact Us">Contact Us</a></li>
-                            <li><a href="javascript:void(0)" data-feature="FAQs">FAQs</a></li>
-                            <li><a href="javascript:void(0)" data-feature="Report Bug">Report Bug</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Legal</h3>
-                        <ul>
-                            <li><a href="javascript:void(0)" data-feature="Terms of Service">Terms of Service</a></li>
-                            <li><a href="javascript:void(0)" data-feature="Privacy Policy">Privacy Policy</a></li>
-                            <li><a href="javascript:void(0)" data-feature="Cookie Policy">Cookie Policy</a></li>
-                        </ul>
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">All Games</a></li>
+                        <li><a href="#">Popular Games</a></li>
+                        <li><a href="#">Tournaments</a></li>
+                        <li><a href="#">Leaderboards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2023 BackbencherGames. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="javascript:void(0)" data-feature="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="javascript:void(0)" data-feature="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="javascript:void(0)" data-feature="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="javascript:void(0)" data-feature="Discord"><i class="fab fa-discord"></i></a>
-                </div>
+                <p>Made with <i class="fas fa-heart" style="color: #e25555;"></i> by BackbencherGames Team | <a href="../sitemap.html">Sitemap</a></p>
             </div>
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/theme.js"></script>
+    <!-- Add this modal HTML at the end of the body but before the script tag -->
+    <div id="feature-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h2>Coming Soon!</h2>
+            <p>We're working hard to bring you this feature. Stay tuned for updates!</p>
+            <button class="modal-button">Got it</button>
+        </div>
+    </div>
+    
+    <!-- Game achievement notification -->
+    <div id="achievement-notification" class="achievement-notification">
+        <div class="achievement-icon">
+            <i class="fas fa-trophy"></i>
+        </div>
+        <div class="achievement-content">
+            <h4>Achievement Unlocked!</h4>
+            <p>First Visit: Welcome to BackbencherGames</p>
+        </div>
+    </div>
+
+    <!-- JavaScript imports -->
+    <script src="../js/main.js" type="module"></script>
+    <script src="../js/theme.js" type="module"></script>
+    <script src="../js/profile.js" type="module"></script>
+    <script src="../js/modal.js" type="module"></script>
+    <script src="../js/feedback.js" type="module"></script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

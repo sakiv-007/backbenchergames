@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Game - Backbencher Games</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="icon" href="../../assets/fevicon.png" type="image/png">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Ludo Game</h1>
+            <div class="game-controls">
+                <button id="new-game-btn" class="btn primary-btn">New Game</button>
+                <button id="rules-btn" class="btn secondary-btn">Rules</button>
+                <a href="../ludo.html" class="btn secondary-btn">Back</a>
+            </div>
+        </div>
+
+        <div class="game-board-container">
+            <div class="player-info" id="player-info">
+                <div class="current-player">
+                    <h3>Current Player</h3>
+                    <div id="current-player-indicator" class="player-indicator"></div>
+                </div>
+                <div class="player-stats">
+                    <div class="player red">
+                        <div class="player-color"></div>
+                        <span>Player 1 (Red)</span>
+                    </div>
+                    <div class="player green">
+                        <div class="player-color"></div>
+                        <span>Player 2 (Green)</span>
+                    </div>
+                    <div class="player yellow">
+                        <div class="player-color"></div>
+                        <span>Player 3 (Yellow)</span>
+                    </div>
+                    <div class="player blue">
+                        <div class="player-color"></div>
+                        <span>Player 4 (Blue)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-board" id="game-board">
+                <!-- The Ludo board will be created dynamically with JavaScript -->
+            </div>
+
+            <div class="dice-container">
+                <div id="dice" class="dice">
+                    <div class="dice-face" id="dice-face">
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <button id="roll-dice-btn" class="btn primary-btn">Roll Dice</button>
+            </div>
+        </div>
+
+        <div id="rules-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Ludo Rules</h2>
+                <ul>
+                    <li>Each player has 4 tokens that start in their home yard</li>
+                    <li>Roll the dice to move your tokens around the board</li>
+                    <li>You need to roll a 6 to move a token out of the home yard</li>
+                    <li>Capture opponent tokens by landing on them, sending them back to their home yard</li>
+                    <li>Safe zones (marked with stars) protect tokens from being captured</li>
+                    <li>A player gets an extra turn when rolling a 6 or capturing an opponent's token</li>
+                    <li>Navigate all four of your tokens to the center of the board to win</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="game-over-modal" class="modal">
+            <div class="modal-content">
+                <h2>Game Over!</h2>
+                <p id="winner-message"></p>
+                <button id="play-again-btn" class="btn primary-btn">Play Again</button>
+                <a href="../ludo.html" class="btn secondary-btn">Back to Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

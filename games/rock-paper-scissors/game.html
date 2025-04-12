@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Rock Paper Scissors</h1>
+            <div class="game-controls">
+                <div class="score-container">
+                    <div class="player-score">
+                        <span>You</span>
+                        <span id="player-score">0</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="computer-score">
+                        <span>Computer</span>
+                        <span id="computer-score">0</span>
+                    </div>
+                </div>
+                <div class="difficulty-selector">
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <button id="new-game-btn" class="btn">New Game</button>
+                <a href="/index.html" class="btn home-btn"><i class="fas fa-home"></i> Home</a>
+            </div>
+        </header>
+
+        <div class="game-content">
+            <div class="round-info">
+                <div id="round-number">Round 1</div>
+                <div id="round-result"></div>
+            </div>
+
+            <div class="game-area">
+                <div class="choices-container">
+                    <h2>Make Your Choice</h2>
+                    <div class="choices">
+                        <div class="choice" data-choice="rock">
+                            <div class="choice-icon">
+                                <i class="fas fa-hand-rock"></i>
+                            </div>
+                            <span>Rock</span>
+                        </div>
+                        <div class="choice" data-choice="paper">
+                            <div class="choice-icon">
+                                <i class="fas fa-hand-paper"></i>
+                            </div>
+                            <span>Paper</span>
+                        </div>
+                        <div class="choice" data-choice="scissors">
+                            <div class="choice-icon">
+                                <i class="fas fa-hand-scissors"></i>
+                            </div>
+                            <span>Scissors</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="battle-area">
+                    <div class="player-choice">
+                        <h3>Your Choice</h3>
+                        <div id="player-choice-display" class="choice-display">
+                            <i class="fas fa-question"></i>
+                        </div>
+                    </div>
+                    <div class="vs-display">VS</div>
+                    <div class="computer-choice">
+                        <h3>Computer's Choice</h3>
+                        <div id="computer-choice-display" class="choice-display">
+                            <i class="fas fa-question"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-history">
+                <h2>Game History</h2>
+                <div class="history-container">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Round</th>
+                                <th>Your Choice</th>
+                                <th>Computer's Choice</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <!-- History rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-message" class="game-message">
+            <div class="message-content">
+                <button id="close-message-btn" class="close-btn"><i class="fas fa-times"></i></button>
+                <h2 id="message-title">Game Over</h2>
+                <p id="message-text">You won the game!</p>
+                <div class="message-stats">
+                    <div class="stat">
+                        <i class="fas fa-trophy"></i>
+                        <span id="final-score">5 - 3</span>
+                    </div>
+                </div>
+                <button id="play-again-btn" class="btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

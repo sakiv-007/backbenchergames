@@ -5,7 +5,7 @@ let notifications = [];
 let unseenCount = 0;
 
 // Version control for default notification
-const DEFAULT_NOTIFICATION_VERSION = '2.2'; // Increment this when default notification changes
+const DEFAULT_NOTIFICATION_VERSION = '2.4'; // Increment this when default notification changes
 
 // Check if we have stored notifications in localStorage
 function loadNotifications() {
@@ -19,15 +19,26 @@ function loadNotifications() {
     const title = 'New Feature Alert!';
 
     const content = `
-    Added a new Game - Rock Paper Scissors
+
+    Added a new Game - Rock Paper Scissors. Try it out now!
 
     <br> <br>
 
-    Word-search game is now available<br><br>Made some UI improvements<br><br>We Updated and made the hero section game fully functional
+    Word-search game is now available
+    
+    <br><br>
+    
+    Made some UI improvements
+    
+    <br><br>
+    
+    We Updated and made the hero section game fully functional
 
     <br> <br>
 
-    And we also added the feature to edit your profile that will store your data locally`;
+    And we also added the feature to edit your profile that will store your data locally
+    
+    `;
 
     const date = 'Released: April 12, 2025';
 

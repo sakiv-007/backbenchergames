@@ -205,16 +205,27 @@ body {
     justify-content: center;
     align-items: center;
     min-width: 300px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 .game-board {
-    position: relative;
+    position: absolute;
     display: grid;
     gap: 0;
-    margin: 0 auto;
+    margin: 0;
     background-color: var(--darker-bg);
     border-radius: 5px;
-    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    padding: 10px; /* Add padding to ensure dots at edges are fully visible */
 }
 
 /* Dots and Lines */

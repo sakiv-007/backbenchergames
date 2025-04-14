@@ -10,8 +10,8 @@ let boxesCompleted = 0;
 let totalBoxes = 0;
 
 // Game board dimensions
-let dotSpacing = 60; // Space between dots
-let dotRadius = 6; // Radius of dots
+let dotSpacing = 60; // Default space between dots
+let dotRadius = 6; // Default radius of dots
 let lineThickness = 4; // Thickness of lines
 
 // Arrays to track game state
@@ -49,6 +49,21 @@ function initGame() {
     gridSize = parseInt(gridSizeSelector.value);
     totalBoxes = (gridSize - 1) * (gridSize - 1);
     
+    // Adjust dot spacing, radius, and line thickness based on grid size
+    if (gridSize <= 5) {
+        dotSpacing = 80; // Default for small grids
+        dotRadius = 6;
+        lineThickness = 8;
+    } else if (gridSize <= 7) {
+        dotSpacing = 60; // Medium grids
+        dotRadius = 5;
+        lineThickness = 3;
+    } else {
+        dotSpacing = 45; // Large grids (9x9)
+        dotRadius = 3;
+        lineThickness = 2;
+    }
+    
     // Initialize arrays
     horizontalLines = Array(gridSize).fill().map(() => Array(gridSize - 1).fill(false));
     verticalLines = Array(gridSize - 1).fill().map(() => Array(gridSize).fill(false));
@@ -66,6 +81,11 @@ function initGame() {
     const boardSize = (gridSize - 1) * dotSpacing + dotRadius * 2;
     gameBoard.style.width = `${boardSize}px`;
     gameBoard.style.height = `${boardSize}px`;
+    
+    // Ensure the game board is properly centered and fills the container
+    gameBoard.style.transform = 'translate(-50%, -50%)';
+    gameBoard.style.left = '50%';
+    gameBoard.style.top = '50%';
     
     // Create the game board
     createGameBoard();

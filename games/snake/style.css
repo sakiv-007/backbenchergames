@@ -356,3 +356,36 @@ canvas {
         width: 100%;
     }
 }
+
+
+/* Home button styling */
+.home-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    z-index: 10;
+}
+
+.home-btn:hover {
+    background: rgba(126, 87, 194, 0.2);
+    transform: scale(1.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(126, 87, 194, 0.4);
+}
+
+.home-btn:active {
+    transform: scale(0.95);
+}

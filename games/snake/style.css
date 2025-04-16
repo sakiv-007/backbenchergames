@@ -44,7 +44,9 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    padding-left: 250px;
+    padding-left: 250px; /* Added fixed padding-left for desktop view */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .game-container {
@@ -289,7 +291,7 @@ canvas {
 
 @media (max-width: 768px) {
     body {
-        padding: 20px;
+        padding: 10px;
         height: auto;
         min-height: 100vh;
     }
@@ -298,6 +300,9 @@ canvas {
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        padding: 10px;
+        padding-left: 10px; /* Override desktop padding for mobile */
+        width: 100%;
     }
 
     canvas {
@@ -313,10 +318,22 @@ canvas {
         width: 100%;
         max-width: 300px;
         margin-top: 20px;
+        position: static;
+    }
+
+    .game-container {
+        padding: 15px;
+        width: 100%;
+        max-width: 330px;
+    }
+    
+    .restart-btn, .pause-btn {
+        padding: 10px 20px;
+        font-size: 14px;
     }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1200px) {
     .leaderboard {
         position: static;
         transform: none;
@@ -329,5 +346,13 @@ canvas {
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        width: 100%;
+        padding: 20px;
+        padding-left: 20px; /* Override desktop padding for tablet */
+    }
+    
+    .game-container {
+        max-width: 450px;
+        width: 100%;
     }
 }

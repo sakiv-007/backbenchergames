@@ -1,28 +1,57 @@
+:root {
+    /* Gaming-themed color palette - matching main website */
+    --primary-color: #7e57c2;
+    --secondary-color: #2979ff;
+    --accent-color: #00e676;
+    --dark-bg: #121212;
+    --darker-bg: #0a0a0a;
+    --card-bg: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --border-color: #333333;
+    --success-color: #00e676;
+    --warning-color: #ffab00;
+    --danger-color: #ff5252;
+    --hero-bg: #1a1533;
+    
+    /* Gaming fonts */
+    --heading-font: 'Orbitron', sans-serif;
+    --body-font: 'Poppins', sans-serif;
+    --pixel-font: 'Press Start 2P', cursive;
+    
+    /* Animations */
+    --transition-speed: 0.3s;
+}
+
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    font-family: var(--body-font), -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--dark-bg);
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(126, 87, 194, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(41, 121, 255, 0.1) 0%, transparent 50%);
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    color: #e2e8f0;
+    color: var(--text-primary);
 }
 
 .container {
-    background: rgba(30, 41, 59, 0.7);
+    background-color: var(--card-bg);
     backdrop-filter: blur(10px);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 32px;
     width: 90%;
     max-width: 500px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 
                 0 0 0 1px rgba(255, 255, 255, 0.1),
-                0 0 40px rgba(79, 70, 229, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+                0 0 40px rgba(126, 87, 194, 0.3);
+    border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
+    transition: all var(--transition-speed);
 }
 
 .container::before {
@@ -40,10 +69,15 @@ h1 {
     text-align: center;
     font-size: 2.2rem;
     margin-bottom: 24px;
-    font-weight: 600;
-    color: #f8fafc;
-    text-shadow: 0 0 10px rgba(79, 70, 229, 0.5);
+    font-weight: 700;
+    font-family: var(--heading-font);
     letter-spacing: 1px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(126, 87, 194, 0.3);
 }
 
 .settings {
@@ -166,26 +200,74 @@ input:focus {
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+@keyframes x-appear-before {
+    0% {
+        transform: translate(-50%, -50%) rotate(45deg) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(45deg) scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(45deg) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes x-appear-after {
+    0% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes o-appear {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
 button {
     width: 100%;
     margin-top: 10px;
     padding: 14px;
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s;
+    font-weight: 600;
+    font-family: var(--heading-font);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all var(--transition-speed);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 4px 12px rgba(126, 87, 194, 0.3);
 }
 
 button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(126, 87, 194, 0.4);
 }
 
 button:active {
@@ -241,23 +323,27 @@ button:hover::after {
 }
 
 /* Add specific styles for X and O */
-.cell.x::before, 
+.cell.x::before,
 .cell.x::after {
     content: '';
     position: absolute;
-    width: 70%;
-    height: 3px;
-    background: #6366f1;
-    border-radius: 2px;
-    box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+    width: 80%;
+    height: 10%;
+    background: var(--secondary-color);
+    border-radius: 3px;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 10px rgba(41, 121, 255, 0.5);
 }
 
 .cell.x::before {
-    transform: rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
+    animation: x-appear-before 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .cell.x::after {
-    transform: rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-45deg);
+    animation: x-appear-after 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 .cell.o::before {
@@ -265,9 +351,13 @@ button:hover::after {
     position: absolute;
     width: 60%;
     height: 60%;
-    border: 3px solid #ef4444;
+    border: 6px solid var(--danger-color);
     border-radius: 50%;
-    box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: o-appear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    box-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
 }
 
 /* Media queries for responsive design */
@@ -415,10 +505,12 @@ button:hover::after {
     font-size: 1.1rem;
     font-weight: 500;
     color: #cbd5e1;
-    background: rgba(15, 23, 42, 0.5);
+    background-color: var(--card-bg);
     padding: 16px;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: var(--heading-font);
 }
 
 #scores div {
@@ -467,14 +559,14 @@ button:hover::after {
     100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
 }
 
-.cell:has(X) {
-    color: #6366f1;
-    text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+.cell:has(X), .cell.x {
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px rgba(41, 121, 255, 0.7);
 }
 
-.cell:has(O) {
-    color: #ef4444;
-    text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+.cell:has(O), .cell.o {
+    color: var(--danger-color);
+    text-shadow: 0 0 10px rgba(255, 82, 82, 0.7);
 }
 .hidden {
     display: none;
@@ -565,13 +657,13 @@ button:hover::after {
 }
 
 .x-line {
-    color: #6366f1; /* Same blue color as X symbol */
-    box-shadow: 0 0 8px rgba(99, 102, 241, 0.6);
+    color: var(--secondary-color); /* Match X symbol color */
+    box-shadow: 0 0 8px rgba(41, 121, 255, 0.6);
 }
 
 .o-line {
-    color: #ef4444; /* Same red color as O symbol */
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+    color: var(--danger-color); /* Match O symbol color */
+    box-shadow: 0 0 8px rgba(255, 82, 82, 0.6);
 }
 
 @keyframes fadeIn {

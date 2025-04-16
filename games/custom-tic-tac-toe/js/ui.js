@@ -344,7 +344,11 @@ function drawMatchLine(cells, player) {
     line.style.transformOrigin = 'left center';
     
     // Add gradient for opacity effect - more opaque at ends, slightly transparent in middle
-    const playerColor = player === 'X' ? '#3498db' : '#e74c3c';
+    // Get computed styles to access CSS variables
+    const computedStyle = getComputedStyle(document.documentElement);
+    const playerColor = player === 'X' ? 
+                        computedStyle.getPropertyValue('--secondary-color').trim() : 
+                        computedStyle.getPropertyValue('--danger-color').trim();
     line.style.background = `linear-gradient(to right, 
                              ${playerColor} 0%, 
                              ${playerColor} 20%, 
@@ -555,28 +559,56 @@ function returnToMainMenu() {
 
 // Add a back button to return to main menu
 function addBackButton() {
-    let backButton = document.getElementById('backToMenu');
+    let homeButton = document.getElementById('backToMenu');
     
-    if (!backButton) {
-        backButton = document.createElement('button');
-        backButton.id = 'backToMenu';
-        backButton.textContent = 'Back to Menu';
-        backButton.classList.add('back-button');
+    if (!homeButton) {
+        homeButton = document.createElement('div');
+        homeButton.id = 'backToMenu';
+        homeButton.classList.add('home-button');
         
-        // Style the back button
-        backButton.style.position = 'absolute';
-        backButton.style.top = '10px';
-        backButton.style.left = '10px';
-        backButton.style.padding = '8px 12px';
-        backButton.style.backgroundColor = '#475569';
-        backButton.style.color = 'white';
-        backButton.style.border = 'none';
-        backButton.style.borderRadius = '5px';
-        backButton.style.cursor = 'pointer';
-        backButton.style.fontWeight = 'bold';
-        backButton.style.zIndex = '100';
+        // Create home icon using CSS
+        homeButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+        `;
         
-        backButton.addEventListener('click', returnToMainMenu);
-        document.querySelector('.game-container').appendChild(backButton);
+        // Style the home button
+        homeButton.style.position = 'absolute';
+        homeButton.style.top = '15px';
+        homeButton.style.left = '15px';
+        homeButton.style.width = '40px';
+        homeButton.style.height = '40px';
+        homeButton.style.backgroundColor = 'rgba(71, 85, 105, 0.7)';
+        homeButton.style.color = 'white';
+        homeButton.style.border = 'none';
+        homeButton.style.borderRadius = '50%';
+        homeButton.style.cursor = 'pointer';
+        homeButton.style.zIndex = '100';
+        homeButton.style.display = 'flex';
+        homeButton.style.justifyContent = 'center';
+        homeButton.style.alignItems = 'center';
+        homeButton.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+        homeButton.style.transition = 'all 0.3s ease';
+        
+        // Add hover effect
+        homeButton.addEventListener('mouseover', () => {
+            homeButton.style.backgroundColor = 'rgba(71, 85, 105, 0.9)';
+            homeButton.style.transform = 'translateY(-2px)';
+            homeButton.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+        });
+        
+        homeButton.addEventListener('mouseout', () => {
+            homeButton.style.backgroundColor = 'rgba(71, 85, 105, 0.7)';
+            homeButton.style.transform = 'translateY(0)';
+            homeButton.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+        });
+        
+        homeButton.addEventListener('click', () => {
+            // Navigate to the home page
+            window.location.href = '/index.html';
+        });
+        document.querySelector('.game-container').appendChild(homeButton);
     }
 }

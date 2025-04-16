@@ -213,7 +213,10 @@ function resetGame() {
     // Update turn indicator with player name
     const turnIndicator = document.getElementById('turnIndicator');
     if (turnIndicator) {
-        turnIndicator.style.color = currentPlayer === 'X' ? '#6366f1' : '#ef4444';
+        const computedStyle = getComputedStyle(document.documentElement);
+        turnIndicator.style.color = currentPlayer === 'X' ? 
+                                   computedStyle.getPropertyValue('--secondary-color').trim() : 
+                                   computedStyle.getPropertyValue('--primary-color').trim();
         turnIndicator.textContent = `Current Turn: ${playerNames[currentPlayer]}`;
     }
     

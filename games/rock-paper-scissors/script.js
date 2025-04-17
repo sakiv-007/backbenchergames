@@ -305,6 +305,7 @@ newGameBtn.addEventListener('click', initGame);
 // Difficulty selector
 difficultySelector.addEventListener('change', () => {
     difficulty = difficultySelector.value;
+    initGame(); // Reset the game when difficulty changes
 });
 
 // Play Again button

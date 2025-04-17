@@ -442,13 +442,31 @@ body {
         border-radius: 20px;
     }
     
+    .game-content {
+        gap: 15px;
+    }
+    
     .battle-area {
-        flex-direction: column;
-        gap: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        padding: 0 10px;
     }
     
     .vs-display {
-        margin: 10px 0;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.5rem;
+        z-index: 1;
+    }
+    
+    .player-choice, .computer-choice {
+        position: relative;
+        z-index: 0;
+        padding: 0 15px;
     }
     
     .choices {
@@ -474,12 +492,18 @@ body {
     .game-container {
         padding: 10px;
         height: auto;
+        min-height: 100vh;
     }
     
     .choice-display {
-        width: 80px;
-        height: 80px;
-        font-size: 2rem;
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+    
+    .player-choice h3, .computer-choice h3 {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
     }
 }
 
@@ -487,9 +511,9 @@ body {
     .score-container {
         width: 100%;
         justify-content: center;
-        padding: 15px 20px;
+        padding: 10px 15px;
         border-radius: 20px;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         background-color: rgba(30, 30, 30, 0.9);
     }
     
@@ -519,14 +543,54 @@ body {
     }
     
     .player-score span:last-child, .computer-score span:last-child {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 700;
     }
     
     .vs {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: 700;
         color: var(--warning-color);
+    }
+    
+    .battle-area {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 5px;
+        margin: 25px 0 15px;
+    }
+    
+    .vs-display {
+        position: absolute;
+        left: 45%;
+        top: 75%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        background-color: var(--darker-bg);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 10px rgba(255, 171, 0, 0.3);
+        z-index: 2;
+    }
+    
+    .player-choice, .computer-choice {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 1;
+    }
+    
+    .choice-display {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
     }
     
     #history-table th, #history-table td {
@@ -539,11 +603,12 @@ body {
     }
     
     .round-info {
-        padding: 10px 15px;
+        padding: 8px 12px;
+        margin-bottom: 10px;
     }
     
     #round-number, #round-result {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     
     .message-content {
@@ -573,6 +638,41 @@ body {
     }
     
     .vs {
-        font-size: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .battle-area {
+        margin: 20px 0 10px;
+        padding: 0;
+    }
+    
+    .vs-display {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+    }
+    
+    .choice-display {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .player-choice h3, .computer-choice h3 {
+        font-size: 0.8rem;
+    }
+    
+    .player-choice, .computer-choice {
+        width: 42%;
+    }
+    
+    .game-area {
+        padding: 10px;
+        gap: 15px;
+    }
+    
+    .game-history {
+        padding: 15px;
+        margin-top: 15px;
     }
 }

@@ -518,6 +518,10 @@ body {
         order: 1;
         margin-top: 10px;
     }
+
+    .choice-div {
+        order: 2;
+    }
     
     .game-controls {
         flex-direction: row;

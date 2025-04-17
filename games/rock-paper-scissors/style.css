@@ -515,6 +515,8 @@ body {
         border-radius: 20px;
         margin-bottom: 10px;
         background-color: rgba(30, 30, 30, 0.9);
+        order: 1;
+        margin-top: 10px;
     }
     
     .game-controls {
@@ -577,6 +579,7 @@ body {
         align-items: center;
         box-shadow: 0 0 10px rgba(255, 171, 0, 0.3);
         z-index: 2;
+        /* order: 2; */
     }
     
     .player-choice, .computer-choice {
@@ -591,6 +594,7 @@ body {
         width: 60px;
         height: 60px;
         font-size: 1.5rem;
+        /* order: 200; */
     }
     
     #history-table th, #history-table td {

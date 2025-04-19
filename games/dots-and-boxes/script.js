@@ -38,7 +38,7 @@ const closeMessageBtn = document.getElementById('close-message-btn');
 
 // Initialize the game
 // Game mode and AI variables
-let gameMode = 'pvp'; // 'pvp' or 'ai'
+let gameMode = 'ai'; // Changed default to 'ai'
 let ai;
 let isAITurn = false;
 
@@ -420,7 +420,12 @@ function updatePlayerLabels() {
 }
 
 // Initialize the game when the page loads
-document.addEventListener('DOMContentLoaded', initGame);
+document.addEventListener('DOMContentLoaded', () => {
+    const gameModeSelector = document.getElementById('game-mode');
+    gameModeSelector.value = 'ai'; // Set selector to AI mode
+    updatePlayerLabels(); // Update the labels for AI mode
+    initGame();
+});
 
 // AI move function with improved implementation
 function makeAIMove() {
@@ -430,13 +435,13 @@ function makeAIMove() {
     const aiThinkingIndicator = document.createElement('div');
     aiThinkingIndicator.className = 'ai-thinking-indicator';
     aiThinkingIndicator.innerHTML = '<i class="fas fa-cog fa-spin"></i> AI is thinking...';
-    gameBoard.appendChild(aiThinkingIndicator);
+    currentPlayerElement.appendChild(aiThinkingIndicator); // Changed from gameBoard to currentPlayerElement
     
     // Get current game state
     const availableLines = getAvailableLines();
     const boxesState = getBoxesState();
     
-    // Delay to simulate AI thinking and make the move visible to the user
+    // Reduced delay for AI thinking
     setTimeout(() => {
         // Get AI's move
         const aiMove = ai.makeMove(availableLines, boxesState);
@@ -500,7 +505,7 @@ function makeAIMove() {
             }
             isAITurn = false;
         }
-    }, 1000);
+    }, 200); // Reduced from 1000
 }
 
 // Helper function to get available lines

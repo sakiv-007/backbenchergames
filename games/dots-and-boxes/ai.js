@@ -32,20 +32,60 @@ class DotsAndBoxesAI {
             this.maxDepth = 2;
         }
 
-        // Look for boxes that can be completed immediately
+        // First priority: Complete boxes when possible
         const immediateCompletionMove = this.findBoxCompletionMove(availableLines, boxes);
         if (immediateCompletionMove) {
             return immediateCompletionMove;
         }
 
-        // Look for safe moves (that don't set up the opponent)
+        // Second priority: Strategic analysis of all possible moves
+        let bestMove = null;
+        let bestScore = -Infinity;
+
+        for (const move of availableLines) {
+            // Calculate immediate gain for AI
+            const aiBoxes = this.simulateMove(move, boxes);
+            const newBoxes = this.updateBoxes(boxes, move);
+            const remainingLines = availableLines.filter(l => 
+                !(l.row === move.row && l.col === move.col && l.orientation === move.orientation));
+            
+            // Calculate potential player gain after this move
+            let maxPlayerGain = 0;
+            let chainPotential = 0;
+            
+            for (const playerMove of remainingLines) {
+                const playerBoxes = this.simulateMove(playerMove, newBoxes);
+                if (playerBoxes > maxPlayerGain) {
+                    maxPlayerGain = playerBoxes;
+                }
+                
+                // Check for chain reactions
+                if (playerBoxes > 0) {
+                    const playerNewBoxes = this.updateBoxes(newBoxes, playerMove);
+                    chainPotential += this.countChainPotential(playerNewBoxes);
+                }
+            }
+            
+            // Calculate strategic score with weighted factors
+            const score = (aiBoxes * 3) - (maxPlayerGain * 4) - (chainPotential * 2);
+            
+            if (score > bestScore) {
+                bestScore = score;
+                bestMove = move;
+            }
+        }
+        
+        if (bestMove) {
+            return bestMove;
+        }
+
+        // Third priority: Safe moves that don't set up the opponent
         const safeMoves = this.findSafeMoves(availableLines, boxes);
         if (safeMoves.length > 0) {
-            // Choose a random safe move
             return safeMoves[Math.floor(Math.random() * safeMoves.length)];
         }
 
-        // If no safe moves, find the move that gives the opponent the least advantage
+        // Last resort: Find the least damaging move
         const leastDamagingMove = this.findLeastDamagingMove(availableLines, boxes);
         if (leastDamagingMove) {
             return leastDamagingMove;
@@ -53,6 +93,19 @@ class DotsAndBoxesAI {
 
         // Fallback: choose a random move to prevent infinite loop
         return availableLines[Math.floor(Math.random() * availableLines.length)];
+    }
+
+    /**
+     * Counts potential chain reactions in boxes
+     */
+    countChainPotential(boxes) {
+        let count = 0;
+        for (const box of boxes) {
+            if (box.sides === 3) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**

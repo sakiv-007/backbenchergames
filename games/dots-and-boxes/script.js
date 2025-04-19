@@ -469,12 +469,17 @@ function makeAIMove() {
                     // Check if any boxes are completed
                     let boxCompleted = checkBoxCompletion();
                     
+                    // Reset AI turn flag before switching players
+                    isAITurn = false;
+                    
                     // If no box was completed, switch players
                     if (!boxCompleted) {
                         switchPlayer();
                     } else {
                         // If AI completed a box, it gets another turn
+                        currentPlayer = 2;
                         isAITurn = true;
+                        updateCurrentPlayer();
                         setTimeout(makeAIMove, 800);
                     }
                     

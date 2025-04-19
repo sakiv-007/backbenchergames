@@ -294,8 +294,12 @@ function checkBoxCompletion() {
                 box.classList.add(`player${currentPlayer}`);
                 box.classList.add('completed');
                 
-                // Add player's initial to the box
-                box.textContent = currentPlayer === 1 ? 'P1' : 'P2';
+                // Add player's initial to the box - modified for AI mode
+                if (gameMode === 'ai' && currentPlayer === 2) {
+                    box.textContent = 'AI';
+                } else {
+                    box.textContent = currentPlayer === 1 ? 'P1' : 'P2';
+                }
                 
                 // Update score
                 if (currentPlayer === 1) {

@@ -45,36 +45,42 @@ class DotsAndBoxesAI {
             return safeMoves[Math.floor(Math.random() * safeMoves.length)];
         }
 
-        // If no safe moves, use minimax to find the best move
-        let bestScore = -Infinity;
+        // If no safe moves, find the move that gives the opponent the least advantage
+        const leastDamagingMove = this.findLeastDamagingMove(availableLines, boxes);
+        if (leastDamagingMove) {
+            return leastDamagingMove;
+        }
+
+        // Fallback: choose a random move to prevent infinite loop
+        return availableLines[Math.floor(Math.random() * availableLines.length)];
+    }
+
+    /**
+     * Finds the move that will result in the least number of boxes being completed by the opponent
+     */
+    findLeastDamagingMove(availableLines, boxes) {
         let bestMove = null;
+        let minBoxesGiven = Infinity;
 
         for (const line of availableLines) {
-            // Create a copy of the game state
-            const newAvailableLines = availableLines.filter(l => 
-                l.row !== line.row || l.col !== line.col || l.orientation !== line.orientation);
+            const newBoxes = this.updateBoxes(boxes, line);
+            let boxesGivenToOpponent = 0;
             
-            // Check if this move completes a box
-            const boxesCompleted = this.simulateMove(line, boxes);
-            
-            // If boxes are completed, AI gets another turn
-            let score;
-            if (boxesCompleted > 0) {
-                // Recursive call for chain moves
-                const nextMove = this.makeMove(newAvailableLines, this.updateBoxes(boxes, line));
-                score = boxesCompleted + (nextMove ? this.evaluateMove(nextMove, newAvailableLines, boxes) : 0);
-            } else {
-                // Evaluate opponent's best response
-                score = -this.minimax(newAvailableLines, this.updateBoxes(boxes, line), 0, -Infinity, Infinity, false);
+            // Count how many boxes with 3 sides this move creates
+            for (const box of newBoxes) {
+                if (box.sides === 3) {
+                    boxesGivenToOpponent++;
+                }
             }
-
-            if (score > bestScore) {
-                bestScore = score;
+            
+            // If this move gives fewer boxes to the opponent, it's better
+            if (boxesGivenToOpponent < minBoxesGiven) {
+                minBoxesGiven = boxesGivenToOpponent;
                 bestMove = line;
             }
         }
-
-        return bestMove || availableLines[Math.floor(Math.random() * availableLines.length)];
+        
+        return bestMove;
     }
 
     /**

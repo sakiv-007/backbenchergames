@@ -35,6 +35,13 @@
                         <option value="9">9x9 Grid</option>
                     </select>
                 </div>
+                <!-- Add this after the grid-size-selector div -->
+                <div class="game-mode-selector">
+                    <select id="game-mode">
+                        <option value="pvp">Player vs Player</option>
+                        <option value="ai">Player vs AI</option>
+                    </select>
+                </div>
                 <button id="new-game-btn" class="btn">New Game</button>
                 <a href="/index.html" class="btn home-btn"><i class="fas fa-home"></i> Home</a>
             </div>
@@ -102,6 +109,7 @@
         </div>
     </div>
 
+    <script src="ai.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -212,6 +212,30 @@ body {
     /* overflow: hidden; */
 }
 
+/* AI Thinking Indicator */
+.ai-thinking-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(41, 121, 255, 0.9);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 15px rgba(41, 121, 255, 0.5);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(41, 121, 255, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(41, 121, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(41, 121, 255, 0); }
+}
+
 .game-board {
     position: absolute;
     display: grid;
@@ -273,6 +297,17 @@ body {
 
 .line.active.player2 {
     background-color: var(--player2-color);
+}
+
+.line.ai-selecting {
+    background-color: var(--player2-color);
+    opacity: 0.6;
+    animation: ai-selecting 1s infinite alternate;
+}
+
+@keyframes ai-selecting {
+    from { opacity: 0.4; }
+    to { opacity: 0.8; }
 }
 
 /* Boxes */
@@ -350,20 +385,6 @@ body {
 
 .player2 .player-initial {
     color: var(--player2-color);
-}
-
-.player-color {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-}
-
-.player1 .player-color {
-    background-color: var(--player1-color);
-}
-
-.player2 .player-color {
-    background-color: var(--player2-color);
 }
 
 .player-score-display {
@@ -606,4 +627,46 @@ body {
 
 .line.active {
     animation: fadeIn 0.3s ease forwards;
+}
+
+/* Add these styles for AI-related UI elements */
+.game-mode-selector {
+    margin-right: 10px;
+}
+
+.game-mode-selector select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: var(--darker-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    font-family: var(--main-font);
+    cursor: pointer;
+}
+
+.ai-thinking {
+    background-color: rgba(255, 165, 0, 0.5) !important;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* When it's AI's turn, show a visual indicator */
+.ai-turn #current-player {
+    color: #ff9800;
+}
+
+.ai-turn #current-player::after {
+    content: " (AI thinking...)";
+    animation: ellipsis 1.5s infinite;
+}
+
+@keyframes ellipsis {
+    0% { content: " (AI thinking.)";}
+    33% { content: " (AI thinking..)";}
+    66% { content: " (AI thinking...)";}
 }

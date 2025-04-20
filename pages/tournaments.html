@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournaments - BackbencherGames</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/fevicon.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <!-- User Avatar at the top for mini-sidebar view -->
+        <div class="user-card">
+            <div class="user-avatar" title="Toggle sidebar">
+                <img src="../assets/avatar.png" alt="User Avatar">
+                <div class="level-badge">5</div>
+            </div>
+            <div class="user-info">
+                <h3>Vikas</h3>
+                <p>Level 5 Player</p>
+                <div class="xp-bar">
+                    <div class="xp-progress" style="width: 75%"></div>
+                </div>
+                <a href="javascript:void(0)" class="edit-profile-btn">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Edit Profile</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Play Online Section -->
+        <div class="play-online-section">
+            <h3><i class="fas fa-gamepad"></i> Play Online</h3>
+            <div class="play-online-buttons">
+                <a href="javascript:void(0)" class="play-btn play-with-friends" data-feature="Play with Friends" title="Start a game with your friends">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Play with Friends</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-with-randoms" data-feature="Play with Random Players" title="Find random players to play with">
+                    <i class="fas fa-random"></i>
+                    <span>Play with Randoms</span>
+                </a>
+                <a href="javascript:void(0)" class="play-btn play-vs-robot" data-feature="Play vs Robot" title="Play against AI opponent">
+                    <i class="fas fa-robot"></i>
+                    <span>Play vs Robot</span>
+                </a>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="../index.html" title="Go to homepage">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Messaging" title="View your messages">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messaging</span>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Friends" title="Manage your friends">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Friends</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Match History" title="View your game history">
+                        <i class="fas fa-history"></i>
+                        <span>Match History</span>
+                    </a>
+                </li>
+                <!-- Tournament Section -->
+                <li class="nav-section-title">
+                    <span>TOURNAMENTS</span>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Creation" title="Create a new tournament">
+                        <i class="fas fa-trophy"></i>
+                        <span>Create Tournament</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="Tournament Play" title="Join existing tournaments">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Play Tournaments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-feature="My Tournaments" title="View your tournaments">
+                        <i class="fas fa-medal"></i>
+                        <span>My Tournaments</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="javascript:void(0)" data-feature="Logout" class="logout-btn" title="Sign out of your account">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <button class="mobile-sidebar-toggle" id="mobile-sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <a href="../index.html">
+                     BackbencherGames</a>
+            </div>
+            <!-- Search button replacing navigation menu and language selector -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="game-search" placeholder="Search games...">
+                    <button id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Tournaments</h1>
+                <p>Compete with players from around the world</p>
+            </div>
+        </section>
+
+        <section class="tournaments">
+            <div class="container">
+                <div class="tournaments-grid">
+                    <!-- Tournament Cards -->
+                    <div class="tournament-card">
+                        <div class="tournament-header">
+                            <h3>Tic Tac Toe Championship</h3>
+                            <span class="tournament-status active">Active</span>
+                        </div>
+                        <div class="tournament-info">
+                            <p><i class="fas fa-users"></i> 32 Players</p>
+                            <p><i class="fas fa-trophy"></i> 500 XP Prize</p>
+                            <p><i class="fas fa-calendar"></i> Ends in 2 days</p>
+                        </div>
+                        <a href="javascript:void(0)" data-feature="Tournament Join" class="tournament-join-btn">Join Tournament</a>
+                    </div>
+
+                    <div class="tournament-card">
+                        <div class="tournament-header">
+                            <h3>Chess Masters League</h3>
+                            <span class="tournament-status upcoming">Upcoming</span>
+                        </div>
+                        <div class="tournament-info">
+                            <p><i class="fas fa-users"></i> 64 Players</p>
+                            <p><i class="fas fa-trophy"></i> 1000 XP Prize</p>
+                            <p><i class="fas fa-calendar"></i> Starts in 3 days</p>
+                        </div>
+                        <a href="javascript:void(0)" data-feature="Tournament Registration" class="tournament-join-btn">Register</a>
+                    </div>
+
+                    <div class="tournament-card">
+                        <div class="tournament-header">
+                            <h3>Snake Game Challenge</h3>
+                            <span class="tournament-status active">Active</span>
+                        </div>
+                        <div class="tournament-info">
+                            <p><i class="fas fa-users"></i> 16 Players</p>
+                            <p><i class="fas fa-trophy"></i> 300 XP Prize</p>
+                            <p><i class="fas fa-calendar"></i> Ends in 1 day</p>
+                        </div>
+                        <a href="javascript:void(0)" data-feature="Tournament Join" class="tournament-join-btn">Join Tournament</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>BackbencherGames</h3>
+                    <p>Play classic paper games online with friends anywhere, anytime!</p>
+                    <p class="copyright">© 2025 BackbencherGames. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="all-games.html">All Games</a></li>
+                        <li><a href="popular-games.html">Popular Games</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboards.html">Leaderboards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="mailto:vikas.kmr.vk15@gmail.com?subject=Feedback%20for%20BackbencherGames&body=Hello%20BackbencherGames%20Team,%0D%0A%0D%0AI%20would%20like%20to%20share%20my%20feedback%20about%20your%20website..." title="Gmail"><i class="fa-solid fa-envelope"></i></a>
+                        <a target="_blank" href="https://github.com/sakiv-007" title="Github"><i class="fa-brands fa-github"></i></a>
+                        <a target="_blank" href="https://my-dev-portfolio-nu.vercel.app/" title="Portfolio"><i class="fa-solid fa-briefcase"></i></a>
+                        <a target="_blank" href="https://www.instagram.com/sakiv.143/" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a target="_blank" href="https://www.linkedin.com/in/vikas-kumar-b761bb227/" title="Linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Made with <i class="fas fa-heart" style="color: #e25555;"></i> by BackbencherGames Team | <a href="../sitemap.html">Sitemap</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add this modal HTML at the end of the body but before the script tag -->
+    <div id="feature-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h2>Coming Soon!</h2>
+            <p>We're working hard to bring you this feature. Stay tuned for updates!</p>
+            <button class="modal-button">Got it</button>
+        </div>
+    </div>
+    
+    <script src="../js/main.js" type="module"></script>
+</body>
+</html>

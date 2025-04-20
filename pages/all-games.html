@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BackbencherGames - Play Games Online</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>All Games - BackbencherGames</title>
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="assets/fevicon.png" type="image/x-icon">
-    <!-- Added gaming-specific font -->
+    <link rel="shortcut icon" href="../assets/fevicon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -19,7 +17,7 @@
         <!-- User Avatar at the top for mini-sidebar view -->
         <div class="user-card">
             <div class="user-avatar" title="Toggle sidebar">
-                <img src="assets/avatar.png" alt="User Avatar">
+                <img src="../assets/avatar.png" alt="User Avatar">
                 <div class="level-badge">5</div>
             </div>
             <div class="user-info">
@@ -56,8 +54,8 @@
         
         <nav class="sidebar-nav">
             <ul>
-                <li class="active">
-                    <a href="index.html" title="Go to homepage">
+                <li>
+                    <a href="../index.html" title="Go to homepage">
                         <i class="fas fa-home"></i>
                         <span>Home</span>
                     </a>
@@ -113,13 +111,14 @@
             </a>
         </div>
     </div>
+
     <header>
         <div class="container">
             <button class="mobile-sidebar-toggle" id="mobile-sidebar-toggle">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="logo">
-                <a href="index.html">
+                <a href="../index.html">
                      BackbencherGames</a>
             </div>
             <!-- Search button replacing navigation menu and language selector -->
@@ -139,61 +138,22 @@
             </div>
         </div>
     </header>
-    
+
     <main>
-        <section class="hero">
-            <canvas id="fruitCanvas"></canvas>
+        <section class="page-header">
             <div class="container">
-                <div class="hero-content">
-                    <h1 class="glitch-text">Play Games Online</h1>
-                    <p>Classic games you can play with friends anywhere, anytime!</p>
-                    <div class="hero-buttons">
-                        <a href="#games" class="cta-button primary-button">
-                            <span class="button-icon"><i class="fas fa-gamepad"></i></span>
-                            <span>Browse Games</span>
-                        </a>
-                        <a href="javascript:void(0)" class="cta-button secondary-button" data-feature="Play with Friends">
-                            <span class="button-icon"><i class="fas fa-user-friends"></i></span>
-                            <span>Play with Friends</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-decoration">
-                    <div class="floating-game-icon" style="animation-delay: 0s;"><i class="fas fa-chess-knight"></i></div>
-                    <div class="floating-game-icon" style="animation-delay: 1s;"><i class="fas fa-dice"></i></div>
-                    <div class="floating-game-icon" style="animation-delay: 2s;"><i class="fas fa-puzzle-piece"></i></div>
-                    <div class="floating-game-icon" style="animation-delay: 3s;"><i class="fas fa-gamepad"></i></div>
-                </div>
-            </div>
-            <!-- Add additional floating icons in the background -->
-            <div class="hero-bg-icons">
-                <i class="fas fa-trophy bg-icon"></i>
-                <i class="fas fa-dice-d20 bg-icon"></i>
-                <i class="fas fa-chess bg-icon"></i>
-                <i class="fas fa-ghost bg-icon"></i>
-                <i class="fas fa-headset bg-icon"></i>
-                <i class="fas fa-joystick bg-icon"></i>
-                <i class="fas fa-dragon bg-icon"></i>
-                <i class="fas fa-hat-wizard bg-icon"></i>
+                <h1>All Games</h1>
+                <p>Browse our complete collection of online games</p>
             </div>
         </section>
-        
-        <section id="games" class="games">
-            <div id="games-container" class="container">
-                <div class="section-header">
-                    <h2><i class="fas fa-fire"></i> Our Games</h2>
-                    <div class="game-filters">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="popular">Popular</button>
-                        <button class="filter-btn" data-filter="new">New</button>
-                        <button class="filter-btn" data-filter="coming-soon">Coming Soon</button>
-                    </div>
-                </div>
+
+        <section class="games">
+            <div class="container">
                 <div class="games-grid">
                     <!-- Game Cards -->
                     <div class="game-card" data-category="popular">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/tic-tac-toe.png" alt="Tic Tac Toe">
+                            <img loading="lazy" src="../assets/tic-tac-toe.png" alt="Tic Tac Toe">
                             <div class="game-badge">Popular</div>
                         </div>
                         <div class="game-info">
@@ -203,13 +163,13 @@
                                 <span><i class="fas fa-users"></i> 1000</span>
                                 <span><i class="fas fa-heart"></i> 750</span>
                             </div>
-                            <a href="games/tic-tac-toe.html" class="play-button">Play Now</a>
+                            <a href="../games/tic-tac-toe.html" class="play-button">Play Now</a>
                         </div>
                     </div>
 
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/snake.jpeg" alt="Snake">
+                            <img loading="lazy" src="../assets/snake.jpeg" alt="Snake">
                         </div>
                         <div class="game-info">
                             <h3>Snake Game</h3>
@@ -218,13 +178,13 @@
                                 <span><i class="fas fa-users"></i> 950</span>
                                 <span><i class="fas fa-heart"></i> 680</span>
                             </div>
-                            <a href="games/snake.html" class="play-button">Play Now</a>
+                            <a href="../games/snake.html" class="play-button">Play Now</a>
                         </div>
                     </div>
                     
                     <div class="game-card" data-category="popular">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/custom-tic-tac-toe.png" alt="Dots and Boxes">
+                            <img loading="lazy" src="../assets/custom-tic-tac-toe.png" alt="Dots and Boxes">
                             <div class="game-badge">Popular</div>
                         </div>
                         <div class="game-info">
@@ -234,13 +194,13 @@
                                 <span><i class="fas fa-users"></i> 875</span>
                                 <span><i class="fas fa-heart"></i> 620</span>
                             </div>
-                            <a href="games/custom-tic-tac-toe.html" class="play-button">Play Now</a>
+                            <a href="../games/custom-tic-tac-toe.html" class="play-button">Play Now</a>
                         </div>
                     </div>
                     
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/chess thumbnail.jpeg" alt="Dots and Boxes">
+                            <img loading="lazy" src="../assets/chess thumbnail.jpeg" alt="Dots and Boxes">
                         </div>
                         <div class="game-info">
                             <h3>Chess</h3>
@@ -249,13 +209,13 @@
                                 <span><i class="fas fa-users"></i> 1200</span>
                                 <span><i class="fas fa-heart"></i> 980</span>
                             </div>
-                            <a href="games/chess.html" class="play-button">Play Now</a>
+                            <a href="../games/chess.html" class="play-button">Play Now</a>
                         </div>
                     </div>
 
                     <div class="game-card" data-category="popular">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/fruit-slasher.avif" alt="fruit-slasher">
+                            <img loading="lazy" src="../assets/fruit-slasher.avif" alt="fruit-slasher">
                             <div class="game-badge">Popular</div>
                         </div>
                         <div class="game-info">
@@ -265,13 +225,13 @@
                                 <span><i class="fas fa-users"></i> 5000</span>
                                 <span><i class="fas fa-heart"></i> 3200</span>
                             </div>
-                            <a href="games/fruit-slasher.html" class="play-button">Play Now</a>
+                            <a href="../games/fruit-slasher.html" class="play-button">Play Now</a>
                         </div>
                     </div>
                     
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/word-search.png" alt="Word Search">
+                            <img loading="lazy" src="../assets/word-search.png" alt="Word Search">
                         </div>
                         <div class="game-info">
                             <h3>Word Search</h3>
@@ -280,13 +240,13 @@
                                 <span><i class="fas fa-users"></i> 620</span>
                                 <span><i class="fas fa-heart"></i> 415</span>
                             </div>
-                            <a href="games/word-search.html" class="play-button">Play Now</a>
+                            <a href="../games/word-search.html" class="play-button">Play Now</a>
                         </div>
                     </div>
 
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/rock-paper.jpeg" alt="rock paper scissor">
+                            <img loading="lazy" src="../assets/rock-paper.jpeg" alt="rock paper scissor">
                         </div>
                         <div class="game-info">
                             <h3>Rock Paper Scissor</h3>
@@ -295,13 +255,13 @@
                                 <span><i class="fas fa-users"></i> 550</span>
                                 <span><i class="fas fa-heart"></i> 315</span>
                             </div>
-                            <a href="games/rock-paper-scissors.html" class="play-button">Play Now</a>
+                            <a href="../games/rock-paper-scissors.html" class="play-button">Play Now</a>
                         </div>
                     </div>
 
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/dots.png" alt="Dots and boxes">
+                            <img loading="lazy" src="../assets/dots.png" alt="Dots and boxes">
                         </div>
                         <div class="game-info">
                             <h3>Dots and Boxes</h3>
@@ -310,13 +270,13 @@
                                 <span><i class="fas fa-users"></i> 3250</span>
                                 <span><i class="fas fa-heart"></i> 945</span>
                             </div>
-                            <a href="games/dots-and-boxes.html" class="play-button">Play Now</a>
+                            <a href="../games/dots-and-boxes.html" class="play-button">Play Now</a>
                         </div>
                     </div>
                     
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/battleship.jpeg" alt="Battleship">
+                            <img loading="lazy" src="../assets/battleship.jpeg" alt="Battleship">
                         </div>
                         <div class="game-info">
                             <h3>Battleship</h3>
@@ -325,13 +285,13 @@
                                 <span><i class="fas fa-users"></i> 780</span>
                                 <span><i class="fas fa-heart"></i> 540</span>
                             </div>
-                            <a href="games/battleship.html" class="play-button">Coming soon</a>
+                            <a href="../games/battleship.html" class="play-button">Coming soon</a>
                         </div>
                     </div>
                     
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/quiz.jpg" alt="quiz">
+                            <img loading="lazy" src="../assets/quiz.jpg" alt="quiz">
                         </div>
                         <div class="game-info">
                             <h3>Quiz</h3>
@@ -340,13 +300,13 @@
                                 <span><i class="fas fa-users"></i> 890</span>
                                 <span><i class="fas fa-heart"></i> 650</span>
                             </div>
-                            <a href="games/quiz.html" class="play-button">Coming soon</a>
+                            <a href="../games/quiz.html" class="play-button">Coming soon</a>
                         </div>
                     </div>
                     
                     <div class="game-card">
                         <div class="game-image">
-                            <img loading="lazy" src="assets/block-breaker.jpeg" alt="block-breaker">
+                            <img loading="lazy" src="../assets/block-breaker.jpeg" alt="block-breaker">
                         </div>
                         <div class="game-info">
                             <h3>Block Breaker</h3>
@@ -355,151 +315,31 @@
                                 <span><i class="fas fa-users"></i> 720</span>
                                 <span><i class="fas fa-heart"></i> 490</span>
                             </div>
-                            <a href="games/block-breaker.html" class="play-button">Coming soon</a>
+                            <a href="../games/block-breaker.html" class="play-button">Coming soon</a>
                         </div>
                     </div>
-                    
-                </div>
-            </div>
-        </section>
-        
-        <section class="features">
-            <div class="container">
-                <h2><i class="fas fa-trophy"></i> Why Play With Us?</h2>
-                <div class="features-grid">
-                    <div class="feature">
-                        <i class="fas fa-users"></i>
-                        <h3>Multiplayer</h3>
-                        <p>Play with friends or random opponents</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h3>Mobile Friendly</h3>
-                        <p>Play on any device, anywhere</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-bolt"></i>
-                        <h3>No Downloads</h3>
-                        <p>Play directly in your browser</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-trophy"></i>
-                        <h3>Tournaments</h3>
-                        <p>Compete and win exciting prizes</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        
-        <section class="web-stats">
-            <div class="container">
-                <div class="web-stats-grid">
-                    <div class="web-stat-item">
-                        <div class="web-stat-icon"><i class="fas fa-users"></i></div>
-                        <div class="web-stat-counter">10,000+</div>
-                        <div class="web-stat-label">Active Players</div>
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img loading="lazy" src="../assets/ludo.png" alt="Ludo">
+                        </div>
+                        <div class="game-info">
+                            <h3>Ludo</h3>
+                            <p>Classic board game of strategy</p>
+                            <div class="game-stats">
+                                <span><i class="fas fa-users"></i> 1500</span>
+                                <span><i class="fas fa-heart"></i> 1100</span>
+                            </div>
+                            <a href="../games/ludo.html" class="play-button">Coming soon</a>
+                        </div>
                     </div>
-                    <div class="web-stat-item">
-                        <div class="web-stat-icon"><i class="fas fa-gamepad"></i></div>
-                        <div class="web-stat-counter">8+</div>
-                        <div class="web-stat-label">Games Available</div>
-                    </div>
-                    <div class="web-stat-item">
-                        <div class="web-stat-icon"><i class="fas fa-trophy"></i></div>
-                        <div class="web-stat-counter">500+</div>
-                        <div class="web-stat-label">Tournaments</div>
-                    </div>
-                    <div class="web-stat-item">
-                        <div class="web-stat-icon"><i class="fas fa-globe"></i></div>
-                        <div class="web-stat-counter">50+</div>
-                        <div class="web-stat-label">Countries</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        
-        
-        
-        
-        <!-- New section: Leaderboard -->
-        <section class="leaderboard">
-            <div class="container">
-                <h2><i class="fas fa-crown"></i> Top Players</h2>
-                <div class="leaderboard-table">
-                    <div class="leaderboard-header">
-                        <div class="rank">Rank</div>
-                        <div class="player">Player</div>
-                        <div class="wins">Wins</div>
-                        <div class="level">Level</div>
-                    </div>
-                    <div class="leaderboard-row">
-                        <div class="rank"><span class="medal gold">1</span></div>
-                        <div class="player"><img src="assets/avatar.png" alt="Player"> GamerKing</div>
-                        <div class="wins">245</div>
-                        <div class="level">15</div>
-                    </div>
-                    <div class="leaderboard-row">
-                        <div class="rank"><span class="medal silver">2</span></div>
-                        <div class="player"><img src="assets/avatar.png" alt="Player"> PaperMaster</div>
-                        <div class="wins">198</div>
-                        <div class="level">12</div>
-                    </div>
-                    <div class="leaderboard-row">
-                        <div class="rank"><span class="medal bronze">3</span></div>
-                        <div class="player"><img src="assets/avatar.png" alt="Player"> GameWizard</div>
-                        <div class="wins">176</div>
-                        <div class="level">11</div>
-                    </div>
-                </div>
-                <a href="javascript:void(0)" class="view-more-btn" data-feature="Leaderboards">View Full Leaderboard</a>
-            </div>
-        </section>
-
-
-        <section class="cta-section">
-            <div class="container">
-                <div class="cta-content">
-                    <h2>Ready to Start Your Gaming Journey?</h2>
-                    <p>Join thousands of players and become part of our gaming community today!</p>
-                    <a href="javascript:void(0)" class="cta-button glow-button" data-feature="Sign Up">
-                        <span>Join Now</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer remains mostly the same with minor enhancements -->
     <footer>
         <div class="container">
-            <div class="footer-feedback">
-                <h4>Share Your Feedback</h4>
-                <p>We'd love to hear your thoughts on how we can improve your gaming experience!</p>
-                <form class="feedback-form">
-                    <textarea placeholder="This feature is under development so you can share your feedback at our gmail address.... vikas.kmr.vk15@gmail.com"></textarea>
-                    <div class="feedback-attachments">
-                        <label for="feedback-file" class="file-upload-label">
-                            <i class="fas fa-paperclip"></i> Attach Files
-                        </label>
-                        <input type="file" id="feedback-file" multiple accept="image/*,video/*" class="file-upload-input">
-                        <div class="attachment-preview"></div>
-                    </div>
-                    <button type="submit">Send Feedback <i class="fas fa-paper-plane"></i></button>
-                </form>
-            </div>
-            
-            <div class="footer-newsletter">
-                <h4>Stay Updated</h4>
-                <p>Subscribe to our newsletter for the latest games and features</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Your email address">
-                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                </form>
-            </div>
-            
             <div class="footer-content">
                 <div class="footer-logo">
                     <h3>BackbencherGames</h3>
@@ -509,40 +349,35 @@
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="pages/all-games.html">All Games</a></li>
-                        <li><a href="pages/popular-games.html">Popular Games</a></li>
-                        <li><a href="pages/tournaments.html">Tournaments</a></li>
-                        <li><a href="pages/leaderboard.html">Leaderboards</a></li>
+                        <li><a href="all-games.html">All Games</a></li>
+                        <li><a href="popular-games.html">Popular Games</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboards.html">Leaderboards</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Support</h4>
                     <ul>
-                        <li><a href="pages/help-center.html">Help Center</a></li>
-                        <li><a href="pages/contact-us.html">Contact Us</a></li>
-                        <li><a href="pages/privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="pages/terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">
                     <h4>Connect With Us</h4>
                     <div class="social-icons">
                         <a href="mailto:vikas.kmr.vk15@gmail.com?subject=Feedback%20for%20BackbencherGames&body=Hello%20BackbencherGames%20Team,%0D%0A%0D%0AI%20would%20like%20to%20share%20my%20feedback%20about%20your%20website..." title="Gmail"><i class="fa-solid fa-envelope"></i></a>
-
                         <a target="_blank" href="https://github.com/sakiv-007" title="Github"><i class="fa-brands fa-github"></i></a>
-
                         <a target="_blank" href="https://my-dev-portfolio-nu.vercel.app/" title="Portfolio"><i class="fa-solid fa-briefcase"></i></a>
-
                         <a target="_blank" href="https://www.instagram.com/sakiv.143/" title="Instagram"><i class="fab fa-instagram"></i></a>
-
                         <a target="_blank" href="https://www.linkedin.com/in/vikas-kumar-b761bb227/" title="Linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
-
                     </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>Made with <i class="fas fa-heart" style="color: #e25555;"></i> by BackbencherGames Team | <a href="sitemap.html">Sitemap</a></p>
+                <p>Made with <i class="fas fa-heart" style="color: #e25555;"></i> by BackbencherGames Team | <a href="../sitemap.html">Sitemap</a></p>
             </div>
         </div>
     </footer>
@@ -560,24 +395,6 @@
         </div>
     </div>
     
-    <!-- Game achievement notification -->
-    <div id="achievement-notification" class="achievement-notification">
-        <div class="achievement-icon">
-            <i class="fas fa-trophy"></i>
-        </div>
-        <div class="achievement-content">
-            <h4>Achievement Unlocked!</h4>
-            <p>First Visit: Welcome to BackbencherGames</p>
-        </div>
-    </div>
-    
-    <!-- <script src="script.js" type="module"></script> -->
-    <script src="js/main.js" type="module"></script>
-    <script src="js/fruit-slasher.js" type="module"></script>
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-      </script>
-      <script defer src="/_vercel/insights/script.js"></script>
-
+    <script src="../js/main.js" type="module"></script>
 </body>
 </html>

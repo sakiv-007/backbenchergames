@@ -143,7 +143,7 @@ export function initAuthModal() {
         joinNowButton.addEventListener('mouseenter', () => {
             joinNowButton.style.transform = 'translateY(-3px)';
             joinNowButton.style.boxShadow = '0 8px 20px rgba(110, 87, 255, 0.6)';
-            joinNowButton.style.color = '#0000FF'; // Change text color on hover
+            joinNowButton.style.color = '#00FF00'; // Change text color on hover
         });
         
         joinNowButton.addEventListener('mouseleave', () => {

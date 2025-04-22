@@ -124,9 +124,34 @@ export function initAuthModal() {
         joinNowButton.href = 'javascript:void(0)';
         joinNowButton.className = 'cta-button join-now-button';
         joinNowButton.innerHTML = `
-            <span class="button-icon"><i class="fas fa-sign-in-alt"></i></span>
-            <span>Join Now</span>
+            <span class="button-icon"><i class="fas fa-gamepad"></i></span>
+            <span>JOIN NOW</span>
         `;
+        // Add enhanced styling to the button
+        joinNowButton.style.background = 'linear-gradient(135deg, #6e57ff, #8c64fd)';
+        joinNowButton.style.boxShadow = '0 4px 15px rgba(110, 87, 255, 0.4)';
+        joinNowButton.style.fontWeight = 'bold';
+        joinNowButton.style.letterSpacing = '1px';
+        joinNowButton.style.border = 'none';
+        joinNowButton.style.padding = '12px 28px';
+        joinNowButton.style.borderRadius = '50px';
+        joinNowButton.style.transition = 'all 0.3s ease';
+        // Change text color for better visibility
+        joinNowButton.style.color = '#ffffff'; // White text for contrast
+        
+        // Add hover effect
+        joinNowButton.addEventListener('mouseenter', () => {
+            joinNowButton.style.transform = 'translateY(-3px)';
+            joinNowButton.style.boxShadow = '0 8px 20px rgba(110, 87, 255, 0.6)';
+            joinNowButton.style.color = '#0000FF'; // Change text color on hover
+        });
+        
+        joinNowButton.addEventListener('mouseleave', () => {
+            joinNowButton.style.transform = 'translateY(0)';
+            joinNowButton.style.boxShadow = '0 4px 15px rgba(110, 87, 255, 0.4)';
+            joinNowButton.style.color = '#ffffff'; // Revert text color
+        });
+        
         heroButtons.appendChild(joinNowButton);
     }
     
@@ -136,14 +161,24 @@ export function initAuthModal() {
     const authForms = authModal.querySelectorAll('.auth-form');
     const switchFormLinks = authModal.querySelectorAll('.switch-form');
     const togglePasswordButtons = authModal.querySelectorAll('.toggle-password');
-    const joinNowBtn = document.querySelector('.join-now-button');
     
-    // Show auth modal when Join Now button is clicked
-    if (joinNowBtn) {
-        joinNowBtn.addEventListener('click', () => {
+    // Find all potential Join Now buttons on the page
+    const joinNowBtns = document.querySelectorAll('.join-now-button');
+    const otherJoinBtns = Array.from(document.querySelectorAll('a, button')).filter(el => 
+        el.textContent.toLowerCase().includes('join now') || 
+        el.innerHTML.toLowerCase().includes('join now')
+    );
+    
+    // Combine all join now buttons
+    const allJoinNowButtons = [...joinNowBtns, ...otherJoinBtns];
+    
+    // Show auth modal when any Join Now button is clicked
+    allJoinNowButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
             authModal.style.display = 'block';
         });
-    }
+    });
     
     // Close modal when X button is clicked
     if (closeModalBtn) {

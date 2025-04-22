@@ -16,6 +16,67 @@
             padding: 40px 0;
         }
         
+        /* Responsive styles for leaderboard */
+        @media (max-width: 768px) {
+            .leaderboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .leaderboard-filters {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .leaderboard-filters {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .leaderboard-filter {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .leaderboard-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .leaderboard-table th,
+            .leaderboard-table td {
+                padding: 10px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .rank {
+                width: 40px;
+                font-size: 1rem;
+            }
+            
+            .player {
+                gap: 8px;
+            }
+            
+            .player-avatar {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .time-period-selector {
+                flex-wrap: wrap;
+            }
+            
+            .time-period-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+        
         .leaderboard-header {
             display: flex;
             justify-content: space-between;

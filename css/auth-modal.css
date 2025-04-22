@@ -372,4 +372,46 @@
         width: 95%;
         padding: 20px;
     }
+    
+    .auth-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .auth-header p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-modal-content {
+        margin: 5% auto;
+        padding: 15px;
+    }
+    
+    .auth-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .auth-header p {
+        font-size: 0.8rem;
+    }
+    
+    .auth-tab {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    
+    .form-group input {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .social-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }

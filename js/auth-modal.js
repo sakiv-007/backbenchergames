@@ -156,7 +156,7 @@ export function initAuthModal() {
     }
     
     // Get DOM elements
-    const closeModalBtn = authModal.querySelector('.close-modal');
+    const closeModalBtn = authModal.querySelector('.close-modal') || authModal.querySelector('.close-auth-modal');
     const authTabs = authModal.querySelectorAll('.auth-tab');
     const authForms = authModal.querySelectorAll('.auth-form');
     const switchFormLinks = authModal.querySelectorAll('.switch-form');
@@ -182,9 +182,17 @@ export function initAuthModal() {
     
     // Close modal when X button is clicked
     if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            authModal.style.display = 'none';
+        // Add both click and touchend events for better mobile support
+        ['click', 'touchend'].forEach(eventType => {
+            closeModalBtn.addEventListener(eventType, (e) => {
+                e.preventDefault(); // Prevent default behavior
+                authModal.style.display = 'none';
+            });
         });
+        
+        // Increase tap target size for mobile
+        closeModalBtn.style.padding = '15px';
+        closeModalBtn.style.fontSize = '28px';
     }
     
     // Close modal when clicking outside the modal content

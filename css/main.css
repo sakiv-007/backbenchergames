@@ -15,6 +15,9 @@
 /* Import section styles */
 @import 'sections.css';
 
+/* Import Auth model styles */
+@import 'auth-modal.css';
+
 /* Import animations */
 @import 'animations.css';
 

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - BackbencherGames</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/fevicon.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Auth Modal Styles */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+            animation: fadeIn 0.3s;
+        }
+
+        .auth-modal-content {
+            background-color: var(--card-bg);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 20px rgba(126, 87, 194, 0.5), 0 0 40px rgba(0, 230, 118, 0.2);
+            position: relative;
+            animation: slideIn 0.3s;
+            border: 1px solid var(--primary-color);
+        }
+
+        .close-auth-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-auth-modal:hover {
+            color: var(--accent-color);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .auth-header h2 {
+            font-family: var(--heading-font);
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+        }
+
+        .auth-header p {
+            color: var(--text-secondary);
+        }
+
+        .auth-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .auth-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px 3px 0 0;
+        }
+
+        .auth-form-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-form {
+            transition: all 0.3s ease;
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(50px);
+            pointer-events: none;
+        }
+
+        .auth-form.active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+            pointer-events: all;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: rgba(30, 30, 30, 0.7);
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(126, 87, 194, 0.3);
+            outline: none;
+        }
+
+        .form-group .password-input {
+            position: relative;
+        }
+
+        .form-group .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            box-shadow: 0 5px 15px rgba(41, 121, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .social-login {
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .social-login p {
+            display: inline-block;
+            padding: 0 10px;
+            background-color: var(--card-bg);
+            position: relative;
+            z-index: 1;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .social-login p::before {
+            left: -30%;
+        }
+
+        .social-login p::after {
+            right: -30%;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .google {
+            background: #DB4437;
+        }
+
+        .facebook {
+            background: #4267B2;
+        }
+
+        .github {
+            background: #333;
+        }
+
+        .discord {
+            background: #7289DA;
+        }
+
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .auth-modal-content {
+                margin: 10% auto;
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Modal HTML -->
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-auth-modal">&times;</span>
+            
+            <div class="auth-header">
+                <h2>Welcome to BackbencherGames</h2>
+                <p>Join our gaming community to play with friends and compete in tournaments</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="signup">Sign Up</div>
+                <div class="auth-tab" data-tab="signin">Sign In</div>
+            </div>
+            
+            <div class="auth-form-container">
+                <!-- Sign Up Form -->
+                <form class="auth-form active" id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" placeholder="Choose a unique username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="signup-password" placeholder="Create a strong password" required>
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <div class="password-input">
+                            <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Create Account</button>
+                    
+                    <div class="social-login">
+                        <p>Or sign up with</p>
+                        <div class="social-buttons">
+                            <div class="social-btn google"><i class="fab fa-google"></i></div>
+                            <div class="social-btn facebook"><i class="fab fa-facebook-f"></i></div>
+                            <div class="social-btn github"><i class="fab fa-github"></i></div>
+                            <div class="social-btn discord"><i class="fab fa-discord"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        Already have an account? <a href="javascript:void(0)" class="switch-form" data-form="signin">Sign In</a>
+                    </div>
+                </form>
+                
+                <!-- Sign In Form -->
+                <form class="auth-form" id="signin-form">
+                    <div class="form-group">
+                        <label for="signin-email">Email</label>
+                        <input type="email" id="signin-email" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signin-password">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="signin-password" placeholder="Enter your password" required>
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <a href="javascript:void(0)" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Sign In</button>
+                    
+                    <div class="social-login">
+                        <p>Or sign in with</p>
+                        <div class="social-buttons">
+                            <div class="social-btn google"><i class="fab fa-google"></i></div>
+                            <div class="social-btn facebook"><i class="fab fa-facebook-f"></i></div>
+                            <div class="social-btn github"><i class="fab fa-github"></i></div>
+                            <div class="social-btn discord"><i class="fab fa-discord"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        Don't have an account? <a href="javascript:void(0)" class="switch-form" data-form="signup">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show the auth modal immediately when this page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const authModal = document.getElementById('auth-modal');
+            authModal.style.display = 'block';
+            
+            // Close modal when clicking the X button
+            const closeModal = document.querySelector('.close-auth-modal');
+            closeModal.addEventListener('click', function() {
+                authModal.style.display = 'none';
+                // Redirect back to home page when modal is closed
+                window.location.href = '../index.html';
+            });
+            
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', function(e) {
+                if (e.target === authModal) {
+                    authModal.style.display = 'none';
+                    // Redirect back to home page when modal is closed
+                    window.location.href = '../index.html';
+                }
+            });
+            
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('.auth-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding form
+                    const formId = this.getAttribute('data-tab');
+                    const forms = document.querySelectorAll('.auth-form');
+                    forms.forEach(form => form.classList.remove('active'));
+                    
+                    if (formId === 'signup') {
+                        document.getElementById('signup-form').classList.add('active');
+                    } else {
+                        document.getElementById('signin-form').classList.add('active');
+                    }
+                });
+            });
+            
+            // Switch between forms using the links
+            const switchLinks = document.querySelectorAll('.switch-form');
+            switchLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const formId = this.getAttribute('data-form');
+                    
+                    // Activate corresponding tab
+                    tabs.forEach(tab => {
+                        if (tab.getAttribute('data-tab') === formId) {
+                            tab.click();
+                        }
+                    });
+                });
+            });
+            
+            // Toggle password visibility
+            const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+            togglePasswordButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const passwordInput = this.previousElementSibling;
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        this.classList.remove('fa-eye');
+                        this.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        this.classList.remove('fa-eye-slash');
+                        this.classList.add('fa-eye');
+                    }
+                });
+            });
+            
+            // Form submission (placeholder functionality)
+            const forms = document.querySelectorAll('.auth-form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // In a real application, you would handle form submission here
+                    alert('This is a demo. In a real application, this would submit the form data.');
+                });
+            });
+            
+            // Social login buttons (placeholder functionality)
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // In a real application, you would handle social login here
+                    alert('This is a demo. In a real application, this would initiate social login.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
